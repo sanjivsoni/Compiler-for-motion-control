@@ -18,7 +18,7 @@ int main()
     while(nameToken)
     {
         printf("%d\n",nameToken);
-        
+
         if(nameToken == COMMENT)
             continue;
 
@@ -99,10 +99,9 @@ int main()
 
         }
         newLineToken = yylex();
-        if(newLineToken == NEWLINE)
+        if(newLineToken == NEWLINE || newLineToken == EOF)
         {
             printf("New Line");
-            continue;
         }
         else
         {
