@@ -1,21 +1,24 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include "symbolTable.h"
 
 extern int yylex();
 extern int yylineno;
 extern char* yytext;
 
-char *names[] = {NULL, "rows", "columns", "map", "colon", "path_available", "door", "stone", "start", "openbracket", "closebracket", "comma", "end", "integer"} 
+char *names[] = {NULL, "rows", "columns", "map", "colon", "path_available", "door", "stone", "start", "openbracket", "closebracket", "comma", "end", "integer"}; 
 int map[20][20];
 
 int main()
 {
-    int nameToken, valueToken, mapToken, rows, columns;
+    int nameToken, valueToken, mapToken, rows, columns, pointX, pointY,newLineToken;
 
     nameToken = yylex();
 
     while(nameToken)
     {
+        printf("%d\n",nameToken);
+        
         if(nameToken == COMMENT)
             continue;
 
@@ -25,12 +28,12 @@ int main()
             return 0;
         }
 
-        valueToken = yylex()
+        valueToken = yylex();
 
         switch(nameToken)
         {
             case ROWS:
-                if(valueToken != IDENTIFIER)
+                if(valueToken != INTEGER)
                 {
                     printf("Syntax Error in line %d, Expected an integer but found %s",yylineno,yytext);
                     return 1;
@@ -40,7 +43,7 @@ int main()
                 break;
 
             case COLUMNS:
-                if(valueToken != IDENTIFIER)
+                if(valueToken != INTEGER)
                 {
                     printf("Syntax Error in line %d, Expected an integer but found %s",yylineno,yytext);
                     return 1;
@@ -55,42 +58,57 @@ int main()
                     for(int j = 0; j < columns; j++)
                     {
                         
-                        case CLEAR:
-                            map[i][j] = CLEAR;
+                        case PATH_AVAILABLE:
+                            map[i][j] = PATH_AVAILABLE;
                         case DOOR:
                             map[i][j] = DOOR;
                         case STONE:
                             map[i][j] = STONE;
-                        mapToken = yylex()
+                        mapToken = yylex();
                     }
                 }
+                break;
             
             case START:
                 if(valueToken == POINT)
                 {
-                    char point[10];
-                    point = yylex()
+                    char *point = yytext;
+                    printf("Start is set to %s\n", &point);
                 }
                 else
                 {
-                    printf("Start is set to %s\n", point);
+                    printf("Syntax Error expecting Coordinate found %s",yytext);
                     return 0;
 
                 }
+                break;
 
             case END:
                 if(valueToken == POINT)
                 {
-                    char point[10];
-                    point = yylex() 
+                    char *point = yytext;
+                    printf("Start is set to %s\n", &point);
                 }
                 else
                 {
-                    printf("Start is set to %s\n", point);
+                    printf("Syntax Error expecting Coordinate found %s",yytext);
                     return 0;
+
                 }
+                break;
 
         }
+        newLineToken = yylex();
+        if(newLineToken == NEWLINE)
+        {
+            printf("New Line");
+            continue;
+        }
+        else
+        {
+            printf("Syntax error at line %d",yylineno);
+        }
         nameToken = yylex();
+
     }
 }
