@@ -12,3 +12,5 @@
 #define END 12
 #define INTEGER 13
 #define COMMENT 14
+#define POINT 15
+#define NEWLINE 16

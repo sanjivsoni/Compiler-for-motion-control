@@ -3,15 +3,20 @@
 %}
 
 %%
-:                   return COLON;
-"db_type"           return TYPE;
-"db_name"           return NAME;
-"db_table_prefix"   return TABLE_PREFIX;
-"db_port"           return PORT;
-
-[a-zA-z][_a-zA-z0-9]*   return IDENTIFIER;
-[1-9][0-9]*             return INTEGER;
-[ \t\n]                  ;
+:                       return COLON;
+"rows"                  return ROWS;
+"columns"               return COLUMNS;
+"map"                   return MAP;
+"start"                 return START;
+"end"                   return END;
+"clear"                 return PATH_AVAILABLE;
+"stone"                 return STONE;
+"door"                  return DOOR;
+[(][0-9]*[,][0-9]*[)]   return POINT;
+[0-9]*                  return INTEGER;
+[#][.][\n]              return COMMENT;
+[ \t]                   ;
+[\n]                    return NEWLINE 
 .                       printf("Unexpected Character\n");
 
 %%
