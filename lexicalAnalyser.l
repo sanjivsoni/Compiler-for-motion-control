@@ -17,7 +17,7 @@
 #.*$                    return COMMENT;
 [ \t]                   ;
 [\n]                    return NEWLINE;
-[\Z]                       return EOF;
+[\Z]                    return ENDOFFILE;
 .                       printf("Unexpected Character\n");
 
 %%

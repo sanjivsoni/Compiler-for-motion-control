@@ -1,4 +1,36 @@
 rows: 5
+
+
+
+
+
+
+
+
+
+
 columns:5
 
-map : clear
+map : clear clear door clear stone
+      stone clear clear clear stone
+      clear clear door clear clear
+      clear clear clear door clear
+      clear clear stone stone clear
+
+start : (0,0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+end : (4,4)
+

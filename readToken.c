@@ -28,11 +28,12 @@ int main()
             return 0;
         }
 
-        valueToken = yylex();
+        
 
         switch(nameToken)
         {
             case ROWS:
+                valueToken = yylex();
                 if(valueToken != INTEGER)
                 {
                     printf("Syntax Error in line %d, Expected an integer but found %s",yylineno,yytext);
@@ -43,6 +44,7 @@ int main()
                 break;
 
             case COLUMNS:
+                valueToken = yylex();
                 if(valueToken != INTEGER)
                 {
                     printf("Syntax Error in line %d, Expected an integer but found %s",yylineno,yytext);
@@ -57,23 +59,31 @@ int main()
                 {
                     for(int j = 0; j < columns; j++)
                     {
-                        
-                        case PATH_AVAILABLE:
-                            map[i][j] = PATH_AVAILABLE;
-                        case DOOR:
-                            map[i][j] = DOOR;
-                        case STONE:
-                            map[i][j] = STONE;
-                        mapToken = yylex();
+                        valueToken = yylex();
+                        printf("%d\n",valueToken);
+
+                        switch(valueToken){
+                            case PATH_AVAILABLE:
+                                map[i][j] = PATH_AVAILABLE;
+                                break;
+                            case DOOR:
+                                map[i][j] = DOOR;
+                                break;
+                            case STONE:
+                                map[i][j] = STONE;
+                                break;
+                        }
                     }
+                    // Read EOL
+                    yylex();
                 }
                 break;
             
             case START:
+                valueToken = yylex();
                 if(valueToken == POINT)
                 {
-                    char *point = yytext;
-                    printf("Start is set to %s\n", &point);
+                    printf("Start is set to %s\n", yytext);
                 }
                 else
                 {
@@ -84,10 +94,10 @@ int main()
                 break;
 
             case END:
+                valueToken = yylex();
                 if(valueToken == POINT)
                 {
-                    char *point = yytext;
-                    printf("Start is set to %s\n", &point);
+                    printf("End is set to %s\n", yytext);
                 }
                 else
                 {
@@ -99,15 +109,16 @@ int main()
 
         }
         newLineToken = yylex();
-        if(newLineToken == NEWLINE || newLineToken == EOF)
+
+        if(newLineToken == NEWLINE || newLineToken == ENDOFFILE)
         {
-            printf("New Line");
+            printf("%d\n",newLineToken);
+            while((nameToken=yylex())==NEWLINE);
         }
         else
         {
             printf("Syntax error at line %d",yylineno);
         }
-        nameToken = yylex();
 
     }
 }

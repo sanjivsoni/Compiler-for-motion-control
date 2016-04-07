@@ -14,4 +14,4 @@
 #define COMMENT 14
 #define POINT 15
 #define NEWLINE 16
-#define EOF 17
+#define ENDOFFILE 17
