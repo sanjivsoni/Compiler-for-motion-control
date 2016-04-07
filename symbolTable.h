@@ -11,3 +11,4 @@
 #define COMMA 11
 #define END 12
 #define INTEGER 13
+#define COMMENT 14
