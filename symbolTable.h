@@ -1,0 +1,13 @@
+#define ROWS 1
+#define COLUMNS 2
+#define MAP 3
+#define COLON 4
+#define PATH_AVAILABLE 5
+#define DOOR 6
+#define STONE 7
+#define START 8
+#define OPENBRACKET 9
+#define CLOSEBRACKET 10
+#define COMMA 11
+#define END 12
+#define INTEGER 13
