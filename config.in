@@ -1,4 +1,3 @@
-
 rows: 5
 columns: 5
 
@@ -13,4 +12,4 @@ map : clear clear door clear stone
 
 start : (0,0)
 
-end : (4,4) 
+end : (4,4)

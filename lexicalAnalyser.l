@@ -16,7 +16,7 @@
 [0-9]*                  return INTEGER;
 [#][.][\n]              return COMMENT;
 [ \t]                   ;
-[\n]                    return NEWLINE 
+[\n]                    return NEWLINE;
 .                       printf("Unexpected Character\n");
 
 %%
