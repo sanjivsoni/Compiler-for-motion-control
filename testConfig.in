@@ -1,13 +1,4 @@
-rows: 5
-
-
-
-
-
-
-
-
-
+rows: 5a
 
 columns:5
 
@@ -18,19 +9,6 @@ map : clear clear door clear stone
       clear clear stone stone clear
 
 start : (0,0)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 end : (4,4)
 
