@@ -12,13 +12,13 @@
 "clear"                 return PATH_AVAILABLE;
 "stone"                 return STONE;
 "door"                  return DOOR;
+[0-9]+                  return INTEGER;
 \([0-9]*,[0-9]*\)       return POINT;
-[0-9]*                  return INTEGER;
 #.*$                    return COMMENT;
 [ \t]                   ;
 [\n]                    return NEWLINE;
 [\Z]                    return ENDOFFILE;
-.                       printf("Unexpected Character\n");
+.                       return UNEXPECTED_CHARACTER;
 
 %%
 int yywrap(void)

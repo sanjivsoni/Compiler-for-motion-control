@@ -15,3 +15,4 @@
 #define POINT 15
 #define NEWLINE 16
 #define ENDOFFILE 17
+#define UNEXPECTED_CHARACTER 18
