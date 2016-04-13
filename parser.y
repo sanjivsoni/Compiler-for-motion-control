@@ -1,5 +1,8 @@
 %{
 #include "declaration.h"
+#include<stdio.h>
+int yylex();
+void yyerror(const char *s);
 %}
 
 %union {    int digit;
@@ -20,6 +23,7 @@
 %token ERROR
 %token<id> POINT
 
+
 %type <id> HURDLES, HURDLE, ASSIGNMENT
 
 %%
@@ -36,11 +40,6 @@ HURDLES         :   HURDLES HURDLE          {printf(" HS -> HS H \n")}
 
 HURDLE          :   POINT                   {printf(" H -> P \n")}
                 ;
-
-
-POINT           :   '('INTEGER','INTEGER')' {printf(" P -> (i,i) \n")}
-                ;
-
 
 ASSIGNMENT      :   START   ':' POINT       {printf(" S -> P \n")}
                 |   END     ':' POINT       {printf(" E -> P \n")};

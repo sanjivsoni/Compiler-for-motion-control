@@ -47,7 +47,8 @@
      END = 263,
      OBSTACLE = 264,
      COMMENT = 265,
-     ERROR = 266
+     ERROR = 266,
+     POINT = 267
    };
 #endif
 /* Tokens.  */
@@ -60,19 +61,20 @@
 #define OBSTACLE 264
 #define COMMENT 265
 #define ERROR 266
+#define POINT 267
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 5 "parser.y"
+#line 8 "parser.y"
 {    int digit;
             char name;
             char* id;
         }
 /* Line 1529 of yacc.c.  */
-#line 76 "parser.tab.h"
+#line 78 "parser.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
