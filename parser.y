@@ -2,7 +2,10 @@
 #include "declaration.h"
 %}
 
-%union { int digit, char name, char* id }
+%union {    int digit;
+            char name;
+            char* id;
+        }
 
 %start EXPRESSION
 
@@ -13,6 +16,8 @@
 %token START 
 %token END
 %token OBSTACLE
+%token COMMENT
+%token ERROR
 
 %type <id> HURDLES, HURDLE, POINT, ASSIGNMENT
 
@@ -32,7 +37,7 @@ HURDLE          :   POINT                   {printf(" H -> P \n")}
                 ;
 
 
-POINT           :   '('INTEGER','INTEGER')' {printf(" P -> (i,i) \n"))}
+POINT           :   '('INTEGER','INTEGER')' {printf(" P -> (i,i) \n")}
                 ;
 
     
