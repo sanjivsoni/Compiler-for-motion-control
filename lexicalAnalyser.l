@@ -1,22 +1,51 @@
 %{
+
+#include<stdio.h>
+#include<string>
+#include<iostream>
+using namespace std;
+#define YY_DECL extern "C" int yylex()
+
 #include "parser.tab.h"
 %}
 
 %%
-:                       return COLON;
+=                       return EQUALS;
 "rows"                  return ROWS;
 "columns"               return COLUMNS;
 "obstacle"              return OBSTACLE;
 "start"                 return START;
 "end"                   return END;
-[0-9]+                  {yylval.digit = atoi(yytext);return INTEGER;}
-\([0-9]+,[0-9]+\)       return POINT;
-#.*$                    return COMMENT;
-[ \t\n]                   ;
-.                       return ERROR;
+[0-9]+                  {
+                            //yylval.stringValue = strdup(yytext);
+                            return NUMBER;
+                        }
+
+\([0-9]+,[0-9]+\)       {
+                            //yylval.stringValue = strdup(yytext);
+                            return COORDINATE;
+                        }
+
+[ \t\n]                 ;
 
 %%
+void yyerror(char *str)
+{
+    printf("Parse Error: \n%s\n",str);
+}
+
 int yywrap(void)
 {
   return 1;
 }
+
+/*
+int main(void)
+{
+    int token;
+    while ((token = yylex()) != 0)
+        printf("Token: %d (%s)\n", token, yytext);
+    return 0;
+}
+
+*/

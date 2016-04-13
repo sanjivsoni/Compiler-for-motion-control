@@ -1,11 +1,8 @@
-rows: 5
-columns: 5
+obstacle = (0,2) (3,4) (2,6) (5,6)
+rows = 10
+columns = 20
+start = (2,3)
+end = (2,4)
 
-# Map stores elements starting from 0,0
-# left to right and top to bottom.
 
-obstacle : (0,2) (0,4) (1,0) (1,2) (2,2) (3,1) (4,3)
 
-start : (0,0)
-
-end : (4,4)
