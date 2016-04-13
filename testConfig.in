@@ -1,12 +1,12 @@
-rows: 5a
+rows: 5
 
-columns:5
+columns:5   
 
 map : clear clear door clear stone
       stone clear clear clear stone
       clear clear door clear clear
       clear clear clear door clear
-      clear clear stone stone clear
+      clear clear stone stone clear clear
 
 start : (0,0)
 

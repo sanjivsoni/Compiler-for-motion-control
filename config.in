@@ -4,11 +4,7 @@ columns: 5
 # Map stores elements starting from 0,0
 # left to right and top to bottom.
 
-map : clear clear door clear stone
-      stone clear clear clear stone
-      clear clear door clear clear
-      clear clear clear door clear
-      clear clear stone stone clear
+obstacle :  (0,2) (0,4) (1,0) (1,2) (2,2) (3,1)  (4,3)
 
 start : (0,0)
 
