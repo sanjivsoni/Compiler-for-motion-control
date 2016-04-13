@@ -1,0 +1,2 @@
+
+int obstacles[50];

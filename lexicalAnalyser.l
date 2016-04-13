@@ -15,8 +15,7 @@
 [0-9]+                  return INTEGER;
 \([0-9]+,[0-9]+\)       return POINT;
 #.*$                    return COMMENT;
-[ \t]                   ;
-[\n]                    return NEWLINE;
+[ \t\n]                   ;
 [\Z]                    return ENDOFFILE;
 .                       return UNEXPECTED_CHARACTER;
 
