@@ -12,8 +12,7 @@
 [0-9]+                  {yyval.digit = atoi(yytext);return INTEGER;}
 \([0-9]+,[0-9]+\)       return POINT;
 #.*$                    return COMMENT;
-[ \t]                   ;
-[\n]                    return NEWLINE;
+[ \t\n]                   ;
 [\Z]                    return ENDOFFILE;
 .                       return UNEXPECTED_CHARACTER;
 
