@@ -16,3 +16,4 @@
 #define NEWLINE 16
 #define ENDOFFILE 17
 #define UNEXPECTED_CHARACTER 18
+#define OBSTACLE 19

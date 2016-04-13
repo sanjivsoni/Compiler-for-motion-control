@@ -12,8 +12,9 @@
 "clear"                 return PATH_AVAILABLE;
 "stone"                 return STONE;
 "door"                  return DOOR;
+[\([0-9]+,[0-9]+\)]*    return OBSTACLE;s
 [0-9]+                  return INTEGER;
-\([0-9]*,[0-9]*\)       return POINT;
+\([0-9]+,[0-9]+\)       return POINT;
 #.*$                    return COMMENT;
 [ \t]                   ;
 [\n]                    return NEWLINE;
