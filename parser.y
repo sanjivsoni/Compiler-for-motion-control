@@ -18,8 +18,9 @@
 %token OBSTACLE
 %token COMMENT
 %token ERROR
+%token POINT
 
-%type <id> HURDLES, HURDLE, POINT, ASSIGNMENT
+%type <id> HURDLES, HURDLE, ASSIGNMENT
 
 %%
 
@@ -34,10 +35,6 @@ HURDLES         :   HURDLES HURDLE          {printf(" HS -> HS H \n")}
 
 
 HURDLE          :   POINT                   {printf(" H -> P \n")}
-                ;
-
-
-POINT           :   '('INTEGER','INTEGER')' {printf(" P -> (i,i) \n")}
                 ;
 
     
