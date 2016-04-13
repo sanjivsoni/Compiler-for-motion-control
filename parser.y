@@ -45,3 +45,12 @@ ASSIGNMENT      :   START   ':' POINT       {printf(" S -> P \n")}
                 ;
 
 %%
+int main(void)
+{
+    return yyparse();
+}
+void yyerror(char *s)
+{
+    fprintf(stderr, "%s\n",s);
+}
+
