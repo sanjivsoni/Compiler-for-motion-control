@@ -16,6 +16,7 @@ using namespace std;
 "obstacle"              return OBSTACLE;
 "start"                 return START;
 "end"                   return END;
+<<<<<<< HEAD
 [0-9]+                  {
                             //yylval.stringValue = strdup(yytext);
                             return NUMBER;
@@ -27,6 +28,7 @@ using namespace std;
                         }
 
 [ \t\n]                 ;
+
 
 %%
 void yyerror(char *str)
