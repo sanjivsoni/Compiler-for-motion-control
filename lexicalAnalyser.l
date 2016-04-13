@@ -10,7 +10,7 @@
 "start"                 return START;
 "end"                   return END;
 [0-9]+                  {yylval.digit = atoi(yytext);return INTEGER;}
-\([0-9]+,[0-9]+\)       return POINT;
+\([0-9]+,[0-9]+\)       {yylval.id = yytext;return POINT;}
 #.*$                    return COMMENT;
 [ \t\n]                   ;
 .                       return ERROR;

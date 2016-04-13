@@ -9,17 +9,18 @@
 
 %start EXPRESSION
 
-%token <digit> INTEGER 
+%token <digit> INTEGER
 %token ROWS
 %token COLUMNS
 %token COLON
-%token START 
+%token START
 %token END
 %token OBSTACLE
 %token COMMENT
 %token ERROR
+%token<id> POINT
 
-%type <id> HURDLES, HURDLE, POINT, ASSIGNMENT
+%type <id> HURDLES, HURDLE, ASSIGNMENT
 
 %%
 
@@ -40,7 +41,7 @@ HURDLE          :   POINT                   {printf(" H -> P \n")}
 POINT           :   '('INTEGER','INTEGER')' {printf(" P -> (i,i) \n")}
                 ;
 
-    
+
 ASSIGNMENT      :   START   ':' POINT       {printf(" S -> P \n")}
                 |   END     ':' POINT       {printf(" E -> P \n")};
                 |   ROWS    ':' INTEGER     {printf(" R -> I \n")}
