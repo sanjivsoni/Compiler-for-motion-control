@@ -281,7 +281,7 @@ void dijkstra(struct Graph* graph, int src)
 
 
 // Driver program to test above functions
-void startDijkstra(int A[][100],int x,int y, int nodes)
+void startDijkstra(int A[][20],int x,int y,int nodes)
 {
     // create the graph given in above fugure
     int i,j;
@@ -291,7 +291,7 @@ void startDijkstra(int A[][100],int x,int y, int nodes)
       for(j=0;j<y;++j)
       {
         if(A[i][j] == 0)
-          addEdge(graph, 0 , i, j);
+          addEdge(graph, 1 , i, j);
       }
     }
 

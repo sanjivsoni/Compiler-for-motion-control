@@ -46,6 +46,6 @@ void displayMatrix()
       }
   }
 
-  int path = obstacles - (intRows * intColumns);
+  int path = (intRows * intColumns) - obstacles;
   startDijkstra(matrix, intRows,intColumns, path);
 }
