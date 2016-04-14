@@ -1,6 +1,6 @@
 %{
-
-
+<<<<<<< HEAD
+  
   #include<stdio.h>
   #include<stdlib.h>
   #include<string>
@@ -12,9 +12,14 @@
   extern "C" FILE *yyin;
 
   void yyerror(const char*s);
-
-
+=======
+#include "declaration.h"
+#include<stdio.h>
+int yylex();
+void yyerror(const char *s);
+>>>>>>> origin/master
 %}
+
 
 // define termminal symbols.
 %token ROWS COLUMNS EQUALS START END OBSTACLE NUMBER COORDINATE
@@ -29,13 +34,25 @@
     char* stringValue;
 }
 
-
+<<<<<<< HEAD
 // Associate each of the terminal tokens with one of union fields.
 %type <stringValue> NUMBER COORDINATE ROWS COLUMNS START END
+=======
+%token <digit> INTEGER
+%token ROWS
+%token COLUMNS
+%token COLON
+%token START
+%token END
+%token OBSTACLE
+%token COMMENT
+%token ERROR
+%token<id> POINT
+
+>>>>>>> origin/master
 
 // Define the starting production
 %start PARSETREE
-
 
 %%
 // First rule is the hishest level rule
@@ -68,11 +85,22 @@ HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS 
 
 HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");}
 
-
+<<<<<<< HEAD
 
 %%
 
 void yyerror(const char* s)
+=======
+ASSIGNMENT      :   START   ':' POINT       {printf(" S -> P \n")}
+                |   END     ':' POINT       {printf(" E -> P \n")};
+                |   ROWS    ':' INTEGER     {printf(" R -> I \n")}
+                |   COLUMNS ':' INTEGER     {printf(" C -> I \n")};
+                ;
+
+%%
+
+int main(void)
+>>>>>>> origin/master
 {
     printf("Parse Error Message: %s\n",s);
 }
@@ -86,7 +114,7 @@ int main(int argc, char**argv)
     }
 
     FILE* file = fopen(argv[1],"r");
-    if(file == NULL)
+    if(file == NULL) 
     {
         printf("Cannot open %s \n",argv[1]);
         exit(0);
