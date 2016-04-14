@@ -33,7 +33,7 @@ end                   return END;
                         }
 
 [ \t]                 ;
-.                       {    printf("Syntax error : Unexpected char \n");
+.                       {    printf("\nSyntax error in line %d : Unexpected char %s \n",yylineno,yytext);
                              exit(0);
                         }
 
