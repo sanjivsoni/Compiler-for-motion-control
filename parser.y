@@ -69,6 +69,7 @@ HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS 
 HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");}
 
 COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN         {printf("C -> (%s,%s)\n",$2,$4);}
+                    ;
 
 
 
