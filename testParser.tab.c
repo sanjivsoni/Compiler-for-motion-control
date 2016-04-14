@@ -110,9 +110,10 @@
   extern "C" int yyparse();
   extern "C" FILE *yyin;
   extern int yylineno;
-  int matrix[20][20], rows, columns;
+  int matrix[20][20];
+  char *rows, *columns;
 
-  void createSparse(int i,int j);
+  void createSparse(char* i,char* j);
 
   void yyerror(const char*s);
 
@@ -138,14 +139,14 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 29 "testParser.y"
+#line 30 "testParser.y"
 {
     int intValue;
     char charValue;
     char* stringValue;
 }
 /* Line 193 of yacc.c.  */
-#line 149 "testParser.tab.c"
+#line 150 "testParser.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -158,7 +159,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 162 "testParser.tab.c"
+#line 163 "testParser.tab.c"
 
 #ifdef short
 # undef short
@@ -446,8 +447,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    49,    49,    52,    53,    55,    56,    57,    60,    61,
-      64,    65,    68,    71,    72,    74
+       0,    50,    50,    53,    54,    56,    57,    58,    61,    62,
+      65,    66,    69,    72,    73,    75
 };
 #endif
 
@@ -1364,78 +1365,78 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 49 "testParser.y"
+#line 50 "testParser.y"
     {printf("P -> LS");;}
     break;
 
   case 3:
-#line 52 "testParser.y"
+#line 53 "testParser.y"
     {printf("LS -> LS L\n");;}
     break;
 
   case 4:
-#line 53 "testParser.y"
+#line 54 "testParser.y"
     {printf("LS -> L\n");;}
     break;
 
   case 5:
-#line 55 "testParser.y"
+#line 56 "testParser.y"
     {printf("L -> AI\n");;}
     break;
 
   case 6:
-#line 56 "testParser.y"
+#line 57 "testParser.y"
     {printf("L -> AC\n");;}
     break;
 
   case 7:
-#line 57 "testParser.y"
+#line 58 "testParser.y"
     {printf("L -> AO\n");;}
     break;
 
   case 8:
-#line 60 "testParser.y"
-    {printf("AI -> R=N %s  %s \n",(yyvsp[(1) - (3)].stringValue),(yyvsp[(3) - (3)].intValue));;}
+#line 61 "testParser.y"
+    {printf("AI -> R=N %s  %s \n",(yyvsp[(1) - (3)].stringValue),(yyvsp[(3) - (3)].stringValue));rows=(yyvsp[(3) - (3)].stringValue);;}
     break;
 
   case 9:
-#line 61 "testParser.y"
-    {printf("AI -> C=N %s  %s \n",(yyvsp[(1) - (3)].stringValue),(yyvsp[(3) - (3)].intValue));;}
+#line 62 "testParser.y"
+    {printf("AI -> C=N\n");columns=(yyvsp[(3) - (3)].stringValue);;}
     break;
 
   case 10:
-#line 64 "testParser.y"
+#line 65 "testParser.y"
     {printf("AC -> S=C\n");;}
     break;
 
   case 11:
-#line 65 "testParser.y"
+#line 66 "testParser.y"
     {printf("AC -> E=C\n");;}
     break;
 
   case 12:
-#line 68 "testParser.y"
+#line 69 "testParser.y"
     {printf("AO -> O=HS\n");;}
     break;
 
   case 13:
-#line 71 "testParser.y"
+#line 72 "testParser.y"
     {printf("HS -> HS H\n");;}
     break;
 
   case 14:
-#line 72 "testParser.y"
+#line 73 "testParser.y"
     {printf("HS -> H\n");;}
     break;
 
   case 15:
-#line 74 "testParser.y"
-    {printf("H -> C\n"); ;}
+#line 75 "testParser.y"
+    {printf("H -> C\n");createSparse((yyvsp[(2) - (5)].stringValue),(yyvsp[(4) - (5)].stringValue));;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1439 "testParser.tab.c"
+#line 1440 "testParser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1649,16 +1650,20 @@ yyreturn:
 }
 
 
-#line 78 "testParser.y"
+#line 79 "testParser.y"
 
-void createSparse(int i,int j)
+void createSparse(char* i,char* j)
 {
+
   int l,k;
-  for(l=0;l<rows;++l)
+  int r = atoi(i);
+  int c = atoi(j);
+  printf("r = %d, c=%d",r,c);
+  for(l=0;l<20;++l)
   {
-    for(k=0;k<columns;++k)
+    for(k=0;k<20;++k)
     {
-      if(l==i && k==j)
+      if(l==r && k==c)
         matrix[l][k] = 1;
       else
         matrix[l][k] = 0;
@@ -1698,10 +1703,10 @@ int main(int argc, char**argv)
 
     printf("\nThe matrix is");
     int l,k;
-    for(l=0;l<rows;++l)
+    for(l=0;l<20;++l)
     {
       printf("\n");
-      for(k=0;k<columns;++k)
+      for(k=0;k<20;++k)
         printf("%d\t",matrix[l][k]);
     }
 

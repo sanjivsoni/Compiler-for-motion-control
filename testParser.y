@@ -11,9 +11,10 @@
   extern "C" int yyparse();
   extern "C" FILE *yyin;
   extern int yylineno;
-  int matrix[20][20], rows, columns;
+  int matrix[20][20];
+  char *rows, *columns;
 
-  void createSparse(int i,int j);
+  void createSparse(char* i,char* j);
 
   void yyerror(const char*s);
 
@@ -34,9 +35,9 @@
 
 
 // Associate each of the terminal tokens with one of union fields.
-%type <stringValue>  COORDINATE ROWS COLUMNS START END
+%type <stringValue>  NUMBER COORDINATE ROWS COLUMNS START END
 %type <charValue> LBRACKET RBRACKET COMMA
-%type <intValue> NUMBER
+
 
 // Define the starting production
 %start PARSETREE
@@ -57,8 +58,8 @@ LINE                :   ASSIGN_INT                                  {printf("L -
                     |   ASSIGN_OBSTACLE                             {printf("L -> AO\n");}
                     ;
 
-ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %s  %s \n",$1,$3);}
-                    |   COLUMNS EQUALS NUMBER                       {printf("AI -> C=N %s  %s \n",$1,$3);}
+ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %s  %s \n",$1,$3);rows=$3;}
+                    |   COLUMNS EQUALS NUMBER                       {printf("AI -> C=N\n");columns=$3;}
                     ;
 
 ASSIGN_COORDINATE   :   START EQUALS LBRACKET NUMBER COMMA NUMBER RBRACKET                  {printf("AC -> S=C\n");}
@@ -71,19 +72,23 @@ ASSIGN_OBSTACLE     :   OBSTACLE EQUALS HINDERENCES                 {printf("AO 
 HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS -> HS H\n");}
                     |   HINDERENCE                                  {printf("HS -> H\n");}
 
-HINDERENCE          :  LBRACKET NUMBER COMMA NUMBER RBRACKET                          {printf("H -> C\n"); }
+HINDERENCE          :  LBRACKET NUMBER COMMA NUMBER RBRACKET                          {printf("H -> C\n");createSparse($2,$4);};
 
 
 
 %%
-void createSparse(int i,int j)
+void createSparse(char* i,char* j)
 {
+
   int l,k;
-  for(l=0;l<rows;++l)
+  int r = atoi(i);
+  int c = atoi(j);
+  printf("r = %d, c=%d",r,c);
+  for(l=0;l<20;++l)
   {
-    for(k=0;k<columns;++k)
+    for(k=0;k<20;++k)
     {
-      if(l==i && k==j)
+      if(l==r && k==c)
         matrix[l][k] = 1;
       else
         matrix[l][k] = 0;
@@ -123,10 +128,10 @@ int main(int argc, char**argv)
 
     printf("\nThe matrix is");
     int l,k;
-    for(l=0;l<rows;++l)
+    for(l=0;l<20;++l)
     {
       printf("\n");
-      for(k=0;k<columns;++k)
+      for(k=0;k<20;++k)
         printf("%d\t",matrix[l][k]);
     }
 
