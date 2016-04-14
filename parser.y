@@ -1,6 +1,5 @@
 %{
 
-
   #include<stdio.h>
   #include<stdlib.h>
   #include<string>
@@ -17,7 +16,7 @@
 %}
 
 // define termminal symbols.
-%token ROWS COLUMNS EQUALS START END OBSTACLE NUMBER COORDINATE
+%token ROWS COLUMNS EQUALS START END OBSTACLE NUMBER COMMA OPAREN CPAREN
 
 // bison gets next token from flex as 'yystype'
 // Each type of token flex could return
@@ -31,7 +30,8 @@
 
 
 // Associate each of the terminal tokens with one of union fields.
-%type <stringValue> NUMBER COORDINATE ROWS COLUMNS START END
+%type <stringValue> NUMBER ROWS COLUMNS START END
+%type <charValue> OPAREN CPAREN COMMA
 
 // Define the starting production
 %start PARSETREE
@@ -67,6 +67,8 @@ HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS 
                     |   HINDERENCE                                  {printf("HS -> H\n");}
 
 HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");}
+
+COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN         {printf("C -> (%s,%s)\n",$2,$4);}
 
 
 

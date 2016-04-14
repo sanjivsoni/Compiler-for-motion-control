@@ -23,9 +23,18 @@ end                   return END;
                             return NUMBER;
                         }
 
-\([0-9]+,[0-9]+\)       {
-                            yylval.stringValue = strdup(yytext);
-                            return COORDINATE;
+\(                      {
+                            yylval.charValue = '(';
+                            return OPAREN;
+                        }
+
+\)                      {
+                            yylval.charValue = ')';
+                            return CPAREN;
+                        }
+,                       {
+                            yylval.charValue = ',';
+                            return COMMA;
                         }
 
 \n                      {
