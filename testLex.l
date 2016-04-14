@@ -23,27 +23,26 @@ end                   return END;
                             return NUMBER;
                         }
 
-\(                     {
+\(                      {
                             yylval.charValue = '(';
-                            return LBRACKET;
+                            return OPAREN;
                         }
 
 \)                      {
-                            yylval.charValue = '(';
-                            return RBRACKET;
+                            yylval.charValue = ')';
+                            return CPAREN;
                         }
-
 ,                       {
                             yylval.charValue = ',';
                             return COMMA;
                         }
 
 \n                      {
-                          yylineno++;
+                            yylineno++;
                         }
 
 [ \t]                 ;
-.                       {    printf("Syntax error : Unexpected char \n");
+.                       {    printf("\nSyntax error in line %d : Unexpected char %s \n",yylineno,yytext);
                              exit(0);
                         }
 
@@ -54,9 +53,8 @@ void yyerror(char *str)
     printf("Parse Error: \n%s\n",str);
 }
 
-int yywrap(void)
-{
-  return 1;
+int yywrap(void) {
+    return 1;
 }
 
 /*

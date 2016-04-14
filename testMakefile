@@ -1,0 +1,8 @@
+testParser.tab.c testParser.tab.h: testParser.y
+	bison -d parser.y
+
+lex.yy.c: textLex.l testParser.tab.h
+	flex textLex.l
+
+motionController: lex.yy.c testParser.tab.c testParser.tab.h
+	g++ testParser.tab.c lex.yy.c -w -ll -o test

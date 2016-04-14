@@ -46,10 +46,9 @@
      END = 262,
      OBSTACLE = 263,
      NUMBER = 264,
-     COORDINATE = 265,
-     LBRACKET = 266,
-     RBRACKET = 267,
-     COMMA = 268
+     COMMA = 265,
+     OPAREN = 266,
+     CPAREN = 267
    };
 #endif
 /* Tokens.  */
@@ -60,24 +59,23 @@
 #define END 262
 #define OBSTACLE 263
 #define NUMBER 264
-#define COORDINATE 265
-#define LBRACKET 266
-#define RBRACKET 267
-#define COMMA 268
+#define COMMA 265
+#define OPAREN 266
+#define CPAREN 267
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 30 "testParser.y"
+#line 28 "testParser.y"
 {
     int intValue;
     char charValue;
     char* stringValue;
 }
 /* Line 1529 of yacc.c.  */
-#line 81 "testParser.tab.h"
+#line 79 "testParser.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
