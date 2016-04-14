@@ -1395,12 +1395,12 @@ yyreduce:
 
   case 8:
 #line 60 "testParser.y"
-    {printf("AI -> R=N %s  %s \n",(yyvsp[(1) - (3)].stringValue),(yyvsp[(3) - (3)].intValue));rows=(yyvsp[(3) - (3)].intValue);;}
+    {printf("AI -> R=N %s  %s \n",(yyvsp[(1) - (3)].stringValue),(yyvsp[(3) - (3)].intValue));;}
     break;
 
   case 9:
 #line 61 "testParser.y"
-    {printf("AI -> C=N\n");columns=(yyvsp[(3) - (3)].intValue);;}
+    {printf("AI -> C=N %s  %s \n",(yyvsp[(1) - (3)].stringValue),(yyvsp[(3) - (3)].intValue));;}
     break;
 
   case 10:
@@ -1430,7 +1430,7 @@ yyreduce:
 
   case 15:
 #line 74 "testParser.y"
-    {printf("H -> C\n"); createSparse((yyvsp[(2) - (5)].intValue),(yyvsp[(4) - (5)].intValue));;}
+    {printf("H -> C\n"); ;}
     break;
 
 

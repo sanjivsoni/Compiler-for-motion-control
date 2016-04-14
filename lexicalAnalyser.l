@@ -29,7 +29,7 @@ end                   return END;
                         }
 
 \n                      {
-                          yylineno++;
+                            yylineno++;
                         }
 
 [ \t]                 ;
@@ -44,6 +44,10 @@ void yyerror(char *str)
     printf("Parse Error: \n%s\n",str);
 }
 
+int yywrap(void) {
+    return 1;
+}
+
 /*
 int main(void)
 {
@@ -52,5 +56,5 @@ int main(void)
         printf("Token: %d (%s)\n", token, yytext);
     return 0;
 }
-
 */
+

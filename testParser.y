@@ -57,8 +57,8 @@ LINE                :   ASSIGN_INT                                  {printf("L -
                     |   ASSIGN_OBSTACLE                             {printf("L -> AO\n");}
                     ;
 
-ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %s  %s \n",$1,$3);rows=$3;}
-                    |   COLUMNS EQUALS NUMBER                       {printf("AI -> C=N\n");columns=$3;}
+ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %s  %s \n",$1,$3);}
+                    |   COLUMNS EQUALS NUMBER                       {printf("AI -> C=N %s  %s \n",$1,$3);}
                     ;
 
 ASSIGN_COORDINATE   :   START EQUALS LBRACKET NUMBER COMMA NUMBER RBRACKET                  {printf("AC -> S=C\n");}
@@ -71,7 +71,7 @@ ASSIGN_OBSTACLE     :   OBSTACLE EQUALS HINDERENCES                 {printf("AO 
 HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS -> HS H\n");}
                     |   HINDERENCE                                  {printf("HS -> H\n");}
 
-HINDERENCE          :  LBRACKET NUMBER COMMA NUMBER RBRACKET                          {printf("H -> C\n"); createSparse($2,$4);}
+HINDERENCE          :  LBRACKET NUMBER COMMA NUMBER RBRACKET                          {printf("H -> C\n"); }
 
 
 
