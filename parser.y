@@ -38,40 +38,49 @@
 
 
 %%
-// First rule is the hishest level rule
+// First rule is the hishest in rule
 
 
-PARSETREE           :   LINES                                       {printf("P -> LS");}
+
+PARSETREE           :   LINE                                      {printf("LS -> L\n");}
+
+LINE                :   DEFINE_LIMIT ASSIGN_OBSTACLE ASSIGN_COORDINATE                 {printf("L -> AI\n");}
                     ;
 
-LINES               :   LINES LINE                                  {printf("LS -> LS L\n");}
-                    |   LINE                                        {printf("LS -> L\n");}
+DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
+                    |   ASSIGN_COLUMN ASSIGN_ROW
 
-LINE                :   ASSIGN_INT                                  {printf("L -> AI\n");}
-                    |   ASSIGN_COORDINATE                           {printf("L -> AC\n");}
-                    |   ASSIGN_OBSTACLE                             {printf("L -> AO\n");}
+
+ASSIGN_ROW          :   ROWS EQUALS NUMBER
                     ;
 
-ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %s  %s \n",$1,$3);}
-                    |   COLUMNS EQUALS NUMBER                       {printf("AI -> C=N\n");}
+ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
                     ;
 
-ASSIGN_COORDINATE   :   START EQUALS COORDINATE                     {printf("AC -> S=C\n");}
-                    |   END EQUALS COORDINATE                       {printf("AC -> E=C\n");}
-                    ;
 
-ASSIGN_OBSTACLE     :   OBSTACLE EQUALS HINDERENCES                 {printf("AO -> O=HS\n");}
+ASSIGN_OBSTACLE     :   OBSTACLE EQUALS HINDERENCES
+                    |  /* Obstacles Absent */
                     ;
 
 HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS -> HS H\n");}
                     |   HINDERENCE                                  {printf("HS -> H\n");}
-
-HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");}
-
-COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN         {printf("C -> (%s,%s)\n",$2,$4);}
                     ;
 
+HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");}
+                    ;
 
+COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN           {printf("C -> (%s,%s)\n",$2,$4);}
+                    ;
+
+ASSIGN_COORDINATE   : ASSIGN_START ASSIGN_END
+                    | ASSIGN_END ASSIGN_START
+                    ;
+
+ASSIGN_START        :   START EQUALS COORDINATE                     {printf("AC -> S=C\n");}
+                    ;
+
+ASSIGN_END          :  END EQUALS COORDINATE                       {printf("AC -> E=C\n");}
+                    ;   
 
 %%
 
