@@ -51,7 +51,7 @@ PARSETREE           :   LINES                                       {printf("P -
                     ;
 
 LINES               :   LINES LINE                                  {printf("LS -> LS L\n");}
-                    |   LINE                                        {printf("LS -> L\n");}
+                    |   LINE                                        {printf("LS -> L\n");};
 
 LINE                :   ASSIGN_INT                                  {printf("L -> AI\n");}
                     |   ASSIGN_COORDINATE                           {printf("L -> AC\n");}
@@ -62,39 +62,65 @@ ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI 
                     |   COLUMNS EQUALS NUMBER                       {printf("AI -> C=N\n");columns=$3;}
                     ;
 
-ASSIGN_COORDINATE   :   START EQUALS LBRACKET NUMBER COMMA NUMBER RBRACKET                  {printf("AC -> S=C\n");}
-                    |   END EQUALS LBRACKET NUMBER COMMA NUMBER RBRACKET                            {printf("AC -> E=C\n");}
+ASSIGN_COORDINATE   :   START EQUALS HINDERENCE             {printf("AC -> S=C\n");}
+                    |   END EQUALS HINDERENCE                    {printf("AC -> E=C\n");}
                     ;
 
 ASSIGN_OBSTACLE     :   OBSTACLE EQUALS HINDERENCES                 {printf("AO -> O=HS\n");}
                     ;
 
 HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS -> HS H\n");}
-                    |   HINDERENCE                                  {printf("HS -> H\n");}
+                    |   HINDERENCE                                  {printf("HS -> H\n");};
 
 HINDERENCE          :  LBRACKET NUMBER COMMA NUMBER RBRACKET                          {printf("H -> C\n");createSparse($2,$4);};
 
 
 
 %%
-void createSparse(char* i,char* j)
+void createSparse(char* rowNo,char* colNO)
 {
 
-  int l,k;
-  int r = atoi(i);
-  int c = atoi(j);
-  printf("r = %d, c=%d",r,c);
-  for(l=0;l<20;++l)
+  int i,j;
+  int row = atoi(rowNo);
+  int column = atoi(colNO);
+  //printf("r = %d, c=%d",r,c);
+  for(i=0;i<20;++i)
   {
-    for(k=0;k<20;++k)
+    for(j=0;j<20;++j)
     {
-      if(l==r && k==c)
-        matrix[l][k] = 1;
-      else
-        matrix[l][k] = 0;
+      if(i==row && j==column)
+        matrix[i][j] = 1;
     }
   }
 
+}
+
+void createEmptyMatrix()
+{
+    int i,j;
+
+    for(i=0;i<20;++i)
+    {
+      for(j=0;j<20;++j)
+        {
+          matrix[i][j] = 0;
+        }
+    }
+}
+
+
+void displayMatrix()
+{
+  int i,j;
+  printf("\nThe matrix is");
+  for(i=0;i<20;++i)
+  {
+    printf("\n");
+    for(j=0;j<20;++j)
+      {
+        printf("%d\t",matrix[i][j]);
+      }
+  }
 }
 
 
@@ -105,6 +131,7 @@ void yyerror(const char* s)
 
 int main(int argc, char**argv)
 {
+    createEmptyMatrix();              //This function initialises matrix with 0
     if(argc != 2)
     {
         printf("Incorrect usage. Try ./a.out filename\n");
@@ -125,15 +152,7 @@ int main(int argc, char**argv)
     }while(!feof((yyin)));
 
     printf("\nNo. of lines are %d", yylineno);
-
-    printf("\nThe matrix is");
-    int l,k;
-    for(l=0;l<20;++l)
-    {
-      printf("\n");
-      for(k=0;k<20;++k)
-        printf("%d\t",matrix[l][k]);
-    }
+    displayMatrix();
 
 
     fclose(file);

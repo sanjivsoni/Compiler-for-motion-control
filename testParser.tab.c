@@ -374,7 +374,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  17
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   33
+#define YYLAST   25
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  14
@@ -383,7 +383,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  15
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  39
+#define YYNSTATES  31
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -430,7 +430,7 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyprhs[] =
 {
        0,     0,     3,     5,     8,    10,    12,    14,    16,    20,
-      24,    32,    40,    44,    47,    49
+      24,    28,    32,    36,    39,    41
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -438,10 +438,9 @@ static const yytype_int8 yyrhs[] =
 {
       15,     0,    -1,    16,    -1,    16,    17,    -1,    17,    -1,
       18,    -1,    19,    -1,    20,    -1,     3,     5,     9,    -1,
-       4,     5,     9,    -1,     6,     5,    11,     9,    13,     9,
-      12,    -1,     7,     5,    11,     9,    13,     9,    12,    -1,
-       8,     5,    21,    -1,    21,    22,    -1,    22,    -1,    11,
-       9,    13,     9,    12,    -1
+       4,     5,     9,    -1,     6,     5,    22,    -1,     7,     5,
+      22,    -1,     8,     5,    21,    -1,    21,    22,    -1,    22,
+      -1,    11,     9,    13,     9,    12,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -485,7 +484,7 @@ static const yytype_uint8 yyr1[] =
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     1,     2,     1,     1,     1,     1,     3,     3,
-       7,     7,     3,     2,     1,     5
+       3,     3,     3,     2,     1,     5
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -495,31 +494,31 @@ static const yytype_uint8 yydefact[] =
 {
        0,     0,     0,     0,     0,     0,     0,     2,     4,     5,
        6,     7,     0,     0,     0,     0,     0,     1,     3,     8,
-       9,     0,     0,     0,    12,    14,     0,     0,     0,    13,
-       0,     0,     0,     0,     0,     0,    10,    11,    15
+       9,     0,    10,    11,    12,    14,     0,    13,     0,     0,
+      15
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     6,     7,     8,     9,    10,    11,    24,    25
+      -1,     6,     7,     8,     9,    10,    11,    24,    22
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -11
+#define YYPACT_NINF -16
 static const yytype_int8 yypact[] =
 {
-      -3,     1,     2,     3,     4,     5,    11,    -3,   -11,   -11,
-     -11,   -11,    -7,     6,     7,     8,     9,   -11,   -11,   -11,
-     -11,    12,    13,    14,     9,   -11,    -1,     0,    15,   -11,
-      16,    17,    18,    19,    20,    21,   -11,   -11,   -11
+      -1,     3,     5,     6,     7,     8,     4,    -1,   -16,   -16,
+     -16,   -16,     9,    10,    11,    11,    11,   -16,   -16,   -16,
+     -16,    12,   -16,   -16,    11,   -16,     1,   -16,    14,    13,
+     -16
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -11,   -11,   -11,    10,   -11,   -11,   -11,   -11,   -10
+     -16,   -16,   -16,    17,   -16,   -16,   -16,   -16,   -15
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -529,18 +528,16 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       1,     2,    19,     3,     4,     5,    12,    13,    14,    15,
-      16,    17,    30,    31,    29,    20,     0,    18,    21,    22,
-      23,    26,    27,    28,     0,    33,    34,    35,    32,     0,
-       0,    36,    37,    38
+      23,    25,     1,     2,    17,     3,     4,     5,    12,    27,
+      13,    14,    15,    16,    28,     0,     0,     0,    19,    20,
+       0,    26,    21,    29,    18,    30
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     4,     9,     6,     7,     8,     5,     5,     5,     5,
-       5,     0,    13,    13,    24,     9,    -1,     7,    11,    11,
-      11,     9,     9,     9,    -1,     9,     9,     9,    13,    -1,
-      -1,    12,    12,    12
+      15,    16,     3,     4,     0,     6,     7,     8,     5,    24,
+       5,     5,     5,     5,    13,    -1,    -1,    -1,     9,     9,
+      -1,     9,    11,     9,     7,    12
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -549,8 +546,8 @@ static const yytype_uint8 yystos[] =
 {
        0,     3,     4,     6,     7,     8,    15,    16,    17,    18,
       19,    20,     5,     5,     5,     5,     5,     0,    17,     9,
-       9,    11,    11,    11,    21,    22,     9,     9,     9,    22,
-      13,    13,    13,     9,     9,     9,    12,    12,    12
+       9,    11,    22,    22,    21,    22,     9,    22,    13,     9,
+      12
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1436,7 +1433,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1440 "testParser.tab.c"
+#line 1437 "testParser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1652,24 +1649,50 @@ yyreturn:
 
 #line 79 "testParser.y"
 
-void createSparse(char* i,char* j)
+void createSparse(char* rowNo,char* colNO)
 {
 
-  int l,k;
-  int r = atoi(i);
-  int c = atoi(j);
-  printf("r = %d, c=%d",r,c);
-  for(l=0;l<20;++l)
+  int i,j;
+  int row = atoi(rowNo);
+  int column = atoi(colNO);
+  //printf("r = %d, c=%d",r,c);
+  for(i=0;i<20;++i)
   {
-    for(k=0;k<20;++k)
+    for(j=0;j<20;++j)
     {
-      if(l==r && k==c)
-        matrix[l][k] = 1;
-      else
-        matrix[l][k] = 0;
+      if(i==row && j==column)
+        matrix[i][j] = 1;
     }
   }
 
+}
+
+void createEmptyMatrix()
+{
+    int i,j;
+
+    for(i=0;i<20;++i)
+    {
+      for(j=0;j<20;++j)
+        {
+          matrix[i][j] = 0;
+        }
+    }
+}
+
+
+void displayMatrix()
+{
+  int i,j;
+  printf("\nThe matrix is");
+  for(i=0;i<20;++i)
+  {
+    printf("\n");
+    for(j=0;j<20;++j)
+      {
+        printf("%d\t",matrix[i][j]);
+      }
+  }
 }
 
 
@@ -1680,6 +1703,7 @@ void yyerror(const char* s)
 
 int main(int argc, char**argv)
 {
+    createEmptyMatrix();              //This function initialises matrix with 0
     if(argc != 2)
     {
         printf("Incorrect usage. Try ./a.out filename\n");
@@ -1700,15 +1724,7 @@ int main(int argc, char**argv)
     }while(!feof((yyin)));
 
     printf("\nNo. of lines are %d", yylineno);
-
-    printf("\nThe matrix is");
-    int l,k;
-    for(l=0;l<20;++l)
-    {
-      printf("\n");
-      for(k=0;k<20;++k)
-        printf("%d\t",matrix[l][k]);
-    }
+    displayMatrix();
 
 
     fclose(file);
