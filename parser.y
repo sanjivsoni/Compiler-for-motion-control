@@ -47,10 +47,10 @@ LINES               :   LINES LINE                                  {printf("LS 
 
 LINE                :   ASSIGN_INT                                  {printf("P -> AI\n");}
                     |   ASSIGN_COORDINATE                           {printf("P -> AC\n");}
-                    |   ASSIGN_OBSTACLE                             {printf("P -> AO\n");}
+                    |   ASSIGN_OBSTACLE                             {printf("P -> AO \n");}
                     ;
 
-ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %d  %s \n",$1,$3);}
+ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %s  %s \n",$1,$3);}
                     |   COLUMNS EQUALS NUMBER                       {printf("AI -> C=N\n");}
                     ;
 

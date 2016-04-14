@@ -39,42 +39,39 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     INTEGER = 258,
-     ROWS = 259,
-     COLUMNS = 260,
-     COLON = 261,
-     START = 262,
-     END = 263,
-     OBSTACLE = 264,
-     COMMENT = 265,
-     ERROR = 266,
-     POINT = 267
+     ROWS = 258,
+     COLUMNS = 259,
+     EQUALS = 260,
+     START = 261,
+     END = 262,
+     OBSTACLE = 263,
+     NUMBER = 264,
+     COORDINATE = 265
    };
 #endif
 /* Tokens.  */
-#define INTEGER 258
-#define ROWS 259
-#define COLUMNS 260
-#define COLON 261
-#define START 262
-#define END 263
-#define OBSTACLE 264
-#define COMMENT 265
-#define ERROR 266
-#define POINT 267
+#define ROWS 258
+#define COLUMNS 259
+#define EQUALS 260
+#define START 261
+#define END 262
+#define OBSTACLE 263
+#define NUMBER 264
+#define COORDINATE 265
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 8 "parser.y"
-{    int digit;
-            char name;
-            char* id;
-        }
+#line 25 "parser.y"
+{
+    int intValue;
+    char charValue;
+    char* stringValue;
+}
 /* Line 1529 of yacc.c.  */
-#line 78 "parser.tab.h"
+#line 75 "parser.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
