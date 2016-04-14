@@ -9,8 +9,8 @@
 "obstacle"              return OBSTACLE;
 "start"                 return START;
 "end"                   return END;
-[0-9]+                  {yylval.digit = atoi(yytext);return INTEGER;}
-\([0-9]+,[0-9]+\)       {yylval.id = yytext;return POINT;}
+[0-9]+                  {printf(atoi(yytext));return INTEGER;}
+\([0-9]+,[0-9]+\)       {printf(yytext);return POINT;}
 #.*$                    return COMMENT;
 [ \t\n]                   ;
 .                       return ERROR;

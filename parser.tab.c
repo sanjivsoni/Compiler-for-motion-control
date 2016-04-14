@@ -99,7 +99,8 @@
 #include "declaration.h"
 #include<stdio.h>
 int yylex();
-void yyerror(const char *s);
+void yyerror(char *s);
+extern yylineno;
 
 
 /* Enabling traces.  */
@@ -122,13 +123,13 @@ void yyerror(const char *s);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 8 "parser.y"
+#line 9 "parser.y"
 {    int digit;
             char name;
             char* id;
         }
 /* Line 193 of yacc.c.  */
-#line 132 "parser.tab.c"
+#line 133 "parser.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -141,7 +142,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 145 "parser.tab.c"
+#line 146 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -426,8 +427,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    31,    31,    32,    36,    37,    41,    44,    45,    46,
-      47
+       0,    32,    32,    33,    37,    38,    42,    45,    46,    47,
+      48
 };
 #endif
 
@@ -1333,53 +1334,53 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 31 "parser.y"
+#line 32 "parser.y"
     {printf(" E -> HS \n");;}
     break;
 
   case 3:
-#line 32 "parser.y"
+#line 33 "parser.y"
     {printf(" E -> A \n");;}
     break;
 
   case 4:
-#line 36 "parser.y"
-    {printf(" HS -> HS H \n");}
+#line 37 "parser.y"
+    {printf(" HS -> HS H \n");;}
     break;
 
   case 5:
-#line 37 "parser.y"
-    {printf("HS -> H \n");}
+#line 38 "parser.y"
+    {printf("HS -> H \n");;}
     break;
 
   case 6:
-#line 41 "parser.y"
-    {printf(" H -> P \n");}
+#line 42 "parser.y"
+    {printf(" H -> P \n");;}
     break;
 
   case 7:
-#line 44 "parser.y"
-    {printf(" S -> P \n");}
+#line 45 "parser.y"
+    {printf(" S -> P \n");;}
     break;
 
   case 8:
-#line 45 "parser.y"
-    {printf(" E -> P \n");}
+#line 46 "parser.y"
+    {printf(" E -> P \n");;}
     break;
 
   case 9:
-#line 46 "parser.y"
-    {printf(" R -> I \n");}
+#line 47 "parser.y"
+    {printf(" R -> I \n");;}
     break;
 
   case 10:
-#line 47 "parser.y"
-    {printf(" C -> I \n");}
+#line 48 "parser.y"
+    {printf(" C -> I \n");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1383 "parser.tab.c"
+#line 1384 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1593,6 +1594,15 @@ yyreturn:
 }
 
 
-#line 50 "parser.y"
+#line 51 "parser.y"
 
+
+int main(void)
+{
+    return yyparse();
+}
+void yyerror(char *s)
+{
+  fprintf(stderr, "line %d: %s\n", yylineno, s);
+}
 

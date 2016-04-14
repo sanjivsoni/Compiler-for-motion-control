@@ -2,7 +2,8 @@
 #include "declaration.h"
 #include<stdio.h>
 int yylex();
-void yyerror(const char *s);
+void yyerror(char *s);
+extern yylineno;
 %}
 
 %union {    int digit;
@@ -10,7 +11,7 @@ void yyerror(const char *s);
             char* id;
         }
 
-%start EXPRESSION
+%start ASSIGNMENT
 
 %token <digit> INTEGER
 %token ROWS
@@ -24,27 +25,11 @@ void yyerror(const char *s);
 %token<id> POINT
 
 
-%type <id> HURDLES, HURDLE, ASSIGNMENT
+%type <id> HURDLES HURDLE ASSIGNMENT
 
 %%
 
-EXPRESSION      :   HURDLES                 {printf(" E -> HS \n");}
-                |   ASSIGNMENT              {printf(" E -> A \n");}
-                ;
-
-
-HURDLES         :   HURDLES HURDLE          {printf(" HS -> HS H \n")}
-                |   HURDLE                  {printf("HS -> H \n")}
-                ;
-
-
-HURDLE          :   POINT                   {printf(" H -> P \n")}
-                ;
-
-ASSIGNMENT      :   START   ':' POINT       {printf(" S -> P \n")}
-                |   END     ':' POINT       {printf(" E -> P \n")};
-                |   ROWS    ':' INTEGER     {printf(" R -> I \n")}
-                |   COLUMNS ':' INTEGER     {printf(" C -> I \n")};
+ASSIGNMENT      :   INTEGER     {printf(" R -> I \n");}
                 ;
 
 %%
@@ -55,5 +40,5 @@ int main(void)
 }
 void yyerror(char *s)
 {
-    fprintf(stderr, "%s\n",s);
+  fprintf(stderr, "line %d: %s\n", yylineno, s);
 }
