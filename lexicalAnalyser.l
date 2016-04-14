@@ -17,6 +17,7 @@ obstacle              return OBSTACLE;
 start                 return START;
 end                   return END;
 
+
 [0-9]+                  {
                             yylval.stringValue = strdup(yytext);
                             return NUMBER;
@@ -28,6 +29,9 @@ end                   return END;
                         }
 
 [ \t\n]                 ;
+.                       {    printf("Syntax error : Unexpected char \n");
+                             exit(0);
+                        }       
 
 
 %%

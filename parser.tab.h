@@ -64,7 +64,11 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
+<<<<<<< HEAD
 #line 25 "parser.y"
+=======
+#line 26 "parser.y"
+>>>>>>> origin/master
 {
     int intValue;
     char charValue;

@@ -1,5 +1,6 @@
 %{
-  
+
+
   #include<stdio.h>
   #include<stdlib.h>
   #include<string>
@@ -14,7 +15,6 @@
 
 %}
 
-
 // define termminal symbols.
 %token ROWS COLUMNS EQUALS START END OBSTACLE NUMBER COORDINATE
 
@@ -28,12 +28,13 @@
     char* stringValue;
 }
 
+
 // Associate each of the terminal tokens with one of union fields.
 %type <stringValue> NUMBER COORDINATE ROWS COLUMNS START END
 
-
 // Define the starting production
 %start PARSETREE
+
 
 %%
 // First rule is the hishest level rule
@@ -42,12 +43,12 @@
 PARSETREE           :   LINES                                       {printf("P -> LS");}
                     ;
 
-LINES               :   LINES LINE                                  {printf("LS -> LS L");}
-                    |   LINE                                        {printf("LS -> L");}
+LINES               :   LINES LINE                                  {printf("LS -> LS L\n");}
+                    |   LINE                                        {printf("LS -> L\n");}
 
-LINE                :   ASSIGN_INT                                  {printf("P -> AI\n");}
-                    |   ASSIGN_COORDINATE                           {printf("P -> AC\n");}
-                    |   ASSIGN_OBSTACLE                             {printf("P -> AO \n");}
+LINE                :   ASSIGN_INT                                  {printf("L -> AI\n");}
+                    |   ASSIGN_COORDINATE                           {printf("L -> AC\n");}
+                    |   ASSIGN_OBSTACLE                             {printf("L -> AO\n");}
                     ;
 
 ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %s  %s \n",$1,$3);}
@@ -67,6 +68,7 @@ HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS 
 HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");}
 
 
+
 %%
 
 void yyerror(const char* s)
@@ -83,7 +85,7 @@ int main(int argc, char**argv)
     }
 
     FILE* file = fopen(argv[1],"r");
-    if(file == NULL) 
+    if(file == NULL)
     {
         printf("Cannot open %s \n",argv[1]);
         exit(0);
@@ -97,3 +99,4 @@ int main(int argc, char**argv)
 
     fclose(file);
 }
+

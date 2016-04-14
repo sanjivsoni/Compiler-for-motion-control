@@ -92,7 +92,12 @@
 /* Copy the first part of user declarations.  */
 #line 1 "parser.y"
 
+<<<<<<< HEAD
   
+=======
+
+
+>>>>>>> origin/master
   #include<stdio.h>
   #include<stdlib.h>
   #include<string>
@@ -105,6 +110,10 @@
 
   void yyerror(const char*s);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 
 
 /* Enabling traces.  */
@@ -127,14 +136,22 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
+<<<<<<< HEAD
 #line 25 "parser.y"
+=======
+#line 26 "parser.y"
+>>>>>>> origin/master
 {
     int intValue;
     char charValue;
     char* stringValue;
 }
 /* Line 193 of yacc.c.  */
+<<<<<<< HEAD
 #line 138 "parser.tab.c"
+=======
+#line 140 "parser.tab.c"
+>>>>>>> origin/master
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -147,7 +164,11 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
+<<<<<<< HEAD
 #line 151 "parser.tab.c"
+=======
+#line 153 "parser.tab.c"
+>>>>>>> origin/master
 
 #ifdef short
 # undef short
@@ -434,8 +455,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
+<<<<<<< HEAD
        0,    42,    42,    45,    46,    48,    49,    50,    53,    54,
       57,    58,    61,    64,    65,    67
+=======
+       0,    44,    44,    47,    48,    50,    51,    52,    55,    56,
+      59,    60,    63,    66,    67,    69
+>>>>>>> origin/master
 };
 #endif
 
@@ -1347,31 +1373,52 @@ yyreduce:
   switch (yyn)
     {
         case 2:
+<<<<<<< HEAD
 #line 42 "parser.y"
+=======
+#line 44 "parser.y"
+>>>>>>> origin/master
     {printf("P -> LS");;}
     break;
 
   case 3:
+<<<<<<< HEAD
 #line 45 "parser.y"
+=======
+#line 47 "parser.y"
+>>>>>>> origin/master
     {printf("LS -> LS L");;}
     break;
 
   case 4:
+<<<<<<< HEAD
 #line 46 "parser.y"
+=======
+#line 48 "parser.y"
+>>>>>>> origin/master
     {printf("LS -> L");;}
     break;
 
   case 5:
+<<<<<<< HEAD
 #line 48 "parser.y"
+=======
+#line 50 "parser.y"
+>>>>>>> origin/master
     {printf("P -> AI\n");;}
     break;
 
   case 6:
+<<<<<<< HEAD
 #line 49 "parser.y"
+=======
+#line 51 "parser.y"
+>>>>>>> origin/master
     {printf("P -> AC\n");;}
     break;
 
   case 7:
+<<<<<<< HEAD
 #line 50 "parser.y"
     {printf("P -> AO \n");;}
     break;
@@ -1383,42 +1430,83 @@ yyreduce:
 
   case 9:
 #line 54 "parser.y"
+=======
+#line 52 "parser.y"
+    {printf("P -> AO\n");;}
+    break;
+
+  case 8:
+#line 55 "parser.y"
+    {printf("AI -> R=N %d  %s \n",(yyvsp[(1) - (3)].stringValue),(yyvsp[(3) - (3)].stringValue));;}
+    break;
+
+  case 9:
+#line 56 "parser.y"
+>>>>>>> origin/master
     {printf("AI -> C=N\n");;}
     break;
 
   case 10:
+<<<<<<< HEAD
 #line 57 "parser.y"
+=======
+#line 59 "parser.y"
+>>>>>>> origin/master
     {printf("AC -> S=C\n");;}
     break;
 
   case 11:
+<<<<<<< HEAD
 #line 58 "parser.y"
+=======
+#line 60 "parser.y"
+>>>>>>> origin/master
     {printf("AC -> E=C\n");;}
     break;
 
   case 12:
+<<<<<<< HEAD
 #line 61 "parser.y"
+=======
+#line 63 "parser.y"
+>>>>>>> origin/master
     {printf("AO -> O=HS\n");;}
     break;
 
   case 13:
+<<<<<<< HEAD
 #line 64 "parser.y"
+=======
+#line 66 "parser.y"
+>>>>>>> origin/master
     {printf("HS -> HS H\n");;}
     break;
 
   case 14:
+<<<<<<< HEAD
 #line 65 "parser.y"
+=======
+#line 67 "parser.y"
+>>>>>>> origin/master
     {printf("HS -> H\n");;}
     break;
 
   case 15:
+<<<<<<< HEAD
 #line 67 "parser.y"
+=======
+#line 69 "parser.y"
+>>>>>>> origin/master
     {printf("H -> C\n");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
+<<<<<<< HEAD
 #line 1422 "parser.tab.c"
+=======
+#line 1424 "parser.tab.c"
+>>>>>>> origin/master
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1632,8 +1720,41 @@ yyreturn:
 }
 
 
+<<<<<<< HEAD
 #line 70 "parser.y"
+=======
+#line 73 "parser.y"
 
+
+void yyerror(const char* s)
+{
+    printf("Parse Error Message: %s\n",s);
+}
+>>>>>>> origin/master
+
+int main(int argc, char**argv)
+{
+    if(argc != 2)
+    {
+        printf("Incorrect usage. Try ./a.out filename\n");
+        exit(0);
+    }
+
+    FILE* file = fopen(argv[1],"r");
+    if(file == NULL)
+    {
+        printf("Cannot open %s \n",argv[1]);
+        exit(0);
+    }
+
+    yyin = file;
+
+    do{
+        yyparse();
+    }while(!feof((yyin)));
+
+    fclose(file);
+}
 
 void yyerror(const char* s)
 {
