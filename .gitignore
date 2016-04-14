@@ -3,5 +3,3 @@ lex.yy.c
 parser.tab.c
 parser.tab.h
 motionController
-.gitignore
-parser.y
