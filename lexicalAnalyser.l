@@ -16,8 +16,7 @@ using namespace std;
 "obstacle"              return OBSTACLE;
 "start"                 return START;
 "end"                   return END;
-#.*$                    return COMMENT;
-.                       return ERROR;
+
 [0-9]+                  {
                             //yylval.stringValue = strdup(yytext);
                             return NUMBER;
