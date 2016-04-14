@@ -11,7 +11,6 @@
   extern "C" FILE *yyin;
 
   void yyerror(const char*s);
-
 %}
 
 
@@ -31,7 +30,6 @@
 // Associate each of the terminal tokens with one of union fields.
 %type <stringValue> NUMBER COORDINATE ROWS COLUMNS START END
 
-
 // Define the starting production
 %start PARSETREE
 
@@ -42,15 +40,15 @@
 PARSETREE           :   LINES                                       {printf("P -> LS");}
                     ;
 
-LINES               :   LINES LINE                                  {printf("LS -> LS L");}
-                    |   LINE                                        {printf("LS -> L");}
+LINES               :   LINES LINE                                  {printf("LS -> LS L\n");}
+                    |   LINE                                        {printf("LS -> L\n");}
 
-LINE                :   ASSIGN_INT                                  {printf("P -> AI\n");}
-                    |   ASSIGN_COORDINATE                           {printf("P -> AC\n");}
-                    |   ASSIGN_OBSTACLE                             {printf("P -> AO\n");}
+LINE                :   ASSIGN_INT                                  {printf("L -> AI\n");}
+                    |   ASSIGN_COORDINATE                           {printf("L -> AC\n");}
+                    |   ASSIGN_OBSTACLE                             {printf("L -> AO\n");}
                     ;
 
-ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %d  %s \n",$1,$3);}
+ASSIGN_INT          :   ROWS EQUALS NUMBER                          {printf("AI -> R=N %s  %s \n",$1,$3);}
                     |   COLUMNS EQUALS NUMBER                       {printf("AI -> C=N\n");}
                     ;
 
@@ -97,3 +95,4 @@ int main(int argc, char**argv)
 
     fclose(file);
 }
+

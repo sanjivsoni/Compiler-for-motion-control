@@ -11,24 +11,25 @@ using namespace std;
 
 %%
 =                       return EQUALS;
-"rows"                  return ROWS;
-"columns"               return COLUMNS;
-"obstacle"              return OBSTACLE;
-"start"                 return START;
-"end"                   return END;
-<<<<<<< HEAD
+rows                    return ROWS;
+columns                 return COLUMNS;
+obstacle                return OBSTACLE;
+start                   return START;
+END                     return END;
 [0-9]+                  {
-                            //yylval.stringValue = strdup(yytext);
+                            yylval.stringValue = strdup(yytext);
                             return NUMBER;
                         }
 
 \([0-9]+,[0-9]+\)       {
-                            //yylval.stringValue = strdup(yytext);
+                            yylval.stringValue = strdup(yytext);
                             return COORDINATE;
                         }
 
 [ \t\n]                 ;
-
+.                       {    printf("Syntax error : Unexpected char \n");
+                             exit(0);
+                        }       
 
 %%
 void yyerror(char *str)
