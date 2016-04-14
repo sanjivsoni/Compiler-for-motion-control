@@ -1,4 +1,6 @@
 
+#include "dijkstra.h"
+
 int matrix[20][20] = {0};
 int obstaclesBuffer[100][100];
 char *rows, *columns, *coordinateX, *coordinateY ;
@@ -43,4 +45,7 @@ void displayMatrix()
         printf("%d\t",matrix[i][j]);
       }
   }
+
+  int path = obstacles - (intRows * intColumns);
+  startDijkstra(matrix, intRows,intColumns, path);
 }
