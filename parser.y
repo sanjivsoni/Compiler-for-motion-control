@@ -10,6 +10,7 @@
   extern "C" int yylex();
   extern "C" int yyparse();
   extern "C" FILE *yyin;
+  extern int yylineno;
 
   void yyerror(const char*s);
 
@@ -97,6 +98,7 @@ int main(int argc, char**argv)
         yyparse();
     }while(!feof((yyin)));
 
+    printf("\nNo. of lines are %d", yylineno);
+
     fclose(file);
 }
-

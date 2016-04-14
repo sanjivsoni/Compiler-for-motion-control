@@ -3,6 +3,3 @@ rows = 10
 columns = 20
 start = (2,3)
 end = (2,4)
-
-
-

@@ -28,10 +28,14 @@ end                   return END;
                             return COORDINATE;
                         }
 
-[ \t\n]                 ;
+\n                      {
+                          yylineno++;
+                        }
+
+[ \t]                 ;
 .                       {    printf("Syntax error : Unexpected char \n");
                              exit(0);
-                        }       
+                        }
 
 
 %%
