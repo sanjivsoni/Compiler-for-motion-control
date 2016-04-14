@@ -74,14 +74,14 @@ HINDERENCE          :   COORDINATE                                  {printf("H -
 
 void yyerror(const char* s)
 {
-    printf("Parse Error Message: %s\n",s);
+    printf("\nParse Error in line %d Message: %s\n",yylineno,s);
 }
 
 int main(int argc, char**argv)
 {
     if(argc != 2)
     {
-        printf("Incorrect usage. Try ./a.out filename\n");
+        printf("\nIncorrect usage. Try ./a.out filename\n");
         exit(0);
     }
 
