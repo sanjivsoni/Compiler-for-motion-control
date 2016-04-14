@@ -1,5 +1,6 @@
 %{
-  
+
+
   #include<stdio.h>
   #include<stdlib.h>
   #include<string>
@@ -11,8 +12,8 @@
   extern "C" FILE *yyin;
 
   void yyerror(const char*s);
-%}
 
+%}
 
 // define termminal symbols.
 %token ROWS COLUMNS EQUALS START END OBSTACLE NUMBER COORDINATE
@@ -27,11 +28,13 @@
     char* stringValue;
 }
 
+
 // Associate each of the terminal tokens with one of union fields.
 %type <stringValue> NUMBER COORDINATE ROWS COLUMNS START END
 
 // Define the starting production
 %start PARSETREE
+
 
 %%
 // First rule is the hishest level rule
@@ -65,6 +68,7 @@ HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS 
 HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");}
 
 
+
 %%
 
 void yyerror(const char* s)
@@ -81,7 +85,7 @@ int main(int argc, char**argv)
     }
 
     FILE* file = fopen(argv[1],"r");
-    if(file == NULL) 
+    if(file == NULL)
     {
         printf("Cannot open %s \n",argv[1]);
         exit(0);

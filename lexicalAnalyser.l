@@ -16,6 +16,7 @@ columns                 return COLUMNS;
 obstacle                return OBSTACLE;
 start                   return START;
 END                     return END;
+
 [0-9]+                  {
                             yylval.stringValue = strdup(yytext);
                             return NUMBER;
@@ -30,6 +31,7 @@ END                     return END;
 .                       {    printf("Syntax error : Unexpected char \n");
                              exit(0);
                         }       
+
 
 %%
 void yyerror(char *str)

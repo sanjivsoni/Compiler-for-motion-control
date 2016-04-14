@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "symbolTable.h"
+#include "parser.tab.h"
 
 extern int yylex();
 extern yylineno;
@@ -17,8 +17,4 @@ int main(void)
   }
 
   return 0;
-}
-int yywrap(void)
-{
-  return 1;
 }
