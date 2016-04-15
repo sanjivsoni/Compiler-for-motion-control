@@ -7,10 +7,32 @@ int col_1D_matrix[20] = {0};
 int obstaclesBuffer[100][100];
 int adjacency[100][100]= {0};
 int path =0 ;
-char *rows, *columns, *coordinateX, *coordinateY ;
+char *rows, *columns, *coordinateX, *coordinateY;
+int startCoordinateX, startCoordinateY,endCoordinateX,endCoordinateY;
+int startPoint,endPoint;
 
 
 int obstacles = 0;
+
+void findEndPoints(char* x,char*y, int type)
+{
+  int intRows = atoi(rows);
+  if(type == 0)
+  {
+    startCoordinateX = atoi(x);
+    startCoordinateY = atoi(y);
+    startPoint = startCoordinateX*intRows + startCoordinateY;
+    printf("\ns: %d  e: %d\n",startCoordinateX,startCoordinateY );
+  }
+
+  else if(type == 1)
+  {
+    endCoordinateX = atoi(x);
+    endCoordinateY = atoi(y);
+    endPoint = endCoordinateX*intRows + endCoordinateY;
+    printf("\ns: %d  e: %d\n",endCoordinateX,endCoordinateY );
+  }
+}
 
 void storeObstacles(char* x, char *y)
 {
@@ -39,7 +61,14 @@ void createSparse()
 
 }
 
+void printEnds()
+{
+  int intRows = atoi(rows);
+  startPoint = startCoordinateX*intRows + startCoordinateY;
+  endPoint = endCoordinateX*intRows + endCoordinateY;
 
+  //printf("start: %d    end: %d\n",start,end );
+}
 
 void findedge(int row,int col)
 {
@@ -150,6 +179,6 @@ void displayMatrix()
 path = (intRows * intColumns) - obstacles;
 printf("\n");
 findedge(0,0);
-startDijkstra(adjacency, intRows*intColumns);
+startDijkstra(adjacency, intRows*intColumns,startPoint);
 printAdjacency();
 }

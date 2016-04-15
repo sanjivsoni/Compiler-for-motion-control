@@ -79,10 +79,10 @@ ASSIGN_COORDINATE   : ASSIGN_START ASSIGN_END
                     | ASSIGN_END ASSIGN_START
                     ;
 
-ASSIGN_START        :  START EQUALS COORDINATE                     {printf("AC -> S=C\n");}
+ASSIGN_START        :  START EQUALS COORDINATE                     {printf("AC -> S=C\n");findEndPoints(coordinateX,coordinateY,0);}
                     ;
 
-ASSIGN_END          :  END EQUALS COORDINATE                       {printf("AC -> E=C\n");}
+ASSIGN_END          :  END EQUALS COORDINATE                       {printf("AC -> E=C\n");findEndPoints(coordinateX,coordinateY,1);}
                     ;
 
 %%
@@ -117,6 +117,7 @@ int main(int argc, char**argv)
     printf("\nNo. of lines are %d", yylineno);
     createSparse();
     displayMatrix();
+    printEnds();
 
     fclose(file);
 }

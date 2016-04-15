@@ -1407,12 +1407,12 @@ yyreduce:
 
   case 16:
 #line 82 "testParser.y"
-    {printf("AC -> S=C\n");;}
+    {printf("AC -> S=C\n");findEndPoints(coordinateX,coordinateY,0);;}
     break;
 
   case 17:
 #line 85 "testParser.y"
-    {printf("AC -> E=C\n");;}
+    {printf("AC -> E=C\n");findEndPoints(coordinateX,coordinateY,1);;}
     break;
 
 
@@ -1664,6 +1664,7 @@ int main(int argc, char**argv)
     printf("\nNo. of lines are %d", yylineno);
     createSparse();
     displayMatrix();
+    printEnds();
 
     fclose(file);
 }

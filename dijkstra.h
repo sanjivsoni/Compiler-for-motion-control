@@ -281,7 +281,7 @@ void dijkstra(struct Graph* graph, int src)
 
 
 // Driver program to test above functions
-void startDijkstra(int A[][100],int nodes)
+void startDijkstra(int A[][100],int nodes,int start)
 {
     // create the graph given in above fugure
 
@@ -296,7 +296,8 @@ void startDijkstra(int A[][100],int nodes)
           {
             //printf("Found Edge %d -> %d",i,j);
             addEdge(graph, i , j, 1);
-          printf("Edge added %d -> %d\n",i,j);}
+          //printf("Edge added %d -> %d\n",i,j);
+        }
       }
     }
 
@@ -316,8 +317,8 @@ void startDijkstra(int A[][100],int nodes)
     addEdge(graph, 6, 7, 1);
     addEdge(graph, 6, 8, 6);
     addEdge(graph, 7, 8, 7);*/
-
-    dijkstra(graph, 0);
+    printf("\nStart Dijkstra: %d\n",start );
+    dijkstra(graph, start);
 
 
 }
