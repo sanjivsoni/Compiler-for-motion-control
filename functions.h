@@ -43,50 +43,62 @@ void createSparse()
 
 void findedge(int row,int col)
 {
-          int intRows = atoi(rows);
-          int intColumns = atoi(columns);
+    int intRows = atoi(rows);
+    int intColumns = atoi(columns);
 
-
+    //To Find Right Edge
     if(col+1<intColumns && row_1D_matrix[row*intRows + (col+1)] == 0 && row_1D_matrix[row*intRows + col]==0)
      {
+       //Check if the edge exists already, if not proceed
        if(adjacency[row*intRows + (col+1)][row*intRows + col] != 1)
        {
+         //Mark both directions in adjacency matrix because if a edge exists
+         //from Point 1 to 2, there exists a edge from 2 to 1.
          adjacency[row*intRows + (col+1)][row*intRows + col] = 1;
          adjacency[row*intRows + col][row*intRows + (col+1)] = 1;
-         printf("Found right edge(%d,%d)\n",row,col);
+         //printf("Found right edge(%d,%d)\n",row,col);
          findedge(row,col+1);
        }
      }
-
+     //To Find Bottom Edge
    if(row + 1<intRows && row_1D_matrix[(row+1)*intRows + col]==0 && row_1D_matrix[row*intRows + col]==0)
     {
+      //Check if the edge exists already, if not proceed
       if(adjacency[(row+1)*intRows + col][row*intRows + col] != 1)
       {
+        //Mark both directions in adjacency matrix because if a edge exists
+        //from Point 1 to 2, there exists a edge from 2 to 1.
       adjacency[(row+1)*intRows + col][row*intRows + col] = 1;
       adjacency[row*intRows + col][(row+1)*intRows + col] = 1;
-      printf("Found bottom edge(%d,%d)\n",row,col);
+      //printf("Found bottom edge(%d,%d)\n",row,col);
       findedge(row+1,col);
     }
     }
-
-    if(col-1>0 && row_1D_matrix[row*intRows + (col-1)]==0 && row_1D_matrix[row*intRows + col]==0)
+    //To Find Left Edge
+    if(col-1>=0 && row_1D_matrix[row*intRows + (col-1)]==0 && row_1D_matrix[row*intRows + col]==0)
       {
+        //Check if the edge exists already, if not proceed
         if(adjacency[row*intRows + (col-1)][row*intRows + col] != 1)
         {
+          //Mark both directions in adjacency matrix because if a edge exists
+          //from Point 1 to 2, there exists a edge from 2 to 1.
         adjacency[row*intRows + (col-1)][row*intRows + col] = 1;
         adjacency[row*intRows + col][row*intRows + (col-1)] = 1;
-        printf("Found left edge(%d,%d)\n",row,col);
+        //printf("Found left edge(%d,%d)\n",row,col);
         findedge(row,col-1);
         }
       }
-
-    if(row-1>0 && row_1D_matrix[(row-1)*intRows + col]==0 &&row_1D_matrix[row*intRows + col]==0)
+      //To Find Top Edge
+    if(row-1>=0 && row_1D_matrix[(row-1)*intRows + col]==0 &&row_1D_matrix[row*intRows + col]==0)
       {
+        //Check if the edge exists already, if not proceed
         if(adjacency[(row-1)*intRows + col][row*intRows + col] != 1)
         {
+          //Mark both directions in adjacency matrix because if a edge exists
+          //from Point 1 to 2, there exists a edge from 2 to 1.
           adjacency[(row-1)*intRows + col][row*intRows + col] = 1;
           adjacency[row*intRows + col][(row-1)*intRows + col] = 1;
-          printf("Found top edge(%d,%d)\n",row,col);
+          //printf("Found top edge(%d,%d)\n",row,col);
           findedge(row-1,col);
         }
       }
