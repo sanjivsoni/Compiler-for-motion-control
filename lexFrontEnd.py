@@ -8,11 +8,12 @@ root.maxsize(675,415)
 
 
 def  serveParse():
-    subprocess.call(['.//Users/abhisheksachdeva/Desktop/Compiler-for-motion-control/Makefile'])
+    subprocess.call(['make motionController'], shell=True)
 
 def serveMake(rowEntry,colEntry,obstacleEntry,startEntry,endEntry):
     fileObj=open('/Users/abhisheksachdeva/Desktop/Compiler-for-motion-control/config.in','r+')
     fileObj.seek(0)
+    fileObj.truncate()
     fileObj.write("columns = ")
     fileObj.write(str(colEntry.get()))
     fileObj.write("\nrows = ")
@@ -23,6 +24,9 @@ def serveMake(rowEntry,colEntry,obstacleEntry,startEntry,endEntry):
     fileObj.write(str(startEntry.get()))
     fileObj.write("\nend = ")
     fileObj.write(str(endEntry.get()))
+    
+    
+    
 def window():
 
     label = tk.Label( text="Welcome to Compiler Motion Control", font=("Helvetica",28))
@@ -57,7 +61,7 @@ def window():
     make.place(x=190, y=320)
     
     parse=tk.Button(text="Generate Path", font=("Helvetica",16) , command=lambda: serveParse())
-    parse.place(x=270, y=320)
+    parse.place(x=300, y=320)
 
 
 window()
