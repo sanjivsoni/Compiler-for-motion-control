@@ -46,6 +46,10 @@ void findedge(int row,int col)
     int intRows = atoi(rows);
     int intColumns = atoi(columns);
 
+    //Because each point can be reached form itself.
+    if(row_1D_matrix[row*intRows + col]==0)
+      adjacency[row*intRows + col][row*intRows + col] = 1;
+
     //To Find Right Edge
     if(col+1<intColumns && row_1D_matrix[row*intRows + (col+1)] == 0 && row_1D_matrix[row*intRows + col]==0)
      {
@@ -60,6 +64,7 @@ void findedge(int row,int col)
          findedge(row,col+1);
        }
      }
+
      //To Find Bottom Edge
    if(row + 1<intRows && row_1D_matrix[(row+1)*intRows + col]==0 && row_1D_matrix[row*intRows + col]==0)
     {
@@ -72,8 +77,9 @@ void findedge(int row,int col)
       adjacency[row*intRows + col][(row+1)*intRows + col] = 1;
       //printf("Found bottom edge(%d,%d)\n",row,col);
       findedge(row+1,col);
+      }
     }
-    }
+
     //To Find Left Edge
     if(col-1>=0 && row_1D_matrix[row*intRows + (col-1)]==0 && row_1D_matrix[row*intRows + col]==0)
       {
@@ -88,6 +94,7 @@ void findedge(int row,int col)
         findedge(row,col-1);
         }
       }
+
       //To Find Top Edge
     if(row-1>=0 && row_1D_matrix[(row-1)*intRows + col]==0 &&row_1D_matrix[row*intRows + col]==0)
       {
