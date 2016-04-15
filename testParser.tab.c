@@ -1365,59 +1365,39 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-#line 48 "testParser.y"
-    {printf("LS -> L\n");;}
-    break;
-
-  case 3:
-#line 50 "testParser.y"
-    {printf("L -> AI\n");;}
-    break;
-
-  case 6:
+        case 6:
 #line 57 "testParser.y"
-    {printf("rows");rows = (yyvsp[(3) - (3)].stringValue);;}
+    {rows = (yyvsp[(3) - (3)].stringValue);;}
     break;
 
   case 7:
 #line 60 "testParser.y"
-    {printf("columns");columns = (yyvsp[(3) - (3)].stringValue);;}
-    break;
-
-  case 10:
-#line 68 "testParser.y"
-    {printf("HS -> HS H\n");;}
-    break;
-
-  case 11:
-#line 69 "testParser.y"
-    {printf("HS -> H\n");;}
+    {columns = (yyvsp[(3) - (3)].stringValue);;}
     break;
 
   case 12:
 #line 72 "testParser.y"
-    {printf("H -> C\n");storeObstacles(coordinateX,coordinateY);;}
+    {storeObstacles(coordinateX,coordinateY);;}
     break;
 
   case 13:
 #line 75 "testParser.y"
-    {printf("C -> (%s,%s)\n",(yyvsp[(2) - (5)].stringValue),(yyvsp[(4) - (5)].stringValue));coordinateX = (yyvsp[(2) - (5)].stringValue); coordinateY = (yyvsp[(4) - (5)].stringValue); ;}
+    {coordinateX = (yyvsp[(2) - (5)].stringValue); coordinateY = (yyvsp[(4) - (5)].stringValue); ;}
     break;
 
   case 16:
 #line 82 "testParser.y"
-    {printf("AC -> S=C\n");findEndPoints(coordinateX,coordinateY,0);;}
+    {findEndPoints(coordinateX,coordinateY,0);;}
     break;
 
   case 17:
 #line 85 "testParser.y"
-    {printf("AC -> E=C\n");findEndPoints(coordinateX,coordinateY,1);;}
+    {findEndPoints(coordinateX,coordinateY,1);;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1421 "testParser.tab.c"
+#line 1401 "testParser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1661,10 +1641,11 @@ int main(int argc, char**argv)
         yyparse();
     }while(!feof((yyin)));
 
-    printf("\nNo. of lines are %d", yylineno);
+    //printf("\nNo. of lines are %d", yylineno);
     createSparse();
-    displayMatrix();
-    printEnds();
+    findPath();
+    //displayMatrix();
+    //printEnds();
 
     fclose(file);
 }

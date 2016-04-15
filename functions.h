@@ -3,7 +3,6 @@
 
 int matrix[20][20] = {0};
 int row_1D_matrix[20] = {0};
-int col_1D_matrix[20] = {0};
 int obstaclesBuffer[100][100];
 int adjacency[100][100]= {0};
 int path =0 ;
@@ -22,7 +21,7 @@ void findEndPoints(char* x,char*y, int type)
     startCoordinateX = atoi(x);
     startCoordinateY = atoi(y);
     startPoint = startCoordinateX*intRows + startCoordinateY;
-    printf("\ns: %d  e: %d\n",startCoordinateX,startCoordinateY );
+    //printf("\ns: %d  e: %d\n",startCoordinateX,startCoordinateY );
   }
 
   else if(type == 1)
@@ -30,7 +29,7 @@ void findEndPoints(char* x,char*y, int type)
     endCoordinateX = atoi(x);
     endCoordinateY = atoi(y);
     endPoint = endCoordinateX*intRows + endCoordinateY;
-    printf("\ns: %d  e: %d\n",endCoordinateX,endCoordinateY );
+    //printf("\ns: %d  e: %d\n",endCoordinateX,endCoordinateY );
   }
 }
 
@@ -55,7 +54,7 @@ void createSparse()
     colNo = obstaclesBuffer[k][1];
     row_1D_matrix[rowNo*intRows + colNo] = 1;
     //col_1D_matrix[rowNo + colNo*intColumns] = 1;
-    matrix[rowNo][colNo] = 1;
+    //matrix[rowNo][colNo] = 1;
     k++;
   }
 
@@ -90,7 +89,7 @@ void findedge(int row,int col)
          //from Point 1 to 2, there exists a edge from 2 to 1.
          adjacency[row*intRows + (col+1)][row*intRows + col] = 1;
          adjacency[row*intRows + col][row*intRows + (col+1)] = 1;
-         printf("Found right edge(%d,%d)\n",row,col);
+         //printf("Found right edge(%d,%d)\n",row,col);
          findedge(row,col+1);
        }
      }
@@ -105,7 +104,7 @@ void findedge(int row,int col)
         //from Point 1 to 2, there exists a edge from 2 to 1.
       adjacency[(row+1)*intRows + col][row*intRows + col] = 1;
       adjacency[row*intRows + col][(row+1)*intRows + col] = 1;
-      printf("Found bottom edge(%d,%d)\n",row,col);
+      //printf("Found bottom edge(%d,%d)\n",row,col);
       findedge(row+1,col);
       }
     }
@@ -120,7 +119,7 @@ void findedge(int row,int col)
           //from Point 1 to 2, there exists a edge from 2 to 1.
         adjacency[row*intRows + (col-1)][row*intRows + col] = 1;
         adjacency[row*intRows + col][row*intRows + (col-1)] = 1;
-        printf("Found left edge(%d,%d)\n",row,col);
+        //printf("Found left edge(%d,%d)\n",row,col);
         findedge(row,col-1);
         }
       }
@@ -135,7 +134,7 @@ void findedge(int row,int col)
           //from Point 1 to 2, there exists a edge from 2 to 1.
           adjacency[(row-1)*intRows + col][row*intRows + col] = 1;
           adjacency[row*intRows + col][(row-1)*intRows + col] = 1;
-          printf("Found top edge(%d,%d)\n",row,col);
+          //printf("Found top edge(%d,%d)\n",row,col);
           findedge(row-1,col);
         }
       }
@@ -172,13 +171,17 @@ void displayMatrix()
     printf("\n");
     for(j=0;j<intColumns;j++)
     printf("%d  ",matrix[i][j] );
-
-
+  }
 }
 
-path = (intRows * intColumns) - obstacles;
-printf("\n");
-findedge(0,0);
-startDijkstra(adjacency, intRows*intColumns,startPoint);
-printAdjacency();
+void findPath()
+{
+  int intRows = atoi(rows);
+  int intColumns = atoi(columns);
+  int nodes = intRows * intColumns;
+  printf("\n");
+  findedge(0,0);
+  startDijkstra(adjacency,nodes,startPoint,endPoint);
+  //printf("\nAdjacency Matrix" );
+  //printAdjacency();
 }

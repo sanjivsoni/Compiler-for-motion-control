@@ -61,9 +61,9 @@ void addEdge(struct Graph* graph, int src, int dest, int weight)
     graph->array[src].head = newNode;
 
     // Since graph is undirected, add an edge from dest to src also
-    newNode = newAdjListNode(src, weight);
-    newNode->next = graph->array[dest].head;
-    graph->array[dest].head = newNode;
+    //newNode = newAdjListNode(src, weight);
+    //newNode->next = graph->array[dest].head;
+    //graph->array[dest].head = newNode;
 }
 
 // Structure to represent a min heap node
@@ -219,12 +219,43 @@ void printArr(int dist[], int n)
         printf("%d \t\t %d\n", i, dist[i]);
 }
 
+// Function to print shortest path from source to j
+// using parent array
+void printPath(int parent[], int j)
+{
+    // Base Case : If j is source
+    if (parent[j]==-1)
+        return;
+
+    printPath(parent, parent[j]);
+
+    printf("%d ", j);
+}
+
+// A utility function to print the constructed distance
+// array
+void printSolution(int dist[], int V, int parent[],int src,int dest)
+{
+    if(dist[dest]==INT_MAX)
+    {
+      printf("\nPath doesn't exists\n" );
+    }
+    else
+    {
+      printf("\nVertex     Distance     Path \n");
+      printf("\n%d -> %d      %d           %d ", src, dest, dist[dest], src);
+      printPath(parent, dest);
+      printf("\n");
+    }
+}
+
 // The main function that calulates distances of shortest paths from src to all
 // vertices. It is a O(ELogV) function
-void dijkstra(struct Graph* graph, int src)
+void dijkstra(struct Graph* graph, int src,int dest)
 {
     int V = graph->V;// Get the number of vertices in graph
     int dist[V];      // dist values used to pick minimum weight edge in cut
+    int parent[V];
 
     // minHeap represents set E
     struct MinHeap* minHeap = createMinHeap(V);
@@ -235,12 +266,14 @@ void dijkstra(struct Graph* graph, int src)
         dist[v] = INT_MAX;
         minHeap->array[v] = newMinHeapNode(v, dist[v]);
         minHeap->pos[v] = v;
+        parent[v] = -1;
     }
 
     // Make dist value of src vertex as 0 so that it is extracted first
     minHeap->array[src] = newMinHeapNode(src, dist[src]);
     minHeap->pos[src]   = src;
     dist[src] = 0;
+
     decreaseKey(minHeap, src, dist[src]);
 
     // Initially size of min heap is equal to V
@@ -266,59 +299,43 @@ void dijkstra(struct Graph* graph, int src)
             if (isInMinHeap(minHeap, v) && dist[u] != INT_MAX &&
                                           pCrawl->weight + dist[u] < dist[v])
             {
+
+                parent[v] = u;
                 dist[v] = dist[u] + pCrawl->weight;
 
                 // update distance value in min heap also
                 decreaseKey(minHeap, v, dist[v]);
+
             }
             pCrawl = pCrawl->next;
         }
     }
 
     // print the calculated shortest distances
-    printArr(dist, V);
+    //printArr(dist, V);
+    printSolution(dist, V, parent,src,dest);
 }
 
 
 // Driver program to test above functions
-void startDijkstra(int A[][100],int nodes,int start)
+void startDijkstra(int A[][100],int nodes,int start,int end)
 {
     // create the graph given in above fugure
 
     int i,j;
+      // create the graph
     struct Graph* graph = createGraph(nodes);
-    //printf("rows %d columns %d\n",x,y );
     for(i=0;i<nodes;++i)
     {
       for(j=0;j<nodes;++j)
       {
         if(A[i][j] == 1)
-          {
-            //printf("Found Edge %d -> %d",i,j);
             addEdge(graph, i , j, 1);
-          //printf("Edge added %d -> %d\n",i,j);
-        }
       }
     }
 
-  /*  int V = 9;
-    struct Graph* graph = createGraph(V);
-    addEdge(graph, 0, 1, 4);
-    addEdge(graph, 0, 7, 8);
-    addEdge(graph, 1, 2, 8);
-    addEdge(graph, 1, 7, 11);
-    addEdge(graph, 2, 3, 7);
-    addEdge(graph, 2, 8, 2);
-    addEdge(graph, 2, 5, 4);
-    addEdge(graph, 3, 4, 9);
-    addEdge(graph, 3, 5, 14);
-    addEdge(graph, 4, 5, 10);
-    addEdge(graph, 5, 6, 2);
-    addEdge(graph, 6, 7, 1);
-    addEdge(graph, 6, 8, 6);
-    addEdge(graph, 7, 8, 7);*/
-    printf("\nStart Dijkstra: %d\n",start );
-    dijkstra(graph, start);
+    printf("\nStart Dijkstra\n" );
+    dijkstra(graph, start, end);
 
 
 }

@@ -45,19 +45,19 @@
 
 
 
-PARSETREE           :   LINE                                      {printf("LS -> L\n");}
+PARSETREE           :   LINE                                      //{printf("LS -> L\n");}
 
-LINE                :   DEFINE_LIMIT ASSIGN_OBSTACLE ASSIGN_COORDINATE                 {printf("L -> AI\n");}
+LINE                :   DEFINE_LIMIT ASSIGN_OBSTACLE ASSIGN_COORDINATE                 //{printf("L -> AI\n");}
                     ;
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
                     |   ASSIGN_COLUMN ASSIGN_ROW
 
 
-ASSIGN_ROW          :   ROWS EQUALS NUMBER                       {printf("rows");rows = $3;}
+ASSIGN_ROW          :   ROWS EQUALS NUMBER                       {rows = $3;}
                     ;
 
-ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER                    {printf("columns");columns = $3;}
+ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER                    {columns = $3;}
                     ;
 
 
@@ -65,24 +65,24 @@ ASSIGN_OBSTACLE     :   OBSTACLE EQUALS HINDERENCES
                     |  /* Obstacles Absent */
                     ;
 
-HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS -> HS H\n");}
-                    |   HINDERENCE                                  {printf("HS -> H\n");}
+HINDERENCES         :   HINDERENCES HINDERENCE                      //{printf("HS -> HS H\n");}
+                    |   HINDERENCE                                  //{printf("HS -> H\n");}
                     ;
 
-HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");storeObstacles(coordinateX,coordinateY);}
+HINDERENCE          :   COORDINATE                                  {storeObstacles(coordinateX,coordinateY);}
                     ;
 
-COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN           {printf("C -> (%s,%s)\n",$2,$4);coordinateX = $2; coordinateY = $4; }
+COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN           {coordinateX = $2; coordinateY = $4; }
                     ;
 
 ASSIGN_COORDINATE   : ASSIGN_START ASSIGN_END
                     | ASSIGN_END ASSIGN_START
                     ;
 
-ASSIGN_START        :  START EQUALS COORDINATE                     {printf("AC -> S=C\n");findEndPoints(coordinateX,coordinateY,0);}
+ASSIGN_START        :  START EQUALS COORDINATE                     {findEndPoints(coordinateX,coordinateY,0);}
                     ;
 
-ASSIGN_END          :  END EQUALS COORDINATE                       {printf("AC -> E=C\n");findEndPoints(coordinateX,coordinateY,1);}
+ASSIGN_END          :  END EQUALS COORDINATE                       {findEndPoints(coordinateX,coordinateY,1);}
                     ;
 
 %%
@@ -114,10 +114,11 @@ int main(int argc, char**argv)
         yyparse();
     }while(!feof((yyin)));
 
-    printf("\nNo. of lines are %d", yylineno);
+    //printf("\nNo. of lines are %d", yylineno);
     createSparse();
-    displayMatrix();
-    printEnds();
+    findPath();
+    //displayMatrix();
+    //printEnds();
 
     fclose(file);
 }
