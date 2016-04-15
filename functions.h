@@ -48,7 +48,8 @@ void findedge(int row,int col)
 
     //Because each point can be reached form itself.
     if(row_1D_matrix[row*intRows + col]==0)
-      adjacency[row*intRows + col][row*intRows + col] = 1;
+     adjacency[row*intRows + col][row*intRows + col] = 1;
+
 
     //To Find Right Edge
     if(col+1<intColumns && row_1D_matrix[row*intRows + (col+1)] == 0 && row_1D_matrix[row*intRows + col]==0)
@@ -60,7 +61,7 @@ void findedge(int row,int col)
          //from Point 1 to 2, there exists a edge from 2 to 1.
          adjacency[row*intRows + (col+1)][row*intRows + col] = 1;
          adjacency[row*intRows + col][row*intRows + (col+1)] = 1;
-         //printf("Found right edge(%d,%d)\n",row,col);
+         printf("Found right edge(%d,%d)\n",row,col);
          findedge(row,col+1);
        }
      }
@@ -75,7 +76,7 @@ void findedge(int row,int col)
         //from Point 1 to 2, there exists a edge from 2 to 1.
       adjacency[(row+1)*intRows + col][row*intRows + col] = 1;
       adjacency[row*intRows + col][(row+1)*intRows + col] = 1;
-      //printf("Found bottom edge(%d,%d)\n",row,col);
+      printf("Found bottom edge(%d,%d)\n",row,col);
       findedge(row+1,col);
       }
     }
@@ -90,7 +91,7 @@ void findedge(int row,int col)
           //from Point 1 to 2, there exists a edge from 2 to 1.
         adjacency[row*intRows + (col-1)][row*intRows + col] = 1;
         adjacency[row*intRows + col][row*intRows + (col-1)] = 1;
-        //printf("Found left edge(%d,%d)\n",row,col);
+        printf("Found left edge(%d,%d)\n",row,col);
         findedge(row,col-1);
         }
       }
@@ -105,7 +106,7 @@ void findedge(int row,int col)
           //from Point 1 to 2, there exists a edge from 2 to 1.
           adjacency[(row-1)*intRows + col][row*intRows + col] = 1;
           adjacency[row*intRows + col][(row-1)*intRows + col] = 1;
-          //printf("Found top edge(%d,%d)\n",row,col);
+          printf("Found top edge(%d,%d)\n",row,col);
           findedge(row-1,col);
         }
       }
@@ -119,10 +120,12 @@ void findedge(int row,int col)
 void printAdjacency()
 {
   int i,j;
+  int intRows = atoi(rows);
+  int intColumns = atoi(columns);
   printf("\n");
-  for(i=0;i<path;++i)
+  for(i=0;i<intRows*intColumns;++i)
     {
-      for(j=0;j<path;++j)
+      for(j=0;j<intRows*intColumns;++j)
       printf("%d  ",adjacency[i][j] );
       printf("\n");
     }
@@ -144,9 +147,9 @@ void displayMatrix()
 
 }
 
-  path = (intRows * intColumns) - obstacles;
-//  startDijkstra(matrix, intRows,intColumns, path);
+path = (intRows * intColumns) - obstacles;
 printf("\n");
 findedge(0,0);
+startDijkstra(adjacency, intRows*intColumns);
 printAdjacency();
 }
