@@ -55,20 +55,69 @@
 		.color-palette-tile.selected {
 			outline-color: rgb(255, 255, 100);
 		}
+
+		#forms
+		{
+				text-align: center;
+		}
+
+		#Heading
+		{
+			text-align: center;
+		}
+
+		#tiles
+		{
+			text-align: center;
+			align-items: center;
+			align-self: center;
+			align-content: center;
+
+		}
+
+		#row_color
+		{
+			text-align: center;
+			align-items: center;
+			align-self: center;
+			align-content: center;
+		}
+
+		#palette_c
+		{			text-align: center;
+					align-items: center;
+					align-self: center;
+					align-content: center;
+		}
+
+		#palette_tile
+		{
+
+			text-align: center;
+			align-items: center;
+			align-self: center;
+			align-content: center;		}
+
+		#ele
+		{			text-align: center;
+					align-items: center;
+					align-self: center;
+					align-content: center;
+		}
 	</style>
 </head>
 
 <body>
-	<div class="container">
-		<h1> Compiler for Motion Control </h1>
-		<div>
-			<input type="number" id="rows" placeholder="Enter Rows" style="width: 120px">
+ <div class="container">
+		<h1 id="Heading"> Compiler for Motion Control </h1>
+		<div id= "forms" class="centerblock">
+			<input type="number" id="rows" placeholder="Enter Rows" style="width: 120px" >
 			<input type="number" id="columns" placeholder="Enter Columns" style="width: 120px">
 			<button onclick="getDimensions()">Make Table</button>
 			<button id="exportButton" style="display: none;"><a id="export" class = "myButton" download="" href="#">Export</a></button>
 
 		</div>
-			<div id="tiles"></div>
+		<div id="tiles"></div>
 			
 	</div>
 
@@ -120,7 +169,7 @@
 
     var rows = document.getElementById("rows").value;
  		var columns = document.getElementById("columns").value;
-		if(rows>0 && columns>0)
+		if(rows>0 && columns>0 && rows<30 && columns<50)
 		{
 
 				refreshTable();
@@ -139,9 +188,11 @@
 		}
 
 		else {
-			alert("Enter a valid value");
+			alert("Error: Value out of bounds");
 		}
 	}
+
+	 var rColor=false,gColor=false,redX,redY,greenX,greenY;
 	(function() {
 
 		/**
@@ -235,7 +286,7 @@
 		 */
 		Paint.prototype._createTiles = function() {
 			for (var y = 0; y < this.width; y++) {
-				var row = $('<div class="tile-row clearfix">');
+				var row = $('<div class="tile-row clearfix" id="row_color">');
 
 				for (var x = 0; x < this.height; x++) {
 					var tile = new PaintTile(x, y);
@@ -263,31 +314,94 @@
 		 * Clicking on a tile colors it with the currently defined primary color for the paint canvas.
 		 * Entering a tile with the left mouse button down colors it as well. So click-and-dragging allows to draw a boundary.
 		 */
+
+		 	function check(x)
+			{
+				var self = x;
+				if(self.primaryColor.r == 255 && self.primaryColor.g == 0 && self.primaryColor.b == 0)
+				{
+					if(rColor==false)
+					{
+						return 1;
+					}
+					else {
+						return 0;
+					}
+				}
+
+	      if(self.primaryColor.r == 0 && self.primaryColor.g == 128 && self.primaryColor.b == 0)
+				{
+				if(gColor==false)
+				{
+					return 1;
+				}
+
+					return 0;
+				}
+
+
+				if(self.primaryColor.r == 255 && self.primaryColor.g ==255  && self.primaryColor.b == 255)
+				{
+
+					return 1;
+				}
+
+			}
 		Paint.prototype._bindEvents = function() {
 			var self = this;
 
 			// Set tile color when a tile is clicked.
 			this.container.on('click', '.tile', function(e) {
+
+				if(check(self))
+				{
+
+					if(self.primaryColor.r == 255 && self.primaryColor.g ==255  && self.primaryColor.b == 255)
+					{
+						if(self.getTileFromElement(this).getY()==redX && self.getTileFromElement(this).getX()==redY)
+							{rColor=false;}
+						if(self.getTileFromElement(this).getY()==greenX && self.getTileFromElement(this).getX()==greenY)
+								{gColor=false;}
+					}
+
 				self.getTileFromElement(this).setColor(self.getPrimaryColor());
 
 				if(self.primaryColor.r == 0 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
 					console.log("black");
 
+
 				}
 				else if(self.primaryColor.r == 255 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
 					console.log("red");
+					rColor = true;
+					redX = self.getTileFromElement(this).getY();
+					redY = self.getTileFromElement(this).getX();
+					console.log(rColor + " " + redX + " " + redY);
+
 				}
 				else if(self.primaryColor.r == 0 && self.primaryColor.g == 128 && self.primaryColor.b == 0 )
 				{
 					console.log("green");
+					gColor = true;
+					rColor = true;
+					greenX = self.getTileFromElement(this).getY();
+					greenY = self.getTileFromElement(this).getX();
+					console.log(rColor + " " + greenX + " " + greenY);
 				}
 				else if(self.primaryColor.r == 255 && self.primaryColor.g == 255 && self.primaryColor.b == 255 )
 				{
 					console.log("white");
 				}
-			});
+			}
+			else {
+				{
+					alert("Source or Destination already set");
+				}
+			}
+		}
+	);
 
 			// Set tile color if the mouse has entered a new tile and the left button is already clicked down.
 			var lastTileEntered = null;
@@ -353,7 +467,7 @@
 		 * @param {number} y - The y-coordinate of the tile.
 		 */
 		var PaintTile = function(x, y) {
-			this.$element = $('<div class="tile">');
+			this.$element = $('<div class="tile" id="ele">');
 			this.$element.prop('id', 'tile-' + x + '-' + y);
 
 			this.x = x;
@@ -650,7 +764,7 @@
 			this.paint = paint;
 
 			if (!this.container) {
-				this.container = $('<div class="color-palette clearfix">').insertBefore(this.paint.container);
+				this.container = $('<div class="color-palette clearfix" id="palette_c">').insertBefore(this.paint.container);
 			}
 
 			this._createTiles();
@@ -665,7 +779,7 @@
 		 */
 		ColorPalette.prototype._createTiles = function() {
 			for (var i in this.colors) {
-				var tile = $('<div class="color-palette-tile">')
+				var tile = $('<div class="color-palette-tile" id="palette_tile">')
 					.css('background-color', this.colors[i])
 					.data('color', this.colors[i])
 					.appendTo(this.container);
