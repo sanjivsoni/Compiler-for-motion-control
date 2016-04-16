@@ -243,6 +243,24 @@
 			// Set tile color when a tile is clicked.
 			this.container.on('click', '.tile', function(e) {
 				self.getTileFromElement(this).setColor(self.getPrimaryColor());
+				
+				if(self.primaryColor.r == 0 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
+				{
+					console.log("black");
+
+				}
+				else if(self.primaryColor.r == 255 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
+				{
+					console.log("red");
+				}
+				else if(self.primaryColor.r == 0 && self.primaryColor.g == 128 && self.primaryColor.b == 0 )
+				{
+					console.log("green");
+				}
+				else if(self.primaryColor.r == 255 && self.primaryColor.g == 255 && self.primaryColor.b == 255 )
+				{
+					console.log("white");
+				}
 			});
 
 			// Set tile color if the mouse has entered a new tile and the left button is already clicked down.
