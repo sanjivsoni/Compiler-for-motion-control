@@ -55,20 +55,68 @@
 		.color-palette-tile.selected {
 			outline-color: rgb(255, 255, 100);
 		}
+
+		#forms
+		{
+				text-align: center;
+		}
+
+		#Heading
+		{
+			text-align: center;
+		}
+
+		#tiles
+		{
+			text-align: center;
+			align-items: center;
+			align-self: center;
+			align-content: center;
+
+		}
+
+		#row_color
+		{
+			text-align: center;
+			align-items: center;
+			align-self: center;
+			align-content: center;
+		}
+
+		#palette_c
+		{			text-align: center;
+					align-items: center;
+					align-self: center;
+					align-content: center;
+		}
+
+		#palette_tile
+		{
+
+			text-align: center;
+			align-items: center;
+			align-self: center;
+			align-content: center;		}
+
+		#ele
+		{			text-align: center;
+					align-items: center;
+					align-self: center;
+					align-content: center;
+		}
 	</style>
 </head>
 
 <body>
-	<div class="container">
-		<h1> Compiler for Motion Control </h1>
-		<div>
-			<input type="number" id="rows" placeholder="Enter Rows" style="width: 120px">
+ <div class="container">
+		<h1 id="Heading"> Compiler for Motion Control </h1>
+		<div id= "forms" class="centerblock">
+			<input type="number" id="rows" placeholder="Enter Rows" style="width: 120px" >
 			<input type="number" id="columns" placeholder="Enter Columns" style="width: 120px">
-
 			<button onclick="getDimensions()">Make Table</button>
 		</div>
-			<div id="tiles"></div>
-	</div>
+	<div id="tiles"></div>
+ </div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/js/bootstrap.min.js"></script>
@@ -94,7 +142,7 @@
 	 function getDimensions() {
     var rows = document.getElementById("rows").value;
  		var columns = document.getElementById("columns").value;
-		if(rows>0 && columns>0)
+		if(rows>0 && columns>0 && rows<30 && columns<50)
 		{
 
 				refreshTable();
@@ -113,7 +161,7 @@
 		}
 
 		else {
-			alert("Enter a valid value");
+			alert("Error: Value out of bounds");
 		}
 	}
 	(function() {
@@ -209,7 +257,7 @@
 		 */
 		Paint.prototype._createTiles = function() {
 			for (var y = 0; y < this.width; y++) {
-				var row = $('<div class="tile-row clearfix">');
+				var row = $('<div class="tile-row clearfix" id="row_color">');
 
 				for (var x = 0; x < this.height; x++) {
 					var tile = new PaintTile(x, y);
@@ -327,7 +375,7 @@
 		 * @param {number} y - The y-coordinate of the tile.
 		 */
 		var PaintTile = function(x, y) {
-			this.$element = $('<div class="tile">');
+			this.$element = $('<div class="tile" id="ele">');
 			this.$element.prop('id', 'tile-' + x + '-' + y);
 
 			this.x = x;
@@ -624,7 +672,7 @@
 			this.paint = paint;
 
 			if (!this.container) {
-				this.container = $('<div class="color-palette clearfix">').insertBefore(this.paint.container);
+				this.container = $('<div class="color-palette clearfix" id="palette_c">').insertBefore(this.paint.container);
 			}
 
 			this._createTiles();
@@ -639,7 +687,7 @@
 		 */
 		ColorPalette.prototype._createTiles = function() {
 			for (var i in this.colors) {
-				var tile = $('<div class="color-palette-tile">')
+				var tile = $('<div class="color-palette-tile" id="palette_tile">')
 					.css('background-color', this.colors[i])
 					.data('color', this.colors[i])
 					.appendTo(this.container);
