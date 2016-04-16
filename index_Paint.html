@@ -164,6 +164,8 @@
 			alert("Error: Value out of bounds");
 		}
 	}
+
+	 var rColor=false,gColor=false,redX,redY,greenX,greenY;
 	(function() {
 
 		/**
@@ -285,31 +287,94 @@
 		 * Clicking on a tile colors it with the currently defined primary color for the paint canvas.
 		 * Entering a tile with the left mouse button down colors it as well. So click-and-dragging allows to draw a boundary.
 		 */
+
+		 	function check(x)
+			{
+				var self = x;
+				if(self.primaryColor.r == 255 && self.primaryColor.g == 0 && self.primaryColor.b == 0)
+				{
+					if(rColor==false)
+					{
+						return 1;
+					}
+					else {
+						return 0;
+					}
+				}
+
+	      if(self.primaryColor.r == 0 && self.primaryColor.g == 128 && self.primaryColor.b == 0)
+				{
+				if(gColor==false)
+				{
+					return 1;
+				}
+
+					return 0;
+				}
+
+
+				if(self.primaryColor.r == 255 && self.primaryColor.g ==255  && self.primaryColor.b == 255)
+				{
+
+					return 1;
+				}
+
+			}
 		Paint.prototype._bindEvents = function() {
 			var self = this;
 
 			// Set tile color when a tile is clicked.
 			this.container.on('click', '.tile', function(e) {
+
+				if(check(self))
+				{
+
+					if(self.primaryColor.r == 255 && self.primaryColor.g ==255  && self.primaryColor.b == 255)
+					{
+						if(self.getTileFromElement(this).getY()==redX && self.getTileFromElement(this).getX()==redY)
+							{rColor=false;}
+						if(self.getTileFromElement(this).getY()==greenX && self.getTileFromElement(this).getX()==greenY)
+								{gColor=false;}
+					}
+
 				self.getTileFromElement(this).setColor(self.getPrimaryColor());
-				
+
 				if(self.primaryColor.r == 0 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
 					console.log("black");
+
 
 				}
 				else if(self.primaryColor.r == 255 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
 					console.log("red");
+					rColor = true;
+					redX = self.getTileFromElement(this).getY();
+					redY = self.getTileFromElement(this).getX();
+					console.log(rColor + " " + redX + " " + redY);
+
 				}
 				else if(self.primaryColor.r == 0 && self.primaryColor.g == 128 && self.primaryColor.b == 0 )
 				{
 					console.log("green");
+					gColor = true;
+					rColor = true;
+					greenX = self.getTileFromElement(this).getY();
+					greenY = self.getTileFromElement(this).getX();
+					console.log(rColor + " " + greenX + " " + greenY);
 				}
 				else if(self.primaryColor.r == 255 && self.primaryColor.g == 255 && self.primaryColor.b == 255 )
 				{
 					console.log("white");
 				}
-			});
+			}
+			else {
+				{
+					alert("Source or Destination already set");
+				}
+			}
+		}
+	);
 
 			// Set tile color if the mouse has entered a new tile and the left button is already clicked down.
 			var lastTileEntered = null;
