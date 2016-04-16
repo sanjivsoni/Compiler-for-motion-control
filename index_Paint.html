@@ -61,6 +61,11 @@
 <body>
 	<div class="container">
 		<h1> Compiler for Motion Control </h1>
+
+		Rows: <input type="text" id="rows" value="">
+		Columns :  <input type="text" id="columns" value="">
+
+		<button onclick="getDimensions()">Make Table</button>
 		<div id="tiles"></div>
 	</div>
 
@@ -74,6 +79,19 @@
 	 * It is responsible for creating the tiles, and some basic functionality like clicking to color a tile.
 	 * @class
 	 */
+	 function getDimensions() {
+    var rows = document.getElementById("rows").value;
+ 		var columns = document.getElementById("columns").value;
+ 		$(document).ready(function() {
+ 			var paint = new Paint($('#tiles'), rows, columns);
+ 			paint.init();
+
+ 			paint.registerPlugin('ColorPalette', new ColorPalette());
+
+ 			// For debugging purposes, make the instance available to the console.
+ 			window.paint = paint;
+ 		});
+	}
 	(function() {
 
 		/**
@@ -607,16 +625,6 @@
 	})();
 
 
-	// Start everything once the DOM is ready.
-	$(document).ready(function() {
-		var paint = new Paint($('#tiles'), 10, 10);
-		paint.init();
-
-		paint.registerPlugin('ColorPalette', new ColorPalette());
-
-		// For debugging purposes, make the instance available to the console.
-		window.paint = paint;
-	});
 	</script>
 </body>
 </html>
