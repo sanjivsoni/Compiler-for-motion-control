@@ -114,11 +114,11 @@
 			<input type="number" id="rows" placeholder="Enter Rows" style="width: 120px" >
 			<input type="number" id="columns" placeholder="Enter Columns" style="width: 120px">
 			<button onclick="getDimensions()">Make Table</button>
-			<button id="exportButton" style="display: none;"><a id="export" class = "myButton" download="" href="#">Export</a></button>
+			<button id="exportButton" style="display: none;"><a id="export"  class = "myButton" download="" href="#">Export</a></button>
 
 		</div>
 		<div id="tiles"></div>
-			
+
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -126,7 +126,22 @@
 
 	<script>
 
+
+
+
+	var rows,columns,str1="",obstaclesCoordinates="obstacles = ",startCoordinates = "start = ",endCoordinates = "end = ";
+	function getData()
+	{
+
+		var rowStr = "rows = " + rows;
+		var colStr = "columns = " + columns;
+		str1= rowStr + "\n" +colStr + "\n" + obstaclesCoordinates + "\n" + startCoordinates + "\n" + endCoordinates;
+		console.log(str1);
+}
+
+
 	function createDownloadLink(anchorSelector, str, fileName){
+		    console.log(str1);
         if(window.navigator.msSaveOrOpenBlob) {
             var fileData = [str];
             blobObject = new Blob(fileData);
@@ -135,14 +150,15 @@
             });
         } else {
             var url = "data:text/plain;charset=utf-8," + encodeURIComponent(str);
-            $(anchorSelector).attr("download", fileName);               
+            $(anchorSelector).attr("download", fileName);
             $(anchorSelector).attr("href", url);
         }
     }
 
     $(function () {
-        var str = "hi,file";
-        createDownloadLink("#export",str,"config.in");
+			//console.log("gh");
+			// var str = "jvj";
+    //  createDownloadLink("#export",str,"config.txt");
     });
 
 
@@ -151,24 +167,26 @@
 	 * It is responsible for creating the tiles, and some basic functionality like clicking to color a tile.
 	 * @class
 	 */
-	 var paint;
+	 var rColor=false,gColor=false,redX,redY,greenX,greenY;
 
 	 function refreshTable(){
 		 $("div").remove("#tiles");
 		 $("div").remove('.color-palette');
  		 var div = document.createElement('div');
  		 div.setAttribute("id","tiles")
- 		 
+
  		//alert("div created");
  	   $(".container").append(div);
+		 rColor=false;
+		 gColor=false;
  		//alert("div created");
 	 }
 	 function getDimensions() {
 
 	 	document.getElementById('exportButton').style.display = 'block';
 
-    var rows = document.getElementById("rows").value;
- 		var columns = document.getElementById("columns").value;
+     rows = document.getElementById("rows").value;
+ 		 columns = document.getElementById("columns").value;
 		if(rows>0 && columns>0 && rows<30 && columns<50)
 		{
 
@@ -177,12 +195,18 @@
 
 
 					//$('#tiles').find('<div class="tile-row clearfix">').remove()
-		 		  paint = new Paint($('#tiles'), rows, columns);
+		 		  var paint = new Paint($('#tiles'), rows, columns);
 		 			paint.init();
 
 		    	paint.registerPlugin('ColorPalette', new ColorPalette());
 
 		 			// For debugging purposes, make the instance available to the console.
+
+					$("[href]").click(function(){
+          	console.log("gh");
+						getData();
+    				createDownloadLink("#export",str1,"config.txt");
+					});
 		 			window.paint = paint;
 		 		});
 		}
@@ -192,7 +216,7 @@
 		}
 	}
 
-	 var rColor=false,gColor=false,redX,redY,greenX,greenY;
+
 	(function() {
 
 		/**
@@ -223,9 +247,14 @@
 		Paint.prototype.init = function() {
 			this.primaryColor = new Color(0x99, 0x99, 0x99);
 
-			this._createTiles();
+
 			this._bindEvents();
+			this._createTiles();
+
 		};
+
+
+
 
 		/**
 		 * Gets a PaintTile object based on the corresponding HTMLElement.
@@ -331,18 +360,24 @@
 
 	      if(self.primaryColor.r == 0 && self.primaryColor.g == 128 && self.primaryColor.b == 0)
 				{
-				if(gColor==false)
-				{
-					return 1;
-				}
-
-					return 0;
+					if(gColor==false)
+						{
+							return 1;
+						}
+					else
+						{
+							return 0;
+						}
 				}
 
 
 				if(self.primaryColor.r == 255 && self.primaryColor.g ==255  && self.primaryColor.b == 255)
 				{
+					return 1;
+				}
 
+				if(self.primaryColor.r == 0 && self.primaryColor.g ==0  && self.primaryColor.b == 0)
+				{
 					return 1;
 				}
 
@@ -368,27 +403,29 @@
 
 				if(self.primaryColor.r == 0 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
-					console.log("black");
+					//console.log("black");
+					obstaclesCoordinates = obstaclesCoordinates + "(" + self.getTileFromElement(this).getY() + "," + self.getTileFromElement(this).getX() + ") ";
 
 
 				}
 				else if(self.primaryColor.r == 255 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
-					console.log("red");
+					//console.log("red");
 					rColor = true;
 					redX = self.getTileFromElement(this).getY();
 					redY = self.getTileFromElement(this).getX();
-					console.log(rColor + " " + redX + " " + redY);
+					endCoordinates = endCoordinates + "(" + redX + "," + redY +")";
+					//console.log(rColor + " " + redX + " " + redY);
 
 				}
 				else if(self.primaryColor.r == 0 && self.primaryColor.g == 128 && self.primaryColor.b == 0 )
 				{
-					console.log("green");
+					//console.log("green");
 					gColor = true;
-					rColor = true;
 					greenX = self.getTileFromElement(this).getY();
 					greenY = self.getTileFromElement(this).getX();
-					console.log(rColor + " " + greenX + " " + greenY);
+					startCoordinates = startCoordinates + "(" + greenX + "," + greenY + ")"
+					//console.log(rColor + " " + greenX + " " + greenY);
 				}
 				else if(self.primaryColor.r == 255 && self.primaryColor.g == 255 && self.primaryColor.b == 255 )
 				{
