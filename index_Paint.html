@@ -79,18 +79,41 @@
 	 * It is responsible for creating the tiles, and some basic functionality like clicking to color a tile.
 	 * @class
 	 */
+	 var paint;
+
+	 function refreshTable(){
+		 $("div").remove("#tiles");
+		 $("div").remove('.color-palette');
+ 		 var div = document.createElement('div');
+ 		 div.setAttribute("id","tiles")
+ 		//alert("div created");
+ 	   $(".container").append(div);
+ 		//alert("div created");
+	 }
 	 function getDimensions() {
     var rows = document.getElementById("rows").value;
  		var columns = document.getElementById("columns").value;
- 		$(document).ready(function() {
- 			var paint = new Paint($('#tiles'), rows, columns);
- 			paint.init();
+		if(rows>0 && columns>0)
+		{
 
- 			paint.registerPlugin('ColorPalette', new ColorPalette());
+				refreshTable();
+		 		$(document).ready(function() {
 
- 			// For debugging purposes, make the instance available to the console.
- 			window.paint = paint;
- 		});
+
+					//$('#tiles').find('<div class="tile-row clearfix">').remove()
+		 		  paint = new Paint($('#tiles'), rows, columns);
+		 			paint.init();
+
+		    	paint.registerPlugin('ColorPalette', new ColorPalette());
+
+		 			// For debugging purposes, make the instance available to the console.
+		 			window.paint = paint;
+		 		});
+		}
+
+		else {
+			alert("Enter a valid value");
+		}
 	}
 	(function() {
 
@@ -623,6 +646,8 @@
 
 		window.ColorPalette = ColorPalette;
 	})();
+
+
 
 
 	</script>
