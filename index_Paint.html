@@ -61,12 +61,13 @@
 <body>
 	<div class="container">
 		<h1> Compiler for Motion Control </h1>
+		<div>
+			<input type="number" id="rows" placeholder="Enter Rows" style="width: 120px">
+			<input type="number" id="columns" placeholder="Enter Columns" style="width: 120px">
 
-		Rows: <input type="text" id="rows" value="">
-		Columns :  <input type="text" id="columns" value="">
-
-		<button onclick="getDimensions()">Make Table</button>
-		<div id="tiles"></div>
+			<button onclick="getDimensions()">Make Table</button>
+		</div>
+			<div id="tiles"></div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
