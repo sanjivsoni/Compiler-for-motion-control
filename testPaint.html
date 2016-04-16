@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -258,7 +259,6 @@
 		 * @returns {PaintTile} The corresponding tile object.
 		 */
 		Paint.prototype.getTileFromElement = function(element) {
-			//console.log("efdf" + this.tilesByID[$(element)[0].id])
 			return this.tilesByID[$(element)[0].id];
 		};
 
@@ -378,14 +378,46 @@
 				}
 
 			}
+
+
+    Paint.prototype._findRed = function (y,x) {
+
+         var self = this;
+         var element = this.getTileFromXY(x,y).getElement();
+         var ele = $(element)[0].outerHTML;
+         var tile = self.getTileFromElement(ele);
+         tile.setColor(new Color(0xFF, 0xFF, 0xFF));
+         var removeObstacle = "(" + y + "," + x + ")";
+         endCoordinates = endCoordinates.replace(removeObstacle,"");
+
+         //console.log(tile);
+       };
+
+     Paint.prototype._findGreen = function (y,x) {
+
+            var self = this;
+            var element = this.getTileFromXY(x,y).getElement();
+            var ele = $(element)[0].outerHTML;
+            var tile = self.getTileFromElement(ele);
+            tile.setColor(new Color(0xFF, 0xFF, 0xFF));
+            //console.log("old" + startCoordinates);
+            var removeObstacle = "(" + y + "," + x + ")";
+            startCoordinates = startCoordinates.replace(removeObstacle,"");
+            //console.log("new" + startCoordinates);
+
+            //console.log(tile);
+          };
+
+
+
+
 		Paint.prototype._bindEvents = function() {
 			var self = this;
+      var checkFlag = true;
 
 			// Set tile color when a tile is clicked.
 			this.container.on('click', '.tile', function(e) {
 
-				if(check(self))
-				{
 
 					if(self.primaryColor.r == 255 && self.primaryColor.g ==255  && self.primaryColor.b == 255)
 					{
@@ -407,23 +439,20 @@
 
 							else if(fetchColorOfTile.r == 255 && fetchColorOfTile.g == 0 && fetchColorOfTile.b == 0)
 							{
-								var removeEnd = "(" + self.getTileFromElement(this).getY() + "," + self.getTileFromElement(this).getX() + ")";
-								endCoordinates = endCoordinates.replace(removeEnd,"");
+								alert("Not Allowed. You need to replace the endpoint.")
+                checkFlag = false;
 
 							}
 
 							else if(fetchColorOfTile.r == 0 && fetchColorOfTile.g == 128 && fetchColorOfTile.b == 0)
 							{
-								var removeStart = "(" + self.getTileFromElement(this).getY() + "," + self.getTileFromElement(this).getX() + ")";
-								startCoordinates = startCoordinates.replace(removeStart,"");
+							alert("Not Allowed. You need to replace the startpoint.")
+              checkFlag = false;
 							}
 
 					}
 
 
-				self.getTileFromElement(this).setColor(self.getPrimaryColor());
-					//console.log(this);
-				console.log(self.getTileFromElement(this));
 
 				if(self.primaryColor.r == 0 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
@@ -435,30 +464,44 @@
 				else if(self.primaryColor.r == 255 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
 					//console.log("red");
+          if(rColor == true)
+          {
+            self._findRed(redX,redY);
+  					redX = self.getTileFromElement(this).getY();
+  					redY = self.getTileFromElement(this).getX();
+  					endCoordinates = endCoordinates + "(" + redX + "," + redY +")"
+          }
+
+          else{
 					rColor = true;
 					redX = self.getTileFromElement(this).getY();
 					redY = self.getTileFromElement(this).getX();
 					endCoordinates = endCoordinates + "(" + redX + "," + redY +")";
+         }
 					//console.log(rColor + " " + redX + " " + redY);
 
 				}
 				else if(self.primaryColor.r == 0 && self.primaryColor.g == 128 && self.primaryColor.b == 0 )
 				{
 					//console.log("green");
+          if(gColor == true)
+          {
+            self._findGreen(greenX,greenY);
+            greenX = self.getTileFromElement(this).getY();
+            greenY = self.getTileFromElement(this).getX();
+            startCoordinates = startCoordinates + "(" + greenX + "," + greenY +")"
+          }
 
-					gColor = true;
-					greenX = self.getTileFromElement(this).getY();
-					greenY = self.getTileFromElement(this).getX();
-					startCoordinates = startCoordinates + "(" + greenX + "," + greenY + ")"
-					//console.log(rColor + " " + greenX + " " + greenY);
-				}
+          else{
+          gColor = true;
+          greenX = self.getTileFromElement(this).getY();
+          greenY = self.getTileFromElement(this).getX();
+          startCoordinates = startCoordinates + "(" + greenX + "," + greenY +")";
+          }
+        }
 
-			}
-			else {
-				{
-					alert("Source or Destination already set");
-				}
-			}
+        self.getTileFromElement(this).setColor(self.getPrimaryColor());
+
 		}
 	);
 
@@ -498,7 +541,6 @@
 		 */
 
 
-
 		Paint.prototype._interpolateMouseMovement = function(fromTile, toTile) {
 			var vector = [toTile.getX() - fromTile.getX(), toTile.getY() - fromTile.getY()];
 			var distance = Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
@@ -529,7 +571,7 @@
 		 * @param {number} y - The y-coordinate of the tile.
 		 */
 
-		var PaintTile = function(){}
+
 		var PaintTile = function(x, y) {
 			this.$element = $('<div class="tile" id="ele">');
 			this.$element.prop('id', 'tile-' + x + '-' + y);
@@ -580,10 +622,16 @@
 		 *
 		 * @param {Color} color - The new color of the tile.
 		 */
-		PaintTile.prototype.setColor = function(color) {
-			this.color = color;
-			this.$element[0].style.backgroundColor = this.color.asCssValue();
-		};
+
+
+
+     PaintTile.prototype.setColor = function(color) {
+       //console.log("set " + color.r + " " +color.g + " " + color.b);
+       this.color = color;
+       this.$element[0].style.backgroundColor = this.color.asCssValue();
+     };
+
+
 
 		window.PaintTile = PaintTile;
 	})();
