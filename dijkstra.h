@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <time.h>
 
 // A structure to represent a node in adjacency list
 struct AdjListNode
@@ -59,11 +60,6 @@ void addEdge(struct Graph* graph, int src, int dest, int weight)
     struct AdjListNode* newNode = newAdjListNode(dest, weight);
     newNode->next = graph->array[src].head;
     graph->array[src].head = newNode;
-
-    // Since graph is undirected, add an edge from dest to src also
-    //newNode = newAdjListNode(src, weight);
-    //newNode->next = graph->array[dest].head;
-    //graph->array[dest].head = newNode;
 }
 
 // Structure to represent a min heap node
@@ -318,13 +314,15 @@ void dijkstra(struct Graph* graph, int src,int dest)
 
 
 // Driver program to test above functions
-void startDijkstra(int A[][100],int nodes,int start,int end)
+void startDijkstra(struct Graph* graph,int start,int end)
 {
     // create the graph given in above fugure
+    clock_t t;
+    t = clock();
 
     int i,j;
       // create the graph
-    struct Graph* graph = createGraph(nodes);
+    /*struct Graph* graph = createGraph(nodes);
     for(i=0;i<nodes;++i)
     {
       for(j=0;j<nodes;++j)
@@ -333,9 +331,11 @@ void startDijkstra(int A[][100],int nodes,int start,int end)
             addEdge(graph, i , j, 1);
       }
     }
-
+    */
     printf("\nStart Dijkstra\n" );
     dijkstra(graph, start, end);
+    t = clock() - t;
+    printf ("\nTime taken: %f seconds\n",((float)t)/CLOCKS_PER_SEC);
 
 
 }

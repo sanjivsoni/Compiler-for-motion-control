@@ -69,14 +69,17 @@ void printEnds()
   //printf("start: %d    end: %d\n",start,end );
 }
 
-void findedge(int row,int col)
+void findedge(struct Graph* graph,int row,int col)
 {
     int intRows = atoi(rows);
     int intColumns = atoi(columns);
 
     //Because each point can be reached form itself.
     if(row_1D_matrix[row*intRows + col]==0)
-     adjacency[row*intRows + col][row*intRows + col] = 1;
+     {
+       adjacency[row*intRows + col][row*intRows + col] = 1;
+       addEdge(graph, row*intRows + col , row*intRows + col, 1);
+     }
 
 
     //To Find Right Edge
@@ -87,10 +90,12 @@ void findedge(int row,int col)
        {
          //Mark both directions in adjacency matrix because if a edge exists
          //from Point 1 to 2, there exists a edge from 2 to 1.
+         addEdge(graph, row*intRows + (col+1) , row*intRows + col, 1);
          adjacency[row*intRows + (col+1)][row*intRows + col] = 1;
+         addEdge(graph, row*intRows + col , row*intRows + (col+1), 1);
          adjacency[row*intRows + col][row*intRows + (col+1)] = 1;
          //printf("Found right edge(%d,%d)\n",row,col);
-         findedge(row,col+1);
+         findedge(graph,row,col+1);
        }
      }
 
@@ -102,10 +107,12 @@ void findedge(int row,int col)
       {
         //Mark both directions in adjacency matrix because if a edge exists
         //from Point 1 to 2, there exists a edge from 2 to 1.
+      addEdge(graph, (row+1)*intRows + col , row*intRows + col, 1);
       adjacency[(row+1)*intRows + col][row*intRows + col] = 1;
+      addEdge(graph, row*intRows + col, (row+1)*intRows + col, 1);
       adjacency[row*intRows + col][(row+1)*intRows + col] = 1;
       //printf("Found bottom edge(%d,%d)\n",row,col);
-      findedge(row+1,col);
+      findedge(graph,row+1,col);
       }
     }
 
@@ -117,10 +124,13 @@ void findedge(int row,int col)
         {
           //Mark both directions in adjacency matrix because if a edge exists
           //from Point 1 to 2, there exists a edge from 2 to 1.
+        addEdge(graph, row*intRows + (col-1) , row*intRows + col, 1);
         adjacency[row*intRows + (col-1)][row*intRows + col] = 1;
+        addEdge(graph,row*intRows + col,row*intRows + (col-1),1);
         adjacency[row*intRows + col][row*intRows + (col-1)] = 1;
+
         //printf("Found left edge(%d,%d)\n",row,col);
-        findedge(row,col-1);
+        findedge(graph,row,col-1);
         }
       }
 
@@ -132,10 +142,12 @@ void findedge(int row,int col)
         {
           //Mark both directions in adjacency matrix because if a edge exists
           //from Point 1 to 2, there exists a edge from 2 to 1.
+          addEdge(graph, (row-1)*intRows + col , row*intRows + col, 1);
           adjacency[(row-1)*intRows + col][row*intRows + col] = 1;
+          addEdge(graph, row*intRows + col , (row-1)*intRows + col, 1);
           adjacency[row*intRows + col][(row-1)*intRows + col] = 1;
           //printf("Found top edge(%d,%d)\n",row,col);
-          findedge(row-1,col);
+          findedge(graph,row-1,col);
         }
       }
 
@@ -180,8 +192,9 @@ void findPath()
   int intColumns = atoi(columns);
   int nodes = intRows * intColumns;
   printf("\n");
-  findedge(0,0);
-  startDijkstra(adjacency,nodes,startPoint,endPoint);
+  struct Graph* graph = createGraph(nodes);
+  findedge(graph,0,0);
+  startDijkstra(graph,startPoint,endPoint);
   //printf("\nAdjacency Matrix" );
   //printAdjacency();
 }
