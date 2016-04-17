@@ -33,7 +33,7 @@
 
 
 // Associate each of the terminal tokens with one of union fields.
-%type <stringValue> NUMBER ROWS COLUMNS START END
+%type <stringValue> NUMBER ` COLUMNS START END
 %type <charValue> OPAREN CPAREN COMMA
 
 // Define the starting production

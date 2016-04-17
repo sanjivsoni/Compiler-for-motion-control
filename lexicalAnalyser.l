@@ -1,51 +1,52 @@
 %{
-
+    
 #include<stdio.h>
 #include<string>
 #include<iostream>
 using namespace std;
-#define YY_DECL extern "C" int yylex()
 
+// Take tokens from parser.tab.h
+#define YY_DECL extern "C" int yylex()
 #include "parser.tab.h"
+
 %}
 
 %%
-=                       return EQUALS;
-rows                    return ROWS;
-columns               return COLUMNS;
-obstacle              return OBSTACLE;
-start                 return START;
-end                   return END;
+=           return EQUALS;
+rows        return ROWS;
+columns     return COLUMNS;
+obstacle    return OBSTACLE;
+start       return START;
+end         return END;
 
+[0-9]+      {
+                yylval.stringValue = strdup(yytext);
+                return NUMBER;
+            }
 
-[0-9]+                  {
-                            yylval.stringValue = strdup(yytext);
-                            return NUMBER;
-                        }
+\(          {
+                yylval.charValue = '(';
+                return OPAREN;
+            }
 
-\(                      {
-                            yylval.charValue = '(';
-                            return OPAREN;
-                        }
+\)          {
+                yylval.charValue = ')';
+                return CPAREN;
+            }
+,           {
+                yylval.charValue = ',';
+                return COMMA;
+            }
 
-\)                      {
-                            yylval.charValue = ')';
-                            return CPAREN;
-                        }
-,                       {
-                            yylval.charValue = ',';
-                            return COMMA;
-                        }
+\n          {
+                yylineno++;
+            }
 
-\n                      {
-                            yylineno++;
-                        }
+[ \t]       ;
 
-[ \t]                 ;
-.                       {    printf("\nSyntax error in line %d : Unexpected char %s \n",yylineno,yytext);
-                             exit(0);
-                        }
-
+.           {    printf("\nSyntax error in line %d : Unexpected char %s \n",yylineno,yytext);
+                 exit(0);
+            }
 
 %%
 void yyerror(char *str)

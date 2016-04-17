@@ -3,8 +3,12 @@
   #include<stdio.h>
   #include<stdlib.h>
   #include<string>
+  #include<vector>
+  #include<time.h>
   using namespace std;
-
+  
+  #include "maze.cpp"
+  
   // Stuff from flex that bison needs to know about
   extern "C" int yylex();
   extern "C" int yyparse();
@@ -12,6 +16,12 @@
   extern int yylineno;
 
   void yyerror(const char*s);
+
+  int rows, columns;
+  int startX, startY, endX, endY;
+  vector<int> obstacleX;
+  vector<int> obstacleY;
+  int x = 0, y = 0;
 
 %}
 
@@ -36,25 +46,26 @@
 // Define the starting production
 %start PARSETREE
 
-
 %%
-// First rule is the hishest in rule
+// Precedence is Top to Bottom High to low.
 
+PARSETREE           :   LINE
+                    ;
 
-
-PARSETREE           :   LINE                                      {printf("LS -> L\n");}
-
-LINE                :   DEFINE_LIMIT ASSIGN_OBSTACLE ASSIGN_COORDINATE                 {printf("L -> AI\n");}
+LINE                :   DEFINE_LIMIT ASSIGN_OBSTACLE ASSIGN_COORDINATE
                     ;
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
                     |   ASSIGN_COLUMN ASSIGN_ROW
+;
 
 
 ASSIGN_ROW          :   ROWS EQUALS NUMBER
+                        {rows = atoi($3);}
                     ;
 
 ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
+                        {columns = atoi($3);}
                     ;
 
 
@@ -62,35 +73,54 @@ ASSIGN_OBSTACLE     :   OBSTACLE EQUALS HINDERENCES
                     |  /* Obstacles Absent */
                     ;
 
-HINDERENCES         :   HINDERENCES HINDERENCE                      {printf("HS -> HS H\n");}
-                    |   HINDERENCE                                  {printf("HS -> H\n");}
+HINDERENCES         :   HINDERENCES HINDERENCE
+
+                    |   HINDERENCE
                     ;
 
-HINDERENCE          :   COORDINATE                                  {printf("H -> C\n");}
+HINDERENCE          :   COORDINATE
+                        {
+                            obstacleX.push_back(x);
+                            obstacleY.push_back(y);
+                        }
                     ;
 
-COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN           {printf("C -> (%s,%s)\n",$2,$4);}
+COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN
+                        {
+                            x = atoi($2);
+                            y = atoi($4);
+                        }
                     ;
 
-ASSIGN_COORDINATE   : ASSIGN_START ASSIGN_END
-                    | ASSIGN_END ASSIGN_START
+ASSIGN_COORDINATE   :   ASSIGN_START ASSIGN_END
+                    |   ASSIGN_END ASSIGN_START
                     ;
 
-ASSIGN_START        :   START EQUALS COORDINATE                     {printf("AC -> S=C\n");}
+ASSIGN_START        :   START EQUALS COORDINATE
+                        {
+                            startX = x;
+                            startY = y;
+                        }
                     ;
 
-ASSIGN_END          :  END EQUALS COORDINATE                       {printf("AC -> E=C\n");}
-                    ;   
+ASSIGN_END          :   END EQUALS COORDINATE
+                        {
+                            endX = x;
+                            endY = y;
+                        }
+                    ;
 
 %%
 
 void yyerror(const char* s)
 {
     printf("\nParse Error in line %d Message: %s\n",yylineno,s);
+    exit(0);
 }
 
 int main(int argc, char**argv)
 {
+    
     if(argc != 2)
     {
         printf("\nIncorrect usage. Try ./a.out filename\n");
@@ -110,7 +140,18 @@ int main(int argc, char**argv)
         yyparse();
     }while(!feof((yyin)));
 
-    printf("\nNo. of lines are %d", yylineno);
+    printf("\nLines of Code = %d", yylineno);
+    
+    clock_t time = clock();
+    
+    Maze maze = Maze(rows, columns);
+    maze.setObstacleFromVector(obstacleX, obstacleY);
+    maze.setStartPoint(startX, startY);
+    maze.setEndPoint(endX, endY);
+    maze.traverseBreadthFirst(0);
+    
+    time = clock() - time;
+    printf("\nRunning Time = %fs\n",((float)time)/CLOCKS_PER_SEC);
 
     fclose(file);
 }

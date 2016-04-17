@@ -1,5 +1,5 @@
-columns = 2
-rows = 2
-obstacle = 1
-start = 1
-end = 1
+columns = 4
+rows = 4
+obstacle = (1,2)
+start = (0,0)
+end = (3,3)
