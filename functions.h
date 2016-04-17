@@ -2,7 +2,7 @@
 #include "dijkstra.h"
 
 int matrix[20][20] = {0};
-int row_1D_matrix[20] = {0};
+int row_1D_matrix[100] = {0};
 int obstaclesBuffer[100][100];
 int adjacency[100][100]= {0};
 int path =0 ;
@@ -194,7 +194,7 @@ void findPath()
   printf("\n");
   struct Graph* graph = createGraph(nodes);
   findedge(graph,0,0);
-  startDijkstra(graph,startPoint,endPoint);
+  //startDijkstra(graph,startPoint,endPoint);
   //printf("\nAdjacency Matrix" );
   //printAdjacency();
 }

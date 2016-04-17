@@ -309,7 +309,7 @@ void dijkstra(struct Graph* graph, int src,int dest)
 
     // print the calculated shortest distances
     //printArr(dist, V);
-    printSolution(dist, V, parent,src,dest);
+    //printSolution(dist, V, parent,src,dest);
 }
 
 

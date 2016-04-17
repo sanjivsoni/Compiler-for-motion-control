@@ -400,12 +400,9 @@
             var ele = $(element)[0].outerHTML;
             var tile = self.getTileFromElement(ele);
             tile.setColor(new Color(0xFF, 0xFF, 0xFF));
-            //console.log("old" + startCoordinates);
             var removeObstacle = "(" + y + "," + x + ")";
             startCoordinates = startCoordinates.replace(removeObstacle,"");
-            //console.log("new" + startCoordinates);
 
-            //console.log(tile);
           };
 
 
