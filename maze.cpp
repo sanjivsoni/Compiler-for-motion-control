@@ -349,7 +349,7 @@ public:
             nextStep = previousStep;
         }
         
-        ofstream fout("test.txt");
+        ofstream fout("path.txt");
         if(fout == NULL)
         {
             printf("Cannot write Path to output file\n");
