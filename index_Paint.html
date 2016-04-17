@@ -349,7 +349,8 @@
 					{
 						return 1;
 					}
-					else {
+					else
+					{
 						return 0;
 					}
 				}
@@ -393,6 +394,7 @@
 						if(self.getTileFromElement(this).getY()==redX && self.getTileFromElement(this).getX()==redY)
 							{rColor=false;}
 						if(self.getTileFromElement(this).getY()==greenX && self.getTileFromElement(this).getX()==greenY)
+<<<<<<< Updated upstream
 								{gColor=false;}
 
 
@@ -418,12 +420,28 @@
 								startCoordinates = startCoordinates.replace(removeStart,"");
 							}
 
+=======
+							{gColor=false;}
+>>>>>>> Stashed changes
 					}
 
 
 				self.getTileFromElement(this).setColor(self.getPrimaryColor());
 					//console.log(this);
 				console.log(self.getTileFromElement(this));
+
+				if(rColor==true && gColor==true && redX==greenX && redY==greenY)
+				{
+					if(self.primaryColor.r==255 && self.primaryColor.g==0 && self.primaryColor.b==0)
+					{
+						gColor=false;
+					}
+
+					if(self.primaryColor.r==0 && self.primaryColor.g==128 && self.primaryColor.b==0)
+					{
+						rColor=false;
+					}
+				}
 
 				if(self.primaryColor.r == 0 && self.primaryColor.g == 0 && self.primaryColor.b == 0 )
 				{
