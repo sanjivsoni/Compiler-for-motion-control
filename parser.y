@@ -26,7 +26,7 @@
 %}
 
 // define termminal symbols.
-%token ROWS COLUMNS EQUALS START END OBSTACLE NUMBER COMMA OPAREN CPAREN
+%token ROWS COLUMNS EQUALS START END OBSTACLES NUMBER COMMA OPAREN CPAREN
 
 // bison gets next token from flex as 'yystype'
 // Each type of token flex could return
@@ -52,7 +52,7 @@
 PARSETREE           :   LINE
                     ;
 
-LINE                :   DEFINE_LIMIT ASSIGN_OBSTACLE ASSIGN_COORDINATE
+LINE                :   DEFINE_LIMIT ASSIGN_OBSTACLES ASSIGN_COORDINATE
                     ;
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
@@ -69,7 +69,7 @@ ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
                     ;
 
 
-ASSIGN_OBSTACLE     :   OBSTACLE EQUALS HINDERENCES
+ASSIGN_OBSTACLES     :   OBSTACLES EQUALS HINDERENCES
                     |  /* Obstacles Absent */
                     ;
 
@@ -140,18 +140,18 @@ int main(int argc, char**argv)
         yyparse();
     }while(!feof((yyin)));
 
-    printf("\nLines of Code = %d", yylineno);
-    
     clock_t time = clock();
     
     Maze maze = Maze(rows, columns);
     maze.setObstacleFromVector(obstacleX, obstacleY);
     maze.setStartPoint(startX, startY);
     maze.setEndPoint(endX, endY);
-    maze.traverseBreadthFirst(0);
+    
+    maze.traverseBreadthFirst();
     
     time = clock() - time;
     printf("\nRunning Time = %fs\n",((float)time)/CLOCKS_PER_SEC);
+    printf("\nLines of Code = %d\n", yylineno);
 
     fclose(file);
 }

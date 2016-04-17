@@ -15,7 +15,7 @@ using namespace std;
 =           return EQUALS;
 rows        return ROWS;
 columns     return COLUMNS;
-obstacle    return OBSTACLE;
+obstacles   return OBSTACLES;
 start       return START;
 end         return END;
 
