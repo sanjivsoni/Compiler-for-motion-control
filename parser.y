@@ -6,7 +6,6 @@
   #include<vector>
   #include<time.h>
   using namespace std;
-<<<<<<< HEAD
   
   #define KNRM  "\x1B[0m"
   #define KRED  "\x1B[31m"
@@ -17,9 +16,6 @@
   #define KCYN  "\x1B[36m"
   #define KWHT  "\x1B[37m"
   
-=======
-
->>>>>>> origin/master
   #include "maze.cpp"
 
   // Stuff from flex that bison needs to know about
