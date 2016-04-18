@@ -1,8 +1,10 @@
 %{
-    
+
+#pragma once
 #include<stdio.h>
 #include<string>
 #include<iostream>
+
 using namespace std;
 
 // Take tokens from parser.tab.h
@@ -44,15 +46,11 @@ end         return END;
 
 [ \t]       ;
 
-.           {    printf("\nSyntax error in line %d : Unexpected char %s \n",yylineno,yytext);
-                 exit(0);
+.           {    yyerror("Unexpected char");
             }
 
 %%
-void yyerror(char *str)
-{
-    printf("Parse Error: \n%s\n",str);
-}
+
 
 int yywrap(void) {
     return 1;

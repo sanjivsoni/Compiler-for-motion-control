@@ -1,10 +1,12 @@
 %{
 
+  #pragma once
   #include<stdio.h>
   #include<stdlib.h>
   #include<string>
   #include<vector>
   #include<time.h>
+  
   using namespace std;
   
   #define KNRM  "\x1B[0m"
@@ -35,7 +37,7 @@
 %}
 
 // define termminal symbols.
-%token ROWS COLUMNS EQUALS START END OBSTACLES NUMBER COMMA OPAREN CPAREN
+%token ROWS COLUMNS EQUALS START END OBSTACLES NUMBER COMMA OPAREN CPAREN EOF
 
 // bison gets next token from flex as 'yystype'
 // Each type of token flex could return
@@ -61,7 +63,11 @@
 PARSETREE           :   LINE
                     ;
 
-LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
+LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES EOF
+                    |   /* Blank input file*/
+                        {
+                            yywarning("Input File has no data.");
+                        }
 
                     ;
 
@@ -75,7 +81,7 @@ ASSIGN_ROW          :   ROWS EQUALS NUMBER
                             rows = atoi($3);
                             if(rows <= 0 )
                             {
-                                yyerror(" Invalid Row value. Expected positive value.");
+                                yyerror("Invalid Row value. Expected positive value.");
                             }
                         }
                     ;
@@ -92,7 +98,7 @@ ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
 
 
 ASSIGN_OBSTACLES    :   OBSTACLES EQUALS HINDERANCES
-                    |  /* Obstacles Absent */
+                    |  /* Obstacles Absent Ebsilon Production */
                     ;
 
 HINDERANCES         :   HINDERANCES HINDERANCE
@@ -122,8 +128,6 @@ HINDERANCE          :   COORDINATE
 
 COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN
                         {
-                            
-                            
                             x = atoi($2);
                             y = atoi($4);
                             
@@ -164,6 +168,12 @@ ASSIGN_END          :   END EQUALS COORDINATE
 void yyerror(const char* s)
 {
     printf("\n%sSemantic Error%s : Line %s%d%s.\n%sMessage:%s %s\n",KRED,KWHT,KBLU,yylineno,KWHT,KRED,KGRN,s);
+    exit(0);
+}
+
+void yywarning(const char* s)
+{
+    printf("\n%sWarning%s : Line %s%d%s.\n%sMessage:%s %s\n",KYEL,KWHT,KBLU,yylineno,KWHT,KRED,KGRN,s);
     exit(0);
 }
 
