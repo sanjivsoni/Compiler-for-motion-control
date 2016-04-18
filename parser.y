@@ -6,9 +6,9 @@
   #include<string>
   #include<vector>
   #include<time.h>
-  
+
   using namespace std;
-  
+
   #define KNRM  "\x1B[0m"
   #define KRED  "\x1B[31m"
   #define KGRN  "\x1B[32m"
@@ -17,7 +17,7 @@
   #define KMAG  "\x1B[35m"
   #define KCYN  "\x1B[36m"
   #define KWHT  "\x1B[37m"
-  
+
   #include "maze.cpp"
 
   // Stuff from flex that bison needs to know about
@@ -64,6 +64,9 @@ PARSETREE           :   LINE
                     ;
 
 LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES EOF
+                        {
+                        printf("Successful Parsing");
+                        }
                     |   /* Blank input file*/
                         {
                             yywarning("Input File has no data.");
@@ -112,7 +115,7 @@ HINDERANCE          :   COORDINATE
                             {
                                 yyerror(" Obstacle Coordinate out of bounds.");
                             }
-                            
+
                             if( x == startX && y == startY )
                             {
                                 yyerror("Obstacle Coordinate can't be same as Start.");
@@ -130,7 +133,7 @@ COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN
                         {
                             x = atoi($2);
                             y = atoi($4);
-                            
+
                         }
                     ;
 
@@ -144,7 +147,7 @@ ASSIGN_START        :   START EQUALS COORDINATE
                             {
                                 yyerror(" Start Coordinate out of bounds");
                             }
-                            
+
                             startX = x;
                             startY = y;
                         }
@@ -155,9 +158,9 @@ ASSIGN_END          :   END EQUALS COORDINATE
                             if( x > rows || y > columns )
                             {
                                 yyerror("End Coordinate out of bounds");
-                            
+
                             }
-                            
+
                             endX = x;
                             endY = y;
                         }
