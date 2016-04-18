@@ -24,12 +24,12 @@ void yyerror( char* s);
 %}
 
 %%
-=           return EQUALS;
-rows        return ROWS;
-columns     return COLUMNS;
-obstacles   return OBSTACLES;
-start       return START;
-end         return END;
+=                      return EQUALS;
+(rows|row)             return ROWS;
+(columns|column)       return COLUMNS;
+(obstacles|obstacle)   return OBSTACLES;
+start                  return START;
+end                    return END;
 
 [-]?[0-9]+      {
                 yylval.stringValue = strdup(yytext);
