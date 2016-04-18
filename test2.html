@@ -116,11 +116,9 @@
 			<input type="number" id="rows" placeholder="Enter Rows" style="width: 120px" >
 			<input type="number" id="columns" placeholder="Enter Columns" style="width: 120px">
 			<button onclick="getDimensions()">Make Table</button>
-
-			<button id="exportButton" style="display: none;"><a id="export"  class = "myButton" download="" href="#">Export</a></button>
 			<button id="Clear"  onclick="clearAll()">Clear</button>
-
-		</div>
+			<button id="exportButton" style="display: none;"><a id="export"  class = "myButton" download="" href="#">Export</a></button>
+ 	</div>
 		<div  id="tiles"></div>
 
 	</div>
@@ -187,12 +185,14 @@
 	 function clearAll(){
 		 rows = document.getElementById("rows").value;
 		 columns = document.getElementById("columns").value;
-		 if(rows>0 && columns>0 && rows<30 && columns<50)
+		 if(rows>0 && columns>0 && rows<30 && columns<30)
 		 {
 			 refreshTable();
+
 		 $(document).ready(function() {
 		 var paint = new Paint($('#tiles'), rows, columns);
 		 paint.init();
+		 paint._setStartEnd();
 		 window.paint = paint;
 		 });
 		}
@@ -209,18 +209,9 @@
 				refreshTable();
 		 		$(document).ready(function() {
 
-
-					//$('#tiles').find('<div class="tile-row clearfix">').remove()
 		 		  var paint = new Paint($('#tiles'), rows, columns);
-
-
-		 			paint.init();
+					paint.init();
           paint._setStartEnd();
-
-		    	//paint.registerPlugin('ColorPalette', new ColorPalette());
-
-		 			// For debugging purposes, make the instance available to the console.
-
 					$("[href]").click(function(){
           	//console.log("gh");
 						getData();
