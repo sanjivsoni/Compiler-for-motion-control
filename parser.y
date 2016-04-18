@@ -29,7 +29,7 @@
   void yyerror(const char*s);
   void yywarning(const char* s);
 
-  int rows, columns;
+  int row, columns;
   int startX, startY, endX, endY;
   vector<int> obstacleX;
   vector<int> obstacleY;
@@ -64,19 +64,29 @@
 PARSETREE           :   LINE
                     ;
 
-LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
+LINE                :   DEFINE_LIMIT COORDINATE_OBSTACLES
                         {
                         printf("Successful Parsing");
                         }
 
-                    |   /* Blank input file*/
-                        {
-                            yywarning("Input File has no data.");
-                        }
+
+                    | COORDINATE_OBSTACLES DEFINE_LIMIT
+                      {
+                        yyerror("Invalid Order");
+                      }
                     ;
+
+COORDINATE_OBSTACLES: ASSIGN_COORDINATE ASSIGN_HURDLE
+                    | ASSIGN_HURDLE ASSIGN_COORDINATE
+                    {
+                        yyerror("Invalid Order");
+                    }
+
+ASSIGN_HURDLE       : ASSIGN_OBSTACLES
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
                     |   ASSIGN_COLUMN ASSIGN_ROW
+
 ;
 
 
@@ -102,7 +112,7 @@ ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
 
 
 ASSIGN_OBSTACLES    :   OBSTACLES EQUALS HINDERANCES
-                    |  /* Obstacles Absent Ebsilon Production */
+                    |  /* Obstacles Absent Epsilon Production */
                     ;
 
 HINDERANCES         :   HINDERANCES HINDERANCE
