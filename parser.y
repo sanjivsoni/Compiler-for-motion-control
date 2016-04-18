@@ -29,7 +29,7 @@
   void yyerror(const char*s);
   void yywarning(const char* s);
 
-  int rows, columns;
+  int rows = -1, columns = -1;
   int startX = -1, startY = -1, endX = -1, endY = -1;
   vector<int> obstacleX;
   vector<int> obstacleY;
@@ -66,7 +66,7 @@ PARSETREE           :   LINE
 
 LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
                         {
-                            printf("%sSuccessful Parsing%s",KGRN,KWHT);
+                            printf("%sSuccessful Parsing\n%s",KGRN,KWHT);
                         }
 
                     ;
@@ -219,8 +219,8 @@ int main(int argc, char**argv)
     maze.traverseBreadthFirst();
 
     time = clock() - time;
-    printf("Running Time = %fs\n",((float)time)/CLOCKS_PER_SEC);
-    printf("Lines of Code = %d\n", yylineno);
+    printf("Running Time = %s%fs%s\n",((float)time)/CLOCKS_PER_SEC,KGRN,KWHT);
+    printf("Lines of Code = %s%d%s\n", KGRN, yylineno, KWHT);
 
     fclose(file);
 }
