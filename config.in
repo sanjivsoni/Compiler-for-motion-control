@@ -1,5 +1,5 @@
 obstacles = (9,0)
 row = 10
-columns = 10
+column = 10
 start = (0,0)
 end = (0,0)
