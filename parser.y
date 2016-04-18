@@ -64,7 +64,7 @@
 PARSETREE           :   LINE
                     ;
 
-LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES EOF
+LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES END_OF_FILE
                         {
                         printf("Successful Parsing");
                         }
