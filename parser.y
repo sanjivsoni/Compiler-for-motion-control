@@ -27,6 +27,7 @@
   extern int yylineno;
 
   void yyerror(const char*s);
+  void yywarning(const char* s);
 
   int rows, columns;
   int startX, startY, endX, endY;
@@ -37,7 +38,7 @@
 %}
 
 // define termminal symbols.
-%token ROWS COLUMNS EQUALS START END OBSTACLES NUMBER COMMA OPAREN CPAREN EOF
+%token ROWS COLUMNS EQUALS START END OBSTACLES NUMBER COMMA OPAREN CPAREN END_OF_FILE
 
 // bison gets next token from flex as 'yystype'
 // Each type of token flex could return
@@ -63,7 +64,8 @@
 PARSETREE           :   LINE
                     ;
 
-LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES EOF
+LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
+                        { printf("%sSuccessful Parse%s\n",KGRN,KWHT);}
                     |   /* Blank input file*/
                         {
                             yywarning("Input File has no data.");

@@ -1,15 +1,25 @@
 %{
 
-#pragma once
 #include<stdio.h>
 #include<string>
 #include<iostream>
+
+#define LKNRM  "\x1B[0m"
+#define LKRED  "\x1B[31m"
+#define LKGRN  "\x1B[32m"
+#define LKYEL  "\x1B[33m"
+#define LKBLU  "\x1B[34m"
+#define LKMAG  "\x1B[35m"
+#define LKCYN  "\x1B[36m"
+#define LKWHT  "\x1B[37m"
 
 using namespace std;
 
 // Take tokens from parser.tab.h
 #define YY_DECL extern "C" int yylex()
 #include "parser.tab.h"
+
+void yyerror( char* s);
 
 %}
 
@@ -41,7 +51,7 @@ end         return END;
             }
 
 <<EOF>>     {
-                 return EOF;
+                 return END_OF_FILE;
             }
 
 \n          {
@@ -50,12 +60,17 @@ end         return END;
 
 [ \t]       ;
 
-.           {    yyerror("Unexpected char");
+.           {
+                yyerror("Unexpected char");
             }
 
 
 %%
-
+void yyerror( char* s)
+{
+    printf("\n%sSyntax Error%s : Line %s%d%s.\n%sMessage:%s %s '%s'.\n",LKRED,LKWHT,LKBLU,yylineno,LKWHT,LKRED,LKYEL,s,yytext);
+    exit(0);
+}
 
 int yywrap(void) {
     return 1;
