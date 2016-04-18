@@ -38,7 +38,7 @@
 %}
 
 // define termminal symbols.
-%token ROWS COLUMNS EQUALS START END OBSTACLES NUMBER COMMA OPAREN CPAREN END_OF_FILE
+%token ROWS COLUMNS EQUALS START END OBSTACLES NUMBER COMMA OPAREN CPAREN
 
 // bison gets next token from flex as 'yystype'
 // Each type of token flex could return
@@ -64,7 +64,7 @@
 PARSETREE           :   LINE
                     ;
 
-LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES END_OF_FILE
+LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
                         {
                         printf("Successful Parsing");
                         }
@@ -73,7 +73,6 @@ LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES END_OF_F
                         {
                             yywarning("Input File has no data.");
                         }
-
                     ;
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN

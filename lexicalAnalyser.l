@@ -50,10 +50,6 @@ end         return END;
                 return COMMA;
             }
 
-<<EOF>>     {
-                 return END_OF_FILE;
-            }
-
 \n          {
                 yylineno++;
             }
