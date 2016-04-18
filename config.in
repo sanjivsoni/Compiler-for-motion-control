@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 columns = 10
 rows = 10
 end = (0,0)
 start = (0,0)
 obstacles = (1,1)
+=======
+columns = 4
+rows =4
+obstacles = (1,1)
+start = (7,7)
+end = (2,2)
+>>>>>>> origin/master

@@ -132,11 +132,14 @@
 
 
 	var rows,columns,str1="",obstaclesCoordinates="obstacles = ",startCoordinates = "start = (0,0) ",endCoordinates = "end = (0,1) ";
+	var obstacleCount =0;
 	function getData()
 	{
 
 		var rowStr = "rows = " + rows;
 		var colStr = "columns = " + columns;
+		if(obstacleCount == 0)
+		{obstaclesCoordinates = "";}
 		str1= rowStr + "\n" +colStr + "\n" + obstaclesCoordinates + "\n" + startCoordinates + "\n" + endCoordinates;
 		console.log(str1);
 }
@@ -423,6 +426,8 @@
               {
                 currentTile.setColor(new Color(0, 0, 0));
                 obstaclesCoordinates = obstaclesCoordinates + "(" + currentTile.getY() + "," + currentTile.getX() + ") ";
+								obstacleCount++;
+								//console.log(obstacleCount);
              }
           }
 
@@ -431,6 +436,8 @@
               currentTile.setColor(new Color(255, 255, 255));
               var removeObstacle = "(" + currentTile.getY() + "," + currentTile.getX() + ")";
               obstaclesCoordinates = obstaclesCoordinates.replace(removeObstacle,"");
+							obstacleCount--;
+							//console.log(obstacleCount);
           }
 
           else if(currentTile.getColor().r == 255 && currentTile.getColor().g == 0 && currentTile.getColor().b == 0)
@@ -612,6 +619,8 @@
 				{
 					currentTile.setColor(new Color(0, 0, 0));
 					obstaclesCoordinates = obstaclesCoordinates + "(" + currentTile.getY() + "," + currentTile.getX() + ") ";
+					obstacleCount++;
+					//console.log(obstacleCount);
 				}
 	}
 
