@@ -30,7 +30,7 @@
   void yywarning(const char* s);
 
   int rows, columns;
-  int startX, startY, endX, endY;
+  int startX = -1, startY = -1, endX = -1, endY = -1;
   vector<int> obstacleX;
   vector<int> obstacleY;
   int x = 0, y = 0;
@@ -73,7 +73,7 @@ LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
                     |   ASSIGN_COLUMN ASSIGN_ROW
-;
+                    ;
 
 
 ASSIGN_ROW          :   ROWS EQUALS NUMBER
@@ -144,9 +144,14 @@ ASSIGN_START        :   START EQUALS COORDINATE
                             {
                                 yyerror(" Start Coordinate out of bounds");
                             }
-
+                            
                             startX = x;
                             startY = y;
+                            
+                            if( startX == endX || startY == endY )
+                            {
+                                yyerror(" Start Coordinate can't be same as End.");
+                            }
                         }
                     ;
 
@@ -156,6 +161,11 @@ ASSIGN_END          :   END EQUALS COORDINATE
                             {
                                 yyerror("End Coordinate out of bounds");
 
+                            }
+                            
+                            if( startX == endX || startY == endY )
+                            {
+                                yyerror(" End Coordinate can't be same as start.");
                             }
 
                             endX = x;
@@ -209,8 +219,8 @@ int main(int argc, char**argv)
     maze.traverseBreadthFirst();
 
     time = clock() - time;
-    printf("\nRunning Time = %fs\n",((float)time)/CLOCKS_PER_SEC);
-    printf("\nLines of Code = %d\n", yylineno);
+    printf("Running Time = %fs\n",((float)time)/CLOCKS_PER_SEC);
+    printf("Lines of Code = %d\n", yylineno);
 
     fclose(file);
 }
