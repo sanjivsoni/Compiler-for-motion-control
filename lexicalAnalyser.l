@@ -1,5 +1,5 @@
 %{
-    
+
 #include<stdio.h>
 #include<string>
 #include<iostream>
@@ -38,6 +38,11 @@ end         return END;
                 return COMMA;
             }
 
+\n*\Z       {
+                 printf("\nError: Blank Input File");
+                 exit(0);
+            }
+
 \n          {
                 yylineno++;
             }
@@ -47,6 +52,7 @@ end         return END;
 .           {    printf("\nSyntax error in line %d : Unexpected char %s \n",yylineno,yytext);
                  exit(0);
             }
+
 
 %%
 void yyerror(char *str)
