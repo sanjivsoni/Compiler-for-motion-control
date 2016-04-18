@@ -324,51 +324,100 @@ public:
     void backTrackPath(int destination)
     {
         bool stop = false;
-        stack<char> path;
-
+        stack<int> path;
+        
+        path.push(destination);
+        
         int previousStep = 0,nextStep = destination;
         while(stop == false)
         {
             previousStep = map[nextStep].origin;
-
+            //cout<<previousStep<<" ";
+            
+            
             // Start node
             if(previousStep == -1)
             {
-                previousStep = nextStep;
                 stop = true;
+                //path.push(nextStep);
+                break;
             }
-
-            if(previousStep == (nextStep - columns))
-                path.push('S');
-            else if(previousStep == (nextStep + columns))
-                path.push('B');
-            else if(previousStep == (nextStep - 1))
-                path.push('L');
-            else if(previousStep == (nextStep + 1))
-                path.push('R');
-
+            
+            path.push(previousStep);
+            
             //printf("%d ",pre);
             nextStep = previousStep;
         }
-
+        
         ofstream fout("finalPath.h");
-
+        
         if(fout == NULL)
         {
-            printf("Cannot write Path to output file\n");
+            printf("Cannot write to File 'finalPath.h'");
             exit(0);
         }
         
-        fout<<" char path[] = \"";
-
+        fout<< "char path[] = \"";
+        
+        int current = 0,next;
+        int turn = 0, roboTurn = 0;
+        current = path.top();
+        path.pop();
+        
         while(!path.empty())
         {
-            fout<<path.top();
+            next = path.top();
             path.pop();
+            
+            if(current == next - 1)
+            {
+                turn = 90;
+            }
+            if(current == next + 1)
+            {
+                turn = -90;
+            }
+            if(current == next + columns)
+            {
+                turn = 0;
+            }
+            if(current == next - columns)
+            {
+                turn = 180;
+            }
+            
+            if(turn - roboTurn == 90 || turn - roboTurn == -270 )
+            {
+                fout<<"R";
+                roboTurn = turn;
+            }
+            
+            else if(turn - roboTurn == 0)
+            {
+                fout<<"S";
+                roboTurn = turn;
+            }
+            else if(turn - roboTurn == 180 || turn - roboTurn == -180)
+            {
+                fout<<"U";
+                roboTurn = turn;
+            }
+            else if(turn - roboTurn == -90 || turn - roboTurn == 270)
+            {
+                fout<<"L";
+                roboTurn = turn;
+            }
+            
+            
+            //printf("C:%d N:%d T:%d R:%d\n",current,next,turn,roboTurn);
+            
+            current = next;
         }
-        fout<<"\";  ";
-
+        
+        fout<<"\";";
         
         fout.close();
+        printf("Succesfully written path to 'finalPath.h'\n");
+        
     }
 };

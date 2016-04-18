@@ -98,7 +98,7 @@ ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
 
 
 ASSIGN_OBSTACLES    :   OBSTACLES EQUALS HINDERANCES
-                    |  /* Obstacles Absent Ebsilon Production */
+                    |  /* Obstacles Absent (Ebsilon Production) */
                     ;
 
 HINDERANCES         :   HINDERANCES HINDERANCE
