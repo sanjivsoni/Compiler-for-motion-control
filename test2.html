@@ -164,7 +164,7 @@
 	 * It is responsible for creating the tiles, and some basic functionality like clicking to color a tile.
 	 * @class
 	 */
-	 var rColor=false,gColor=false,redX=-1,redY=-1,greenX=-1,greenY=-1;
+	 var rColor=false,gColor=false,redX=-1,redY=-1,greenX=-1,greenY=-1,redInBrush = false,greenInBrush = false;
 
 	 function refreshTable(){
 		 $("div").remove("#tiles");
@@ -400,6 +400,7 @@
       					redY = self.getTileFromElement(this).getX();
       					endCoordinates = endCoordinates + "(" + redX + "," + redY +")"
                 rColor = false;
+								redInBrush = false;
               }
 
               else if(gColor)
@@ -409,11 +410,11 @@
       					greenY = self.getTileFromElement(this).getX();
       					startCoordinates = startCoordinates + "(" + greenX + "," + greenY +")"
                 gColor = false;
+								greenInBrush = false;
               }
 
               else
               {
-								console.log("original")
                 currentTile.setColor(new Color(0, 0, 0));
                 obstaclesCoordinates = obstaclesCoordinates + "(" + currentTile.getY() + "," + currentTile.getX() + ") ";
              }
@@ -428,6 +429,8 @@
 
           else if(currentTile.getColor().r == 255 && currentTile.getColor().g == 0 && currentTile.getColor().b == 0)
 					{
+						if(!greenInBrush)
+						{
               if(rColor == false)
               {
                 currentTile.setColor(new Color(255, 255, 255));
@@ -435,12 +438,21 @@
                 redX = self.getTileFromElement(this).getY();
       					redY = self.getTileFromElement(this).getX();
                 var removeObstacle = "(" + redX + "," + redY + ")";
-                startCoordinates = startCoordinates.replace(removeObstacle,"");
-              }
+								endCoordinates = endCoordinates.replace(removeObstacle,"");
+								redInBrush = true;
+							}
+						}
+
+						else {
+							alert("Not Allowed")
+						}
 
           }
+
           else if(currentTile.getColor().r == 0 && currentTile.getColor().g == 128 && currentTile.getColor().b == 0)
 					{
+						if(!redInBrush)
+						{
               if(gColor == false)
               {
                 currentTile.setColor(new Color(255, 255, 255));
@@ -448,9 +460,14 @@
                 greenX = self.getTileFromElement(this).getY();
                 greenY = self.getTileFromElement(this).getX();
                 var removeObstacle = "(" + greenX + "," + greenY + ")";
-                endCoordinates = endCoordinates.replace(removeObstacle,"");
-              }
+								startCoordinates = startCoordinates.replace(removeObstacle,"");
+								greenInBrush = true;
+							}
+						}
 
+						else {
+							alert("Not Allowed")
+						}
           }
 
 
@@ -542,13 +559,12 @@
 
 			this.container.on('mouseenter', '.tile', function(e) {
 				if (e.buttons === 1) {
+					//console.log("enter")
 					var currentTile = self.getTileFromElement(this);
           if(currentTile.getColor().r == 255 && currentTile.getColor().g == 255 && currentTile.getColor().b == 255)
           {
-            currentTile.setColor(new Color(0, 0, 0));
-            obstaclesCoordinates = obstaclesCoordinates + "(" + currentTile.getY() + "," + currentTile.getX() + ") ";
-            console.log("added " +"(" + currentTile.getY() + "," + currentTile.getX() + ") ");
             // Interpolate all the tiles between the last entered tile and the current one.
+						console.log("enter");
   					if (lastTileEntered)
               {
   						      self._interpolateMouseMovement(currentTile, lastTileEntered);
@@ -585,18 +601,13 @@
       for (var i = 1; i <= distance; i++) {
 				var x = Math.floor(fromTile.getX() + i * unitVector[0]);
 				var y = Math.floor(fromTile.getY() + i * unitVector[1]);
-				this.getTileFromXY(x, y).setColor(new Color(0, 0, 0));
-			}
-
-
-      /*var self = this;
-      var currentTile = self.getTileFromElement(this);
-      if((currentTile.getColor().r == 255 && currentTile.getColor().g == 0 && currentTile.getColor().b == 0) && rColor==true)
-      {
-        console.log("if");
-        this.getTileFromXY(x, y).setColor(new Color(0xFF, 0xFF, 0xFF));
-      }*/
-
+				var currentTile=this.getTileFromXY(x,y);
+				if(currentTile.getColor().r == 255 && currentTile.getColor().g == 255 && currentTile.getColor().b == 255)
+				{
+					currentTile.setColor(new Color(0, 0, 0));
+					obstaclesCoordinates = obstaclesCoordinates + "(" + currentTile.getY() + "," + currentTile.getX() + ") ";
+				}
+	}
 
 		};
 

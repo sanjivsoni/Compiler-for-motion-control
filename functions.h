@@ -2,11 +2,12 @@
 #include "dijkstra.h"
 
 int matrix[20][20] = {0};
-int row_1D_matrix[100] = {0};
+
 int obstaclesBuffer[100][100];
-int adjacency[100][100]= {0};
+int **adjacency;
 int path =0 ;
 char *rows, *columns, *coordinateX, *coordinateY;
+int *row_1D_matrix;
 int startCoordinateX, startCoordinateY,endCoordinateX,endCoordinateY;
 int startPoint,endPoint;
 
@@ -48,6 +49,8 @@ void createSparse()
 {
   int k = 0;
   int rowNo, colNo, intRows = atoi(rows),intColumns = atoi(columns);
+  row_1D_matrix = new int[intColumns*intRows];
+  row_1D_matrix[intColumns*intRows] = 0;
   while(k < obstacles)
   {
     rowNo = obstaclesBuffer[k][0];
@@ -193,8 +196,12 @@ void findPath()
   int nodes = intRows * intColumns;
   printf("\n");
   struct Graph* graph = createGraph(nodes);
-  findedge(graph,0,0);
+  adjacency = new int*[intRows];
+  for(int i = 0; i < intRows; ++i)
+    {adjacency[i] = new int[intColumns];}
+
+  //findedge(graph,0,0);
   //startDijkstra(graph,startPoint,endPoint);
-  //printf("\nAdjacency Matrix" );
-  //printAdjacency();
+  printf("\nAdjacency Matrix" );
+  printAdjacency();
 }

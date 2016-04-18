@@ -1,5 +1,5 @@
-columns = 50
-rows =50
+columns = 4
+rows =4
 
 start = (0,0)
-end = (49,49)
+end = (9,9)
