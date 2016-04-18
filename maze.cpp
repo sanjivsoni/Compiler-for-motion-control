@@ -105,6 +105,7 @@ public:
         }
         else
         {
+            printf("Map Error : Obstacle out of bounds\n");
             return false;
         }
         return true;
