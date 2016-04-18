@@ -8,8 +8,10 @@
 
 #include "maze.hpp"
 #include<queue>
+#include<stack>
 #include<iostream>
 #include<vector>
+#include<fstream>
 
 using namespace std;
 
@@ -64,15 +66,32 @@ public:
     
     void setStartPoint(int x, int y)
     {
-        this -> startX = x;
-        this -> startY = y;
-    }
+        
+        if(x < rows && y< columns)
+        {
+            this -> startX = x;
+            this -> startY = y;
+        }
+        else
+        {
+            printf("Semantic Error : Invalid Start Point\n");
+            exit(0);
+        }
+        }
     
     // Node where robot ends
     void setEndPoint(int x, int y)
     {
-        this -> endX = x;
-        this -> endY = y;
+        if(x < rows && y< columns)
+        {
+            this -> endX = x;
+            this -> endY = y;
+        }
+        else
+        {
+            printf("Map Error : Invalid End Point\n");
+            exit(0);
+        }
     }
     
     // set obstacle at node
@@ -222,32 +241,20 @@ public:
     }
 
     // Perform BFS starting from source to destination.
-    bool traverseBreadthFirst(int node)
+    bool traverseBreadthFirst()
     {
-        int top,bottom,left,right,destination;
+        int node,top,bottom,left,right,destination;
         bool pathFoundFlag = false;
         queue<int> nodeQueue;
         
-        if(checkValidNode(node))
-        {
-                nodeQueue.push(node);
-                map[node].status = true;
-                map[node].origin = -1;
-        }
-        else
-        {
-            printf("Map Error : Invalid start node ");
-            return false;
-        }
-        
-        
+        // Start from Start node
+        node = getNodeNumber(startX, startY);
         destination = getNodeNumber(endX, endY);
         
-        if(!checkValidNode(destination))
-        {
-            printf("Map Error : Invalid destination node ");
-            return false;
-        }
+        // Add start node to queue
+        nodeQueue.push(node);
+        map[node].status = true;
+        map[node].origin = -1;
         
         // BFS
         while(!nodeQueue.empty())
@@ -257,7 +264,7 @@ public:
             
             if(node == destination)
             {
-                printf("\nDestination to Source %d ",node);
+                //printf("\nDestination to Source %d ",node);
                 pathFoundFlag = true;
                 backTrackPath(destination);
                 break;
@@ -304,7 +311,8 @@ public:
         
         if(pathFoundFlag == false)
         {
-            printf("\nDestination not reachable\n");
+            printf("\nDestination is not reachable.\n");
+            return false;
         }
         return true;
     }
@@ -313,12 +321,46 @@ public:
     // Generates path.
     void backTrackPath(int destination)
     {
-        int pre = 0;
-        while(pre != -1)
+        bool stop = false;
+        stack<char> path;
+        
+        int previousStep = 0,nextStep = destination;
+        while(stop == false)
         {
-            pre = map[destination].origin;
-            printf("%d ",pre);
-            destination = pre;
+            previousStep = map[nextStep].origin;
+            
+            // Start node
+            if(previousStep == -1)
+            {
+                previousStep = nextStep;
+                stop = true;
+            }
+            
+            if(previousStep == (nextStep - columns))
+                path.push('D');
+            else if(previousStep == (nextStep + columns))
+                path.push('U');
+            else if(previousStep == (nextStep - 1))
+                path.push('L');
+            else if(previousStep == (nextStep + 1))
+                path.push('R');
+            
+            //printf("%d ",pre);
+            nextStep = previousStep;
         }
+        
+        ofstream fout("path.txt");
+        if(fout == NULL)
+        {
+            printf("Cannot write Path to output file\n");
+            exit(0);
+        }
+        
+        while(!path.empty())
+        {
+            fout<<path.top();
+            path.pop();
+        }
+        fout.close();
     }
 };
