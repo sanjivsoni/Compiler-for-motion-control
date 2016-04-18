@@ -6,9 +6,9 @@
   #include<vector>
   #include<time.h>
   using namespace std;
-  
+
   #include "maze.cpp"
-  
+
   // Stuff from flex that bison needs to know about
   extern "C" int yylex();
   extern "C" int yyparse();
@@ -69,16 +69,16 @@ ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
                     ;
 
 
-ASSIGN_OBSTACLES     :   OBSTACLES EQUALS HINDERENCES
+ASSIGN_OBSTACLES     :   OBSTACLES EQUALS HINDERANCES
                     |  /* Obstacles Absent */
                     ;
 
-HINDERENCES         :   HINDERENCES HINDERENCE
+HINDERANCES         :   HINDERANCES HINDERANCE
 
-                    |   HINDERENCE
+                    |   HINDERANCE
                     ;
 
-HINDERENCE          :   COORDINATE
+HINDERANCE          :   COORDINATE
                         {
                             obstacleX.push_back(x);
                             obstacleY.push_back(y);
@@ -120,7 +120,7 @@ void yyerror(const char* s)
 
 int main(int argc, char**argv)
 {
-    
+
     if(argc != 2)
     {
         printf("\nIncorrect usage. Try ./a.out filename\n");
@@ -141,14 +141,14 @@ int main(int argc, char**argv)
     }while(!feof((yyin)));
 
     clock_t time = clock();
-    
+
     Maze maze = Maze(rows, columns);
     maze.setObstacleFromVector(obstacleX, obstacleY);
     maze.setStartPoint(startX, startY);
     maze.setEndPoint(endX, endY);
-    
+
     maze.traverseBreadthFirst();
-    
+
     time = clock() - time;
     printf("\nRunning Time = %fs\n",((float)time)/CLOCKS_PER_SEC);
     printf("\nLines of Code = %d\n", yylineno);
