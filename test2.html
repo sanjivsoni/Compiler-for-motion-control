@@ -186,14 +186,13 @@
 
 	 function clearAll(){
 		 rows = document.getElementById("rows").value;
-			 columns = document.getElementById("columns").value;
+		 columns = document.getElementById("columns").value;
 		 if(rows>0 && columns>0 && rows<30 && columns<50)
 		 {
 			 refreshTable();
 		 $(document).ready(function() {
 		 var paint = new Paint($('#tiles'), rows, columns);
 		 paint.init();
-		 paint.registerPlugin('ColorPalette', new ColorPalette());
 		 window.paint = paint;
 		 });
 		}
