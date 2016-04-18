@@ -19,7 +19,7 @@ obstacles   return OBSTACLES;
 start       return START;
 end         return END;
 
-[0-9]+      {
+[-]?[0-9]+      {
                 yylval.stringValue = strdup(yytext);
                 return NUMBER;
             }
