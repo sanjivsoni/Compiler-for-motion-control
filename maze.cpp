@@ -339,9 +339,9 @@ public:
             }
 
             if(previousStep == (nextStep - columns))
-                path.push('D');
+                path.push('S');
             else if(previousStep == (nextStep + columns))
-                path.push('U');
+                path.push('B');
             else if(previousStep == (nextStep - 1))
                 path.push('L');
             else if(previousStep == (nextStep + 1))
@@ -358,12 +358,17 @@ public:
             printf("Cannot write Path to output file\n");
             exit(0);
         }
+        
+        fout<<" char path[] = \"";
 
         while(!path.empty())
         {
             fout<<path.top();
             path.pop();
         }
+        fout<<"\";  ";
+
+        
         fout.close();
     }
 };
