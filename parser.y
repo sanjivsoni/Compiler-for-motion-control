@@ -6,7 +6,20 @@
   #include<vector>
   #include<time.h>
   using namespace std;
+<<<<<<< HEAD
+  
+  #define KNRM  "\x1B[0m"
+  #define KRED  "\x1B[31m"
+  #define KGRN  "\x1B[32m"
+  #define KYEL  "\x1B[33m"
+  #define KBLU  "\x1B[34m"
+  #define KMAG  "\x1B[35m"
+  #define KCYN  "\x1B[36m"
+  #define KWHT  "\x1B[37m"
+  
+=======
 
+>>>>>>> origin/master
   #include "maze.cpp"
 
   // Stuff from flex that bison needs to know about
@@ -52,7 +65,8 @@
 PARSETREE           :   LINE
                     ;
 
-LINE                :   DEFINE_LIMIT ASSIGN_OBSTACLES ASSIGN_COORDINATE
+LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
+
                     ;
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
@@ -61,15 +75,27 @@ DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
 
 
 ASSIGN_ROW          :   ROWS EQUALS NUMBER
-                        {rows = atoi($3);}
+                        {
+                            rows = atoi($3);
+                            if(rows <= 0 )
+                            {
+                                yyerror(" Invalid Row value. Expected positive value.");
+                            }
+                        }
                     ;
 
 ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
-                        {columns = atoi($3);}
+                        {
+                            columns = atoi($3);
+                            if(columns <= 0 )
+                            {
+                                yyerror(" Invalid Column value. Expected positive value.");
+                            }
+                        }
                     ;
 
 
-ASSIGN_OBSTACLES     :   OBSTACLES EQUALS HINDERANCES
+ASSIGN_OBSTACLES    :   OBSTACLES EQUALS HINDERANCES
                     |  /* Obstacles Absent */
                     ;
 
@@ -80,6 +106,19 @@ HINDERANCES         :   HINDERANCES HINDERANCE
 
 HINDERANCE          :   COORDINATE
                         {
+                            if( x > rows || y > columns )
+                            {
+                                yyerror(" Obstacle Coordinate out of bounds.");
+                            }
+                            
+                            if( x == startX && y == startY )
+                            {
+                                yyerror("Obstacle Coordinate can't be same as Start.");
+                            }
+                            if( x == endX && y == endX )
+                            {
+                                yyerror("Obstacle Coordinate can't be same as End.");
+                            }
                             obstacleX.push_back(x);
                             obstacleY.push_back(y);
                         }
@@ -87,8 +126,11 @@ HINDERANCE          :   COORDINATE
 
 COORDINATE          :   OPAREN NUMBER COMMA NUMBER CPAREN
                         {
+                            
+                            
                             x = atoi($2);
                             y = atoi($4);
+                            
                         }
                     ;
 
@@ -98,6 +140,11 @@ ASSIGN_COORDINATE   :   ASSIGN_START ASSIGN_END
 
 ASSIGN_START        :   START EQUALS COORDINATE
                         {
+                            if( x > rows || y > columns )
+                            {
+                                yyerror(" Start Coordinate out of bounds");
+                            }
+                            
                             startX = x;
                             startY = y;
                         }
@@ -105,6 +152,12 @@ ASSIGN_START        :   START EQUALS COORDINATE
 
 ASSIGN_END          :   END EQUALS COORDINATE
                         {
+                            if( x > rows || y > columns )
+                            {
+                                yyerror("End Coordinate out of bounds");
+                            
+                            }
+                            
                             endX = x;
                             endY = y;
                         }
@@ -114,7 +167,7 @@ ASSIGN_END          :   END EQUALS COORDINATE
 
 void yyerror(const char* s)
 {
-    printf("\nParse Error in line %d Message: %s\n",yylineno,s);
+    printf("\n%sSemantic Error%s : Line %s%d%s.\n%sMessage:%s %s\n",KRED,KWHT,KBLU,yylineno,KWHT,KRED,KGRN,s);
     exit(0);
 }
 
