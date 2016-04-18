@@ -6,7 +6,7 @@
 //  Copyright © 2016 sunjiv. All rights reserved.
 //
 
-#include "maze.hpp"
+
 #include<queue>
 #include<stack>
 #include<iostream>
@@ -37,36 +37,36 @@ private:
     int endX, endY;
     // Total nodes in graph
     int nodeCount;
-    
+
 public:
-    
+
     // Constructor
     Maze(int rows, int columns)
     {
         nodeCount = rows * columns;
-        
+
         map = new Node[nodeCount];
-        
+
         for(int i = 0; i < nodeCount ; i++)
         {
             map[i].clear = true;
             map[i].status = false;
             map[i].origin = -1;
         }
-        
+
         this->rows = rows;
         this->columns = columns;
-        
+
         // Default Start and End
         this->startX = 0;
         this->startY = 0;
         this->endX = rows - 1;
         this->endY = columns - 1;
     }
-    
+
     void setStartPoint(int x, int y)
     {
-        
+
         if(x < rows && y< columns)
         {
             this -> startX = x;
@@ -78,7 +78,7 @@ public:
             exit(0);
         }
         }
-    
+
     // Node where robot ends
     void setEndPoint(int x, int y)
     {
@@ -93,7 +93,7 @@ public:
             exit(0);
         }
     }
-    
+
     // set obstacle at node
     bool setObstacle(int node)
     {
@@ -109,7 +109,7 @@ public:
         }
         return true;
     }
-    
+
     // Define obstacles based on list of nodes
     bool setObstaclesFromList(int *nodes, int count)
     {
@@ -126,10 +126,10 @@ public:
         }
         return true;
     }
-    
+
     bool setObstacleFromVector(vector<int> vectorOfX, vector<int> vectorOfY)
     {
-        
+
         if(vectorOfX.size() < nodeCount && vectorOfY.size() < nodeCount )
         {
             if(vectorOfY.size() == vectorOfX.size())
@@ -150,30 +150,30 @@ public:
         }
         return true;
     }
-    
-    
+
+
     int getNodeNumber(int i, int j)
     {
         return (i * rows + j);
     }
-    
+
     // Convert nodes coordinates to
     void getMatrixIndex(int node, int &i, int &j)
     {
         i = node / columns;
         j = node - i * columns;
     }
-    
+
     int getNodeRowIndex(int node)
     {
         return node / columns;
     }
-    
+
     int getNodeColumnIndex(int node)
     {
         return node - node / columns * columns;
     }
-    
+
     // Print maze to console
     // or file (maze too large)
     // girls like it too large ;)
@@ -191,10 +191,10 @@ public:
                 printf("%d ",map[i].clear);
             }
             printf("\n");
-            
+
         }
     }
-    
+
     // check for valid step from current to next node
     bool checkValidStep(int currentNode, int nextNode)
     {
@@ -225,7 +225,7 @@ public:
         }
         return true;
     }
-    
+
     // Check for valid and clear node
     bool checkValidNode(int node)
     {
@@ -246,22 +246,22 @@ public:
         int node,top,bottom,left,right,destination;
         bool pathFoundFlag = false;
         queue<int> nodeQueue;
-        
+
         // Start from Start node
         node = getNodeNumber(startX, startY);
         destination = getNodeNumber(endX, endY);
-        
+
         // Add start node to queue
         nodeQueue.push(node);
         map[node].status = true;
         map[node].origin = -1;
-        
+
         // BFS
         while(!nodeQueue.empty())
         {
             node = nodeQueue.front();
             nodeQueue.pop();
-            
+
             if(node == destination)
             {
                 //printf("\nDestination to Source %d ",node);
@@ -269,9 +269,9 @@ public:
                 backTrackPath(destination);
                 break;
             }
-            
+
             //printf("OUT %d\n",node);
-            
+
             // Check for top, bottom, left, and right node
             if(checkValidStep(node,node - columns))
             {
@@ -280,7 +280,7 @@ public:
                 map[top].origin = node;
                 nodeQueue.push(top);
                 //printf("IN  %d T %d\n",node,top);
-                
+
             }
             if(checkValidStep(node, node - 1))
             {
@@ -298,7 +298,7 @@ public:
                 nodeQueue.push(bottom);
                 //printf("IN  %d B %d\n",node,bottom);
             }
-            
+
             if(checkValidStep(node, node + 1))
             {
                 right = node + 1;
@@ -308,7 +308,7 @@ public:
                 //printf("IN  %d R %d\n",node,right);
             }
         }
-        
+
         if(pathFoundFlag == false)
         {
             printf("\nDestination is not reachable.\n");
@@ -316,26 +316,26 @@ public:
         }
         return true;
     }
-    
+
     // Backtrack back to origin starting from destination node
     // Generates path.
     void backTrackPath(int destination)
     {
         bool stop = false;
         stack<char> path;
-        
+
         int previousStep = 0,nextStep = destination;
         while(stop == false)
         {
             previousStep = map[nextStep].origin;
-            
+
             // Start node
             if(previousStep == -1)
             {
                 previousStep = nextStep;
                 stop = true;
             }
-            
+
             if(previousStep == (nextStep - columns))
                 path.push('D');
             else if(previousStep == (nextStep + columns))
@@ -344,18 +344,18 @@ public:
                 path.push('L');
             else if(previousStep == (nextStep + 1))
                 path.push('R');
-            
+
             //printf("%d ",pre);
             nextStep = previousStep;
         }
-        
+
         ofstream fout("path.txt");
         if(fout == NULL)
         {
             printf("Cannot write Path to output file\n");
             exit(0);
         }
-        
+
         while(!path.empty())
         {
             fout<<path.top();
