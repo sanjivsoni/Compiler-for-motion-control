@@ -118,6 +118,7 @@
 			<button onclick="getDimensions()">Make Table</button>
 
 			<button id="exportButton" style="display: none;"><a id="export"  class = "myButton" download="" href="#">Export</a></button>
+			<button id="Clear"  onclick="clearAll()">Clear</button>
 
 		</div>
 		<div  id="tiles"></div>
@@ -181,6 +182,21 @@
 		 startCoordinates = "start = (0,0) ";
 		 endCoordinates = "end = (0,1) ";
  		//alert("div created");
+	 }
+
+	 function clearAll(){
+		 rows = document.getElementById("rows").value;
+			 columns = document.getElementById("columns").value;
+		 if(rows>0 && columns>0 && rows<30 && columns<50)
+		 {
+			 refreshTable();
+		 $(document).ready(function() {
+		 var paint = new Paint($('#tiles'), rows, columns);
+		 paint.init();
+		 paint.registerPlugin('ColorPalette', new ColorPalette());
+		 window.paint = paint;
+		 });
+		}
 	 }
 	 function getDimensions() {
 
