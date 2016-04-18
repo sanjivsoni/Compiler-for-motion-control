@@ -38,9 +38,8 @@ end         return END;
                 return COMMA;
             }
 
-\n*\Z       {
-                 printf("\nError: Blank Input File");
-                 exit(0);
+<<EOF>>     {
+                 return EOF;
             }
 
 \n          {
