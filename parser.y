@@ -66,13 +66,9 @@ PARSETREE           :   LINE
 
 LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
                         {
-                        printf("Successful Parsing");
+                            printf("%sSuccessful Parsing%s",KGRN,KWHT);
                         }
 
-                    |   /* Blank input file*/
-                        {
-                            yywarning("Input File has no data.");
-                        }
                     ;
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
