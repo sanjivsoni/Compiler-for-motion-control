@@ -117,7 +117,7 @@
 			<input type="number" id="columns" placeholder="Enter Columns" style="width: 120px">
 			<button onclick="getDimensions()">Make Table</button>
 			<button id="Clear"  onclick="clearAll()">Clear</button>
-			<button id="exportButton" style="display: none;"><a id="export"  class = "myButton" download="" href="#">Export</a></button>
+			<button id="exportButton" style="display: none;" ><a id="export"  class = "myButton" download="" href="#">Export</a></button>
  	</div>
 		<div  id="tiles"></div>
 
@@ -132,15 +132,15 @@
 
 
 	var rows,columns,str1="",obstaclesCoordinates="obstacles = ",startCoordinates = "start = (0,0) ",endCoordinates = "end = (0,1) ";
-	var obstacleCount =0;
+	var obstacleCount = 0, data = false;
 	function getData()
 	{
-
+		data = true;
 		var rowStr = "rows = " + rows;
 		var colStr = "columns = " + columns;
 		if(obstacleCount == 0)
 		{obstaclesCoordinates = "";}
-		str1= rowStr + "\n" +colStr + "\n" + obstaclesCoordinates + "\n" + startCoordinates + "\n" + endCoordinates;
+		str1= rowStr + "\n" +colStr + "\n" + startCoordinates + "\n" + endCoordinates + "\n" + obstaclesCoordinates ;
 		console.log(str1);
 }
 
@@ -216,7 +216,6 @@
 					paint.init();
           paint._setStartEnd();
 					$("[href]").click(function(){
-          	//console.log("gh");
 						getData();
     				createDownloadLink("#export",str1,"config.in");
 					});
@@ -225,7 +224,7 @@
 		}
 
 		else {
-			alert("Error: Value out of bounds");
+			alert("Error: Value exceeds the limit of 30.");
 		}
 	}
 
@@ -457,7 +456,7 @@
 						}
 
 						else {
-							alert("Not Allowed")
+							alert("Error: You cannot set start and end at same point. ")
 						}
 
           }

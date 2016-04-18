@@ -5,3 +5,4 @@ parser.tab.h
 motionController
 work.xcworkspace
 finalPath.h
+config.in
