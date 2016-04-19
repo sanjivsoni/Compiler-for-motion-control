@@ -222,8 +222,8 @@ int main(int argc, char**argv)
     clock_t time = clock();
 
     Maze maze = Maze(rows, columns);
-    maze.setObstacleFromVector(obstacleX, obstacleY);
     maze.setStartPoint(startX, startY);
+    
     maze.setEndPoint(endX, endY);
 
     maze.traverseBreadthFirst();

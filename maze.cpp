@@ -156,7 +156,7 @@ public:
 
     int getNodeNumber(int i, int j)
     {
-        return (i * rows + j);
+        return (i*columns + j);
     }
 
     // Convert nodes coordinates to
@@ -173,7 +173,7 @@ public:
 
     int getNodeColumnIndex(int node)
     {
-        return node - node / columns * columns;
+        return node - (node / columns) * columns;
     }
 
     // Print maze to console
@@ -332,7 +332,7 @@ public:
         while(stop == false)
         {
             previousStep = map[nextStep].origin;
-            //cout<<previousStep<<" ";
+            cout<<previousStep<<" ";
             
             
             // Start node
@@ -409,7 +409,7 @@ public:
             }
             
             
-            //printf("C:%d N:%d T:%d R:%d\n",current,next,turn,roboTurn);
+            printf("C:%d N:%d T:%d R:%d\n",current,next,turn,roboTurn);
             
             current = next;
         }
