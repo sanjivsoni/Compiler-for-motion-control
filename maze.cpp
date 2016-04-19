@@ -156,7 +156,7 @@ public:
 
     int getNodeNumber(int i, int j)
     {
-        return (i * rows + j);
+        return (i * columns + j);
     }
 
     // Convert nodes coordinates to
@@ -252,7 +252,6 @@ public:
         // Start from Start node
         node = getNodeNumber(startX, startY);
         destination = getNodeNumber(endX, endY);
-
         // Add start node to queue
         nodeQueue.push(node);
         map[node].status = true;
@@ -281,7 +280,7 @@ public:
                 map[top].status = true;
                 map[top].origin = node;
                 nodeQueue.push(top);
-                //printf("IN  %d T %d\n",node,top);
+                printf("IN  %d T %d\n",node,top);
 
             }
             if(checkValidStep(node, node - 1))
@@ -290,15 +289,15 @@ public:
                 map[left].status = true;
                 map[left].origin = node;
                 nodeQueue.push(left);
-                //printf("IN  %d L %d\n",node,left);
+                printf("IN  %d L %d\n",node,left);
             }
             if(checkValidStep(node, node + columns))
             {
-                bottom = node + rows;
+                bottom = node + columns;
                 map[bottom].status = true;
                 map[bottom].origin = node;
                 nodeQueue.push(bottom);
-                //printf("IN  %d B %d\n",node,bottom);
+                printf("IN  %d B %d\n",node,bottom);
             }
 
             if(checkValidStep(node, node + 1))
@@ -307,7 +306,7 @@ public:
                 map[right].status = true;
                 map[right].origin = node;
                 nodeQueue.push(right);
-                //printf("IN  %d R %d\n",node,right);
+                printf("IN  %d R %d\n",node,right);
             }
         }
 
