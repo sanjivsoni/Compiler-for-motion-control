@@ -26,6 +26,7 @@
   extern "C" FILE *yyin;
   extern int yylineno;
 
+  void yySemanticError(const char*s);
   void yyerror(const char*s);
   void yywarning(const char* s);
 
@@ -73,6 +74,7 @@ LINE                :   DEFINE_LIMIT ASSIGN_COORDINATE ASSIGN_OBSTACLES
 
 DEFINE_LIMIT        :   ASSIGN_ROW ASSIGN_COLUMN
                     |   ASSIGN_COLUMN ASSIGN_ROW
+
                     ;
 
 
@@ -81,7 +83,7 @@ ASSIGN_ROW          :   ROWS EQUALS NUMBER
                             rows = atoi($3);
                             if(rows <= 0 )
                             {
-                                yyerror("Invalid Row value. Expected positive value.");
+                                yySemanticError("Invalid Row value. Expected positive value.");
                             }
                         }
                     ;
@@ -91,7 +93,7 @@ ASSIGN_COLUMN       :   COLUMNS EQUALS NUMBER
                             columns = atoi($3);
                             if(columns <= 0 )
                             {
-                                yyerror(" Invalid Column value. Expected positive value.");
+                                yySemanticError(" Invalid Column value. Expected positive value.");
                             }
                         }
                     ;
@@ -110,16 +112,16 @@ HINDERANCE          :   COORDINATE
                         {
                             if( x > rows || y > columns )
                             {
-                                yyerror(" Obstacle Coordinate out of bounds.");
+                                yySemanticError(" Obstacle Coordinate out of bounds.");
                             }
 
                             if( x == startX && y == startY )
                             {
-                                yyerror("Obstacle Coordinate can't be same as Start.");
+                                yySemanticError("Obstacle Coordinate can't be same as Start.");
                             }
-                            if( x == endX && y == endX )
+                            if( x == endX && y == endY )
                             {
-                                yyerror("Obstacle Coordinate can't be same as End.");
+                                yySemanticError("Obstacle Coordinate can't be same as End.");
                             }
                             obstacleX.push_back(x);
                             obstacleY.push_back(y);
@@ -142,15 +144,15 @@ ASSIGN_START        :   START EQUALS COORDINATE
                         {
                             if( x > rows || y > columns )
                             {
-                                yyerror(" Start Coordinate out of bounds");
+                                yySemanticError(" Start Coordinate out of bounds");
                             }
                             
                             startX = x;
                             startY = y;
                             
-                            if( startX == endX || startY == endY )
+                            if( startX == endX && startY == endY )
                             {
-                                yyerror(" Start Coordinate can't be same as End.");
+                                yySemanticError(" Start Coordinate can't be same as End.");
                             }
                         }
                     ;
@@ -159,27 +161,35 @@ ASSIGN_END          :   END EQUALS COORDINATE
                         {
                             if( x > rows || y > columns )
                             {
-                                yyerror("End Coordinate out of bounds");
+                                yySemanticError("End Coordinate out of bounds");
 
                             }
                             
-                            if( startX == endX || startY == endY )
-                            {
-                                yyerror(" End Coordinate can't be same as start.");
-                            }
-
                             endX = x;
                             endY = y;
+                            
+                            if( startX == endX && startY == endY )
+                            {
+                                yySemanticError(" End Coordinate can't be same as start.");
+                            }
                         }
                     ;
 
 %%
 
-void yyerror(const char* s)
+void yySemanticError(const char* s)
 {
     printf("\n%sSemantic Error%s : Line %s%d%s.\n%sMessage:%s %s\n",KRED,KWHT,KBLU,yylineno,KWHT,KRED,KGRN,s);
     exit(0);
 }
+
+void yyerror(const char* s)
+{
+    printf("\n%sError%s : Line %s%d%s.\n%sMessage:%s %s\n",KRED,KWHT,KBLU,yylineno,KWHT,KRED,KGRN,s);
+    exit(0);
+}
+
+
 
 void yywarning(const char* s)
 {
