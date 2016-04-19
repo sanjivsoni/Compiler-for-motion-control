@@ -26,6 +26,7 @@
 			float: left;
 			width: 20px;
 			height: 20px;
+			position: relative;
 
 
 			/* Make sure the tiles can't be dragged, since it ruins our own click-and-drag effect. */
@@ -59,6 +60,15 @@
 			outline-color: rgb(255, 255, 100);
 		}
 
+		#bottom_line
+		{
+			   position:absolute;                  /* added */
+			   bottom:0;
+				 left: 0;
+				 font-size: 150%                        /* added */
+			                             /* added */
+    }
+
 		#forms
 		{
 				text-align: center;
@@ -71,7 +81,7 @@
 
 		#tiles
 		{
-    margin: auto;
+    margin: 0 auto;
     width: 50%;
     padding: 10px;
 
@@ -118,9 +128,9 @@
 			<button onclick="getDimensions()">Make Table</button>
 			<button id="Clear"  onclick="clearAll()">Clear</button>
 			<button id="exportButton" style="display: none;" ><a id="export"  class = "myButton" download="" href="#">Export</a></button>
- 	</div>
+ 	 </div>
 		<div  id="tiles"></div>
-
+		<div id="bottom_line">For illustrative purposes only</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
