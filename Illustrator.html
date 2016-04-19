@@ -150,14 +150,13 @@
 		var colStr = "columns = " + columns;
 		if(obstacleCount == 0)
 		{
-			obstaclesCoordinates = "";
+            str1= rowStr + "\n" +colStr + "\n" + startCoordinates + "\n" + endCoordinates + "\n" ;
 		}
-
-		str1= rowStr + "\n" +colStr + "\n" + startCoordinates + "\n" + endCoordinates + "\n" + obstaclesCoordinates ;
-		if(obstacleCount == 0)
-		{
-			obstaclesCoordinates="obstacles = ";
-		}
+        else
+        {
+		  str1= rowStr + "\n" +colStr + "\n" + startCoordinates + "\n" + endCoordinates + "\n" + obstaclesCoordinates ;
+        }
+		
 
 		console.log(str1);
 

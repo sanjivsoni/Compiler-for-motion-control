@@ -280,7 +280,7 @@ public:
                 map[top].status = true;
                 map[top].origin = node;
                 nodeQueue.push(top);
-                printf("IN  %d T %d\n",node,top);
+                //printf("IN  %d T %d\n",node,top);
 
             }
             if(checkValidStep(node, node - 1))
@@ -289,7 +289,7 @@ public:
                 map[left].status = true;
                 map[left].origin = node;
                 nodeQueue.push(left);
-                printf("IN  %d L %d\n",node,left);
+                //printf("IN  %d L %d\n",node,left);
             }
             if(checkValidStep(node, node + columns))
             {
@@ -297,7 +297,7 @@ public:
                 map[bottom].status = true;
                 map[bottom].origin = node;
                 nodeQueue.push(bottom);
-                printf("IN  %d B %d\n",node,bottom);
+                //printf("IN  %d B %d\n",node,bottom);
             }
 
             if(checkValidStep(node, node + 1))
@@ -306,7 +306,7 @@ public:
                 map[right].status = true;
                 map[right].origin = node;
                 nodeQueue.push(right);
-                printf("IN  %d R %d\n",node,right);
+                //printf("IN  %d R %d\n",node,right);
             }
         }
 
